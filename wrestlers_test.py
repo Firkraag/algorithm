@@ -1,6 +1,6 @@
 #!/usr/bin/env ipython
 import unittest
-from breadth_first_search import Vertex, Graph
+from graph import Vertex, Graph
 from wrestlers import wrestlers
 
 class TestWrestler(unittest.TestCase):
