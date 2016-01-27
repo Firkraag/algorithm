@@ -15,7 +15,8 @@ def bfs(g, s):
     q.enqueue(s)
     while not q.empty():
         u = q.dequeue()
-        for v in u.edges:
+        #for v in u.edges:
+        for v in g.adj[u]:
 #            print "v.key: {}, v.color: {}".format(v.key, v.color)
             if u.type == v.type:
                 return False
