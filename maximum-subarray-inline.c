@@ -54,9 +54,12 @@ struct value FIND_MAXIMUM_SUBARRAY(int A[], int low, int high) {
 
 int main() {
         int a[17] = { 13, -3, -25, -20, -3, -16, 23, 18, 20, -7, 12, -5, 22, -15, -4, 7, 0};
+		int b[9] = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
         struct value max;       
 
         max = FIND_MAXIMUM_SUBARRAY(a, 0, 16);
         printf("%d, %d, %d, %d, %d\n", max.low, max.high, max.sum, a[max.low], a[max.high]);
+        max = FIND_MAXIMUM_SUBARRAY(b, 0, 8);
+        printf("%d, %d, %d, %d, %d\n", max.low, max.high, max.sum, b[max.low], b[max.high]);
 		return 0;
 }

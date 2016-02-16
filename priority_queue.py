@@ -27,6 +27,11 @@ class max_priority_queue(max_heap):
         self.heap_size = self.heap_size + 1
         self[self.heap_size - 1] = float("-Inf")
         self.heap_increase_key(self.heap_size - 1, key)
+    def heap_delete(self, i):
+        self.heap_increase_key(i, float("Inf"))
+        self[0], self[self.heap_size - 1] = self[self.heap_size - 1], self[0]
+        self.heap_size = self.heap_size - 1
+        self.max_heapify(0)
 class min_priority_queue(min_heap):
     def heap_minimum(self):
         return self[0]

@@ -25,6 +25,29 @@ class TestMaxPriorityQueue(unittest.TestCase):
         queue.heap_extract_max()
         queue.max_heap_insert(100)
         self.assertEquals(queue, [100, 14, 10, 4, 8, 9, 3, 2, 1, 7])
+    def test_heap_delete(self):
+        a = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
+        h = max_priority_queue(a)
+        h.heap_delete(4)
+        self.assertEquals(h[0:h.heap_size], [16, 14, 10, 8, 1, 9, 3, 2, 4])
+        h.heap_delete(2)
+        self.assertEquals(h[0:h.heap_size], [16, 14, 9, 8, 1, 4, 3, 2])
+        h.heap_delete(0)
+        self.assertEquals(h[0:h.heap_size], [14, 8, 9, 2, 1, 4, 3])
+        h.heap_delete(5)
+        self.assertEquals(h[0:h.heap_size], [14, 8, 9, 2, 1, 3])
+        h.heap_delete(3)
+        self.assertEquals(h[0:h.heap_size], [14, 8, 9, 3, 1])
+        h.heap_delete(1)
+        self.assertEquals(h[0:h.heap_size], [14, 3, 9, 1])
+        h.heap_delete(3)
+        self.assertEquals(h[0:h.heap_size], [14, 3, 9])
+        h.heap_delete(2)
+        self.assertEquals(h[0:h.heap_size], [14, 3])
+        h.heap_delete(1)
+        self.assertEquals(h[0:h.heap_size], [14])
+        h.heap_delete(0)
+        self.assertEquals(h[0:h.heap_size], [])
 class TestMinPriorityQueue(unittest.TestCase):
     def test_init(self):
         a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]

@@ -32,6 +32,7 @@ class max_heap(list):
             self[0],self[i] = self[i],self[0]
             self.heap_size = self.heap_size - 1
             self.max_heapify(0)
+#            print self
 class min_heap(list):
     def __init__(self, data):
         list.__init__(self, data)
