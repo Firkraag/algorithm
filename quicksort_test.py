@@ -1,12 +1,32 @@
 import unittest
-from quicksort import partition, quicksort
+from partition import partition, partition2, partition3
+import random
+from quicksort import  quicksort, randomized_quicksort
 
-class TestHeap(unittest.TestCase):
+class TestQuickSort(unittest.TestCase):
     def test_quicksort(self):
-        a = [2, 8, 7, 1, 3, 5, 6, 4]
-        quicksort(a, 0, 7)
-        self.assertEquals(a, [1, 2, 3, 4, 5, 6, 7, 8])
-    def test_partition(self):
-        a = [2, 8, 7, 1, 3, 5, 6, 4]
-        partition(a, 0, 7)
-        self.assertEquals(a, [2, 1, 3, 4, 7, 5, 6, 8])
+        for i in range(0, 100):
+            A = [random.randint(1, 10000) for i in range(0, 100)]
+            B = A[:]
+            quicksort(A, 0, len(A) - 1, partition)
+            B.sort()
+            self.assertEquals(A, B)
+        for i in range(0, 100):
+            A = [random.randint(1, 10000) for i in range(0, 100)]
+            B = A[:]
+            quicksort(A, 0, len(A) - 1, partition2)
+            B.sort()
+            self.assertEquals(A, B)
+        for i in range(0, 100):
+            A = [random.randint(1, 10000) for i in range(0, 100)]
+            B = A[:]
+            quicksort(A, 0, len(A) - 1, partition3)
+            B.sort()
+            self.assertEquals(A, B)
+    def test_randomized_quicksort(self):
+        for i in range(0, 100):
+            A = [random.randint(1, 10000) for i in range(0, 100)]
+            B = A[:]
+            randomized_quicksort(A, 0, len(A) - 1)
+            B.sort()
+            self.assertEquals(A, B)

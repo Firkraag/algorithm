@@ -28,6 +28,7 @@ def merge(list1, list2):
 
 
 def k_way_merge(lists):
+    '''Merge k sorted lists and return it as one sorted list'''
     length = len(lists)
     if length == 1:
         return lists[0]
