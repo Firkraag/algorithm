@@ -28,34 +28,41 @@ class rb_tree(Tree):
         return self.root.minimum(self.nil)
     def __getitem__(self, key):
         return self.iterative_tree_search(key)
+
     def left_rotate(self, x):
         y = x.right
-        x.right = y.left
-        if y.left != self.nil:
-            y.left.p = x
-        y.p = x.p
-        if x.p == self.nil:
-            self.root = y
-        elif x.p.left == x:
-            x.p.left = y
-        else:
-            x.p.right = y
-        y.left = x
+        z = y.left
+        p = x.p
+        x.right = z
         x.p = y
+        y.left = x
+        y.p = p
+        if z != self.nil:
+            z.p = x
+        if p == self.nil:
+            self.root = y
+        elif p.left == x:
+            p.left = y
+        else:
+            p.right = y
+
     def right_rotate(self, y):
         x = y.left
-        y.left = x.right
-        if x.right != self.nil:
-            x.right.p = y
-        x.p = y.p
-        if y.p == self.nil:
-            self.root = x
-        elif y.p.right == y:
-            y.p.right = x
-        else:
-            y.p.left = x
-        x.right = y
+        z = x.right
+        p = y.p
+        y.left = z
         y.p = x
+        x.right = y
+        x.p = p
+        if z != self.nil:
+            z.p = y
+        if p == self.nil:
+            self.root = x
+        elif p.left == y:
+            p.left = x
+        else:
+            p.right = x
+
     def insert(self, z):
         y = self.nil
         x = self.root
