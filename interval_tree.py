@@ -11,6 +11,33 @@ class interval_node(rb_node):
         rb_node.__init__(self, key, p, left, right, color)
         self.interval = interval
         self.maximum = maximum
+
+    def list_all_overlapping_intervals(self, T, i):
+        x = self
+        if x.interval.high >= i.low and i.high >= x.interval.low:
+            print x.interval.low, x.interval.high
+        if x.left != T.nil and x.left.maximum >= i.low:
+            self.left.list_all_overlapping_intervals(T, i)
+            self.right.list_all_overlapping_intervals(T, i)
+        elif x.right != T.nil:
+            self.right.list_all_overlapping_intervals(T, i)
+
+    def interval_search_exactly(self, T, i):
+        if self.interval.low == i.low and self.interval.high ==  i.high:
+            return self
+        if self.interval.low > i.low:
+            if self.left != T.nil:
+                return self.left.interval_search_exactly(T, i)
+            else:
+                return T.nil
+        else:
+            if self.right != T.nil:
+                return self.right.interval_search_exactly(T, i)
+            else:
+                return T.nil
+
+        
+
 class interval_tree(rb_tree):
     nil = interval_node(None, None, None, None, 1, None, float("-Inf"))
     root = nil
@@ -103,6 +130,7 @@ class interval_tree(rb_tree):
             traverse = traverse.p
         if y_original_color == 1:
             self.delete_fixup(x)
+
     def closed_interval_search(self, interval):
         x = self.root
         while x != self.nil and (x.interval.high < interval.low or interval.high < x.interval.low):
@@ -111,6 +139,25 @@ class interval_tree(rb_tree):
             else:
                 x = x.right
         return x
+
+    def closed_interval_search_minimum_low_end(self, interval):
+        '''given an interval, returns an interval over-
+        lapping i that has the minimum low endpoint, or T.nil if no such interval exists'''
+        x = self.root
+        overlap = False
+        i = self.nil
+        while x != self.nil:
+            if x.interval.high >= interval.low and interval.high >= x.interval.low:
+                overlap = True
+                i = x
+            if x.left != self.nil and interval.low <= x.left.maximum:
+                x = x.left
+            elif not overlap:
+                x = x.right
+            else:
+                break
+        return i
+
     def open_interval_search(self, interval):
         x = self.root
         while x != self.nil and (x.interval.high <= interval.low or interval.high <= x.interval.low):
@@ -119,34 +166,16 @@ class interval_tree(rb_tree):
             else:
                 x = x.right
         return x
-# A more straightforward implemention of interval search compared to the one on the textbook
-    def closed_interval_serach_straightforward(self, interval):
-        x = self.root
-        while x != self.nil:
-            if x.interval.low > interval.high:
-                x = x.left
-            elif interval.low > x.interval.high:
-                x = x.right
-            # if x.interval.low <= interval.high and interval.low <= x.interval.high, then x overlaps interval
-            else:
-                return x
-        return self.nil
+
     def list_all_overlapping_intervals(self, i):
         if    self.root == self.nil:
             return
-        s = []
-        s.append(self.root)
-        while len(s) != 0:
-            x = s.pop()
-            if x.interval.low > i.high:
-                if x.left != self.nil:
-                    s.append(x.left)
-            elif i.low > x.interval.high:
-                if x.right != self.nil:
-                    s.append(x.right)
-            else:
-                if x.left != self.nil:
-                    s.append(x.left)
-                if x.right != self.nil:
-                    s.append(x.right)
-                print x.interval.low, x.interval.high
+        else:
+            self.root.list_all_overlapping_intervals(self, i)
+            print
+
+    def interval_search_exactly(self, i):
+        if self.root == self.nil:
+            return self.nil
+        else:
+            return self.root.interval_search_exactly(self, i)

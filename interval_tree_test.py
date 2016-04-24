@@ -94,6 +94,83 @@ class TestIntervalTree(unittest.TestCase):
         T.delete(T.iterative_tree_search(38))
         T.delete(T.iterative_tree_search(41))
         self.assertEquals(T.nil.maximum, float("-Inf"))
+    
+    def test_interval_search(self):
+        intervals = []
+        values = [41, 41, 38, 52, 43, 48]
+        for i in range(0, len(values), 2):
+            intervals.append(interval(values[i], values[i + 1]))
+        T = interval_tree(intervals)
+        i = interval(50, 51)
+        t = T.closed_interval_search(i)
+        self.assertEquals(T.root.left, t)
+        i = interval(58, 60)
+        t = T.closed_interval_search(i)
+        self.assertEquals(T.nil, t)
+        i = interval(38, 48)
+        t = T.closed_interval_search(i)
+        self.assertEquals(T.root, t)
+
+    def test_interval_search_minimum_low_end(self):
+        intervals = []
+        values = [41, 41, 38, 52, 43, 48]
+        for i in range(0, len(values), 2):
+            intervals.append(interval(values[i], values[i + 1]))
+        T = interval_tree(intervals)
+        i = interval(22, 51)
+        t = T.closed_interval_search_minimum_low_end(i)
+        self.assertEquals(T.root.left, t)
+        i = interval(58, 60)
+        t = T.closed_interval_search_minimum_low_end(i)
+        self.assertEquals(T.nil, t)
+        i = interval(38, 48)
+        t = T.closed_interval_search_minimum_low_end(i)
+        self.assertEquals(T.root.left, t)
+
+    def test_list_all_overlapping_intervals(self):
+        intervals = []
+        values = [41, 41, 38, 52, 43, 48]
+        for i in range(0, len(values), 2):
+            intervals.append(interval(values[i], values[i + 1]))
+        T = interval_tree(intervals)
+        i = interval(22, 51)
+        t = T.list_all_overlapping_intervals(i)
+        i = interval(58, 60)
+        t = T.list_all_overlapping_intervals(i)
+        i = interval(38, 48)
+        t = T.list_all_overlapping_intervals(i)
+        i = interval(38, 41)
+        t = T.list_all_overlapping_intervals(i)
+        i = interval(42, 42)
+        t = T.list_all_overlapping_intervals(i)
+
+    def test_interval_search_exactly(self):
+        intervals = []
+        values = [41, 41, 38, 52, 43, 48]
+        for i in range(0, len(values), 2):
+            intervals.append(interval(values[i], values[i + 1]))
+        T = interval_tree(intervals)
+        i = interval(22, 51)
+        t = T.interval_search_exactly(i)
+        self.assertEquals(t, T.nil)
+        i = interval(41, 41)
+        t = T.interval_search_exactly(i)
+        self.assertEquals(t, T.root)
+        i = interval(38, 52)
+        t = T.interval_search_exactly(i)
+        self.assertEquals(t, T.root.left)
+        i = interval(43, 48)
+        t = T.interval_search_exactly(i)
+        self.assertEquals(t, T.root.right)
+        i = interval(43, 49)
+        t = T.interval_search_exactly(i)
+        self.assertEquals(t, T.nil)
+        i = interval(20, 50)
+        t = T.interval_search_exactly(i)
+        self.assertEquals(t, T.nil)
+        i = interval(39, 41)
+        t = T.interval_search_exactly(i)
+        self.assertEquals(t, T.nil)
     def wrap(self, tree, node, maximum):
         self.assertEquals(tree.iterative_tree_search(node).maximum, maximum)
 if __name__ == '__main__':

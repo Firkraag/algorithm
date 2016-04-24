@@ -15,6 +15,7 @@ class rb_node(Node):
             y = x
             x = x.left
         return y
+
 class rb_tree(Tree):
     nil = rb_node(None, None, None, None, 1)
     root = nil
@@ -124,65 +125,7 @@ class rb_tree(Tree):
             else:
                 x = x.left
         return x
-    def insert_stack(self, z):
-        y = self.nil
-        x = self.root
-        s = []
-        while x != self.nil:
-            s.append(x)
-            y = x
-            if z.key <= x.key:
-                x = x.left
-            else:
-                x = x.right
-        if y == self.nil:
-            self.root = z
-        elif z.key <= y.key:
-            y.left = z
-        else:
-            y.right = z
-        z.p = y
-        z.left = self.nil
-        z.right = self.nil
-        z.color = 0 
-        self.insert_fixed_stack(z, s)
-    def insert_fixed_stack(self, z, s):
-        while len(s) != 0:
-            parent = s.pop()
-            if parent.color != 0:
-                break
-            grandparent = s.pop()
-            if grandparent.left == parent:
-                y = grandparent.right
-                if y.color == 0:
-                    parent.color = 1
-                    y.color = 1
-                    grandparent.color = 0
-                    z = grandparent
-                else:
-                    if parent.right == z:
-                        self.left_rotate(parent)
-                        parent = z
-                    grandparent.color = 0
-                    parent.color = 1
-                    self.right_rotate(grandparent)
-                    s = []
-            else:
-                y = grandparent.left
-                if y.color == 0:
-                    parent.color = 1
-                    y.color = 1
-                    grandparent.color = 0
-                    z = grandparent
-                else:
-                    if parent.left == z:
-                        z = parent
-                        self.right_rotate(z)
-                    grandparent.color = 0
-                    parent.color = 1
-                    self.left_rotate(grandparent)
-                    s = []
-        self.root.color = 1
+
     def transplant(self, u, v):
         if u.p == self.nil:
             self.root = v
