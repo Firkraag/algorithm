@@ -1,31 +1,5 @@
-from tree import Tree
 from numpy import zeros
 
-class tree(Tree):
-    def insert(self, node):
-        y = None
-        x = self.root
-        while x != None:
-            y = x
-            if node.key == x.key:
-                return
-            if node.key < x.key:
-                x = x.left
-            else:
-                x = x.right
-        node.p = y
-        if y == None:
-            self.root = node
-        elif node.key <= y.key:
-            y.left = node
-        else:
-            y.right = node
-def inorder_tree_walk(node, C):
-    if node.left != None:
-        inorder_tree_walk(node.left, C)
-    C.append(node.key)
-    if node.right != None:
-        inorder_tree_walk(node.right, C)
 def lcs_length(X, Y):
     m = len(X)
     n = len(Y)
@@ -72,9 +46,3 @@ def print_lcs(b, X, i, j):
     else:
         print_lcs(b, X, i, j - 1)
 
-def largest_monotonically_increasing_subsequence(A):
-    T = tree(A)
-    C = []
-    # walk the tree and fill C with values of A in monotonically increasing order
-    inorder_tree_walk(T.root, C)
-    return lcs_length_one_row(A, C)

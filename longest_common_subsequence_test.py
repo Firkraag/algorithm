@@ -1,6 +1,6 @@
 #!/usr/bin/env ipython
 import unittest
-from largest_common_subsequence import lcs_length_one_row, largest_monotonically_increasing_subsequence, lcs_length
+from longest_common_subsequence import lcs_length_one_row, lcs_length
 
 class TestLCS(unittest.TestCase):
     def test_lcs_length(self):
@@ -26,10 +26,3 @@ class TestLCS(unittest.TestCase):
         X = "ACCGGTCGAGTGCGCGGAAGCCGGCCGAA"
         Y = "GTCGTTCGGAATGCCGTTGCTCTGTAAA"
         self.assertEquals(lcs_length_one_row(X, Y), 20)
-    def test_largest_monotonically_increasing_subsequence(self):
-        X = [5, 4, 1, 3, 2]
-        self.assertEquals(largest_monotonically_increasing_subsequence(X), 2)
-        X = [1, 3, 4, 2, 5]
-        self.assertEquals(largest_monotonically_increasing_subsequence(X), 4)
-        X = [1, 3, 10, 5, 3, 4]
-        self.assertEquals(largest_monotonically_increasing_subsequence(X), 3)
