@@ -1,256 +1,14 @@
-from queue import queue
-from priority_queue import min_priority_queue
+from queue import queue 
 import disjoint_sets_forest as dsf
-import math
+import sys
 
-class dsf_node(dsf.node):
-    def __init__(self, key):
-        self.key = key
-        key.index = self
-        self.p = self
-        self.rank = 0
-        self.child = []
-#class vEB_node(object):
-#    def __init__(self, u):
-#        self.u = u
-#        self.min = None
-#        self.max = None
-#        self.min_value = None
-#        self.max_value = None
-#        self.size = 0
-#        if u > 2:
-#            self.root = int(math.sqrt(u))
-#            self.cluster = [0] * self.root
-#            self.summary = vEB_node(self.root)
-#            for i in range(0, self.root):
-#                self.cluster[i] = vEB_node(self.root)
-#    def high(self, x):
-#        return x.weight / self.root
-#    def low(self, x):
-#        return x.weight % self.root
-#    def index(self, x, y):
-#        return x.weight * self.root + y.weight
-#    def member(self, x):
-#        if x in self.min or y in self.max:
-#            return True
-#        elif self.u == 2:
-#            return False
-#        else:
-#            return self.cluster[self.high(x)].member(self.low(x))
-#    def empty_tree_insert(self, x):
-#        self.min =    x 
-#        self.max = x
-#        self.min_value = x.weight
-#        self.max_value = x.weight
-#    def insert(self, s):
-#        if self.size == 0:
-#            self.empty_tree_insert(s)
-#        else:
-#            x = iter(s).next()
-#            if self.u == 2:
-#                if self.min_value == self.max_value:
-#                    if x.weight < self.min_value:
-#                        self.min = s
-#                        self.min_value = x.weight
-#                    elif x.weight == self.min_value:
-#                        self.min = self.min.union(s)
-#                    else:
-#                        self.max = s
-#                        self.max_value = x.weight
-#                elif self.min_value < self.max_value:
-#                    if x.weight == self.min_value:
-#                        self.min = self.min.union(s)
-#                    else:
-#                        self.max = self.max.union(s)
-#                self.size = self.size + 1
-#            if self.u > 2:
-#                if x.weight < self.min_value:
-#                    self.min,x = x,self.min 
-#                if self.cluster[self.high(x)].size == 0:
-#                    self.summary.insert({self.high(x)})
-#                    self.cluster[self.high(x)].empty_tree_insert({self.low(x)})
-#                else:
-#                    self.cluster[self.high(x)].insert(self.low(x))
-#                if x > self.max:
-#                    self.max.clear()
-#                    self.max.add(x)
-#        self.size = self.size + 1
-#    def _insert_min_elements(self, s):
-#        if self.size == 0:
-#            self.min = s
-#        else:
-#            self.cluster[self.high(iter(s).next())]._insert_min_elements(self.min)
-#            self.min = s
-#    def delete(self, x):
-#        print "u = {}, x = {}".format(self.u, x)
-#        if self.min == self.max:
-#            print "min = {}, max = {}".format(self.min, self.max)
-#            if x == self.min:
-#                self.min = None
-#                self.max = None
-#        elif self.u == 2:
-#            if x == 0:
-#                self.min = 1
-#            else:
-#                self.max = 0
-#        elif x < self.min:
-#            return
-#        else:
-#            if x == self.min:
-#                first_cluster = self.summary.min
-#                x = self.index(first_cluster, self.cluster[first_cluster].min)
-#                self.min = x
-#            self.cluster[self.high(x)].delete(self.low(x))
-#            if self.cluster[self.high(x)].min == None:
-#                self.summary.delete(self.high(x))
-#                if x == self.max:
-#                    summary_max = self.summary.max
-#                    if summary_max == None:
-#                        self.max = self.min
-#                    else:
-#                        self.max = self.index(summary_max, self.cluster[summary_max].max)
-#            elif x == self.max:
-#                self.max = self.index(self.high(x), self.cluster[self.high(x)].max)
-#        self.size = self.size - 1
-class max_heap(list):
-    def __init__(self, data, attr):
-        list.__init__(self, data)
-        for i in range(0, len(data)):
-            self[i].index = i
-        self.length = len(data)
-        self.attr = attr
-        self.heap_size = self.length
-        self.build_max_heap()
-    def __contains__(self, y):
-        return y in self[0:self.heap_size]
-    def left(self, i):
-        return 2 * i + 1
-    def right(self, i):
-        return 2 * i + 2
-    def parent(self, i):
-        return (i - 1) / 2
-    def max_heapify(self, i):
-        l = self.left(i)
-        r = self.right(i)
-        if (l <= (self.heap_size - 1)) and (self[l].__dict__[self.attr] > self[i].__dict__[self.attr]):
-            largest = l
-        else:
-            largest = i
-        if (r <= (self.heap_size - 1)) and (self[r].__dict__[self.attr] > self[largest].__dict__[self.attr]):
-            largest = r
-        if     largest != i:
-            self[i],self[largest] = self[largest],self[i]
-            self[i].index = i
-            self[largest].index = largest
-            self.max_heapify(largest)
-    def build_max_heap(self):
-        self.heap_size = self.length
-        for i in range(self.length / 2 - 1, -1, -1):
-            self.max_heapify(i)
-class max_priority_queue(max_heap):
-    def heap_maximum(self):
-        return self[0]
-    def heap_extract_max(self):
-        if self.heap_size < 1:
-            sys.exit("heap underflow")
-        maximum = self[0]
-        self[0] = self[self.heap_size - 1]
-        self[0].index = 0
-        self.heap_size = self.heap_size - 1
-        self.max_heapify(0)
-        return maximum
-    def heap_increase_key(self, i, key):
-        if key < self[i].__dict__[self.attr]:
-            sys.exit("new key is smaller than current key")
-        self[i].__dict__[self.attr] = key
-        while i > 0 and self[self.parent(i)].__dict__[self.attr] < self[i].__dict__[self.attr]:
-            self[i],self[self.parent(i)] = self[self.parent(i)], self[i]
-            self[i].index = i
-            self[self.parent(i)].index = self.parent(i)
-            i = self.parent(i)
-    def max_heap_insert(self, element):
-        if self.heap_size >= self.length:
-            sys.exit("heap overflow")
-        self.heap_size = self.heap_size + 1
-        self[self.heap_size - 1] = element
-        element.index = self.heap_size - 1
-        key = element.__dict__[self.attr]    
-        element.__dict__[self.attr] = float("-Inf")
-        self.heap_increase_key(self.heap_size - 1, key)
-class min_heap(list):
-    def __init__(self, data, attr):
-        '''
-        data: input data for heap
-        attr: the attribute of input date used as compare key
-        '''
-        list.__init__(self, data)
-        for i in range(0, len(data)):
-            self[i].index = i
-        self.attr = attr
-        self.length = len(data)
-        self.heap_size = self.length
-        self.build_min_heap()
-    def __contains__(self, y):
-        return y in self[0:self.heap_size]
-    def left(self, i):
-        return 2 * i + 1
-    def right(self, i):
-        return 2 * i + 2
-    def parent(self, i):
-        return (i - 1) / 2
-    def min_heapify(self, i):
-        l = self.left(i)
-        r = self.right(i)
-        if (l <= (self.heap_size - 1)) and (self[l].__dict__[self.attr] < self[i].__dict__[self.attr]):
-            smallest = l
-        else:
-            smallest = i
-        if (r <= (self.heap_size - 1)) and (self[r].__dict__[self.attr] < self[smallest].__dict__[self.attr]):
-            smallest = r
-        if     smallest != i:
-            self[i],self[smallest] = self[smallest],self[i]
-            self[i].index = i
-            self[smallest].index = smallest
-            self.min_heapify(smallest)
-    def build_min_heap(self):
-        self.heap_size = self.length
-        for i in range(self.length / 2 - 1, -1, -1):
-            self.min_heapify(i)
-class min_priority_queue(min_heap):
-    def heap_minimum(self):
-        return self[0]
-    def heap_extract_min(self):
-        if self.heap_size < 1:
-            sys.exit("heap underflow")
-        minimum = self[0]
-        self[0] = self[self.heap_size - 1]
-        self[0].index = 0
-        self.heap_size = self.heap_size - 1
-        self.min_heapify(0)
-        return minimum
-    def heap_decrease_key(self, i, key):
-        if key > self[i].__dict__[self.attr]:
-            sys.exit("new key is larger than current key")
-        self[i].__dict__[self.attr] = key
-        while i > 0 and self[self.parent(i)].__dict__[self.attr] > self[i].__dict__[self.attr]:
-            self[i],self[self.parent(i)] = self[self.parent(i)], self[i]
-            self[i].index = i
-            self[self.parent(i)].index = self.parent(i)
-            i = self.parent(i)
-    def min_heap_insert(self, element):
-        if self.heap_size >= self.length:
-            sys.exit("heap overflow")
-        self.heap_size = self.heap_size + 1
-        self[self.heap_size - 1] = element
-        element.index = self.heap_size - 1
-        key = element.__dict__[self.attr]
-        element.__dict__[self.attr] = float("Inf")
-        self.heap_decrease_key(self.heap_size - 1, key)
 class Vertex(object):
     def __init__(self, key):
         self.key = key
+
     def __repr__(self):
         return str(self.key)
+
     def print_path(self, v):
         '''print out the vertices on a shortest path from s to
         v, assuming that BFS has already computed a breadth-first tree'''
@@ -261,33 +19,57 @@ class Vertex(object):
         else:
             self.print_path(v.p)
             print v,
+
 class Graph(object):
     def __init__(self, vertices = tuple(), edges = tuple(), directed = True):
         self.directed = directed
         self.vertices = set(vertices)
-        self.edges = list()
+        self.edges = set()
         self.adj = dict()
         for u in vertices:
-            self.adj[u] = list()
-        if directed == True:
-            for u,v in edges:
-                self.addEdge(u, v)
-                self.edges.append((u, v))
-        if directed == False:
-            for u,v in edges:
-                self.addEdge(u, v)
-                self.addEdge(v, u)
-                self.edges.append((u, v))
-                self.edges.append((v, u))
-    def addEdge(self, u, v):
-        self.adj[u].append(v)
-    def addVertex(self, u, edges = tuple()):
+            self.adj[u] = set()
+        for u, v in edges:
+            self._addEdge(u, v)
+
+    def __eq__(self, G2):
+        G1 = self
+        if G1.directed != G2.directed:
+            return False
+        elif G1.vertices != G2.vertices:
+            return False
+        elif G1.edges != G2.edges:
+            return False
+        else:
+            for u in G1.vertices:
+                if G1.adj[u] != G2.adj[u]:
+                    return False
+            return True
+
+    def _addEdge(self, u, v):
+        if self.directed:
+            self.adj[u].add(v)
+            self.edges.add((u, v))
+        elif u != v: # undirected graph does not allow self loop
+            self.adj[u].add(v)
+            self.edges.add((u, v))
+            self.adj[v].add(u)
+            self.edges.add((v, u))
+
+    def _addVertex(self, u, edges = tuple()):
         self.vertices.add(u)    
-        self.adj[u] = list(edges)
-    def printEdge(self, u):
-        for v in self.adj[u]:
-            print v.key,
-        print
+        for u, v in edges:
+            self._addEdge(u, v)
+
+    def copy(self):
+        return Graph(self.vertices, self.edges, self.directed)
+
+    def transpose(self):
+        t = Graph(self.vertices)
+        for u in self.vertices:
+            for v in self.adj[u]:
+                t._addEdge(v, u)
+        return t
+
     def bfs(self, s):
         for u in self.vertices:
             u.d = float("Inf")
@@ -307,6 +89,7 @@ class Graph(object):
                     v.p = u
                     q.enqueue(v)
             u.color = 2
+
     def dfs(self):
         global time
         for u in self.vertices:
@@ -315,8 +98,9 @@ class Graph(object):
         time = 0
         for u in self.vertices:
             if u.color == 0:
-                self.dfs_visit(u)
-    def dfs_visit(self, u):
+                self._dfs_visit(u)
+
+    def _dfs_visit(self, u):
         global time
         time = time + 1
         u.d = time
@@ -324,21 +108,63 @@ class Graph(object):
         for v in self.adj[u]:
             if v.color == 0:
                 v.p = u
-                self.dfs_visit(v)
+                self._dfs_visit(v)
         u.color = 2
         time = time + 1
         u.f = time
+
+    def isCyclic(self):
+        global time
+        for u in self.vertices:
+            u.color = 0
+            u.p = None
+        time = 0
+        for u in self.vertices:
+            if u.color == 0:
+                if self._is_cyclic_aux(u):
+                    return True
+        return False
+
+    def _is_cyclic_aux(self, u):
+        global time
+        time = time + 1
+        u.d = time
+        u.color = 1
+        for v in self.adj[u]:
+            if v.color == 0:
+                v.p = u
+                if self._is_cyclic_aux(v):
+                    return True
+            elif v.color == 1:
+                return True
+        u.color = 2
+        time = time + 1
+        u.f = time
+        return False
+
     def topological_sort(self):
         self.dfs()
-        return    sorted(self.vertices, key = lambda x: x.f, reverse = True)
-    def printVertices(self):
-        for u in self.vertices:
-            print "key : {}, distance: {}".format(u.key, u.d)
+        return sorted(self.vertices, key = lambda x: x.f, reverse = True)
+
+    def print_all_edges(self):
+        s = next(iter(self.vertices))
+        self.bfs(s)
+        self._print_all_edges_aux(s)
+
+    def _print_all_edges_aux(self, u):
+        for v in self.adj[u]:
+            if u == v.p:
+                print (u, v)
+                self._print_all_edges_aux(v)
+                print (v, u)
+            else:
+                pass
     def printAllEdges(self):
         self.status = dict()
         s = next(iter(self.vertices))
         print "key of s is {}".format(s.key)
         self.printAllEdges_aux(s)
+
     def printAllEdges_aux(self, u):
         for v in self.adj[u]:
             try:
@@ -349,6 +175,7 @@ class Graph(object):
                 print (u, v)
                 self.printAllEdges_aux(v)
                 print (v, u)
+
     def path_num(self, s, t):
         '''
         A linear-time algorithm that takes as input a directed acyclic graph
@@ -360,22 +187,18 @@ class Graph(object):
             u.num = 0
         t.color = 2
         t.num = 1
-        return self.path_num_aux(s, t)
-    def path_num_aux(self, s, t):
+        return self._path_num_aux(s, t)
+
+    def _path_num_aux(self, s, t):
         s.color = 1
         for v in self.adj[s]:
             if v.color == 2:
                 s.num = s.num + v.num
             elif v.color == 0:
-                s.num = s.num + self.path_num_aux(v, t)
+                s.num = s.num + self._path_num_aux(v, t)
         s.color = 2
         return s.num
-    def transpose(self):
-        t = Graph(self.vertices)
-        for u in self.vertices:
-            for v in self.adj[u]:
-                t.addEdge(v, u)
-        return t
+
     def strongly_connected_components(self):
         global time, cc
         self.dfs()
@@ -389,6 +212,7 @@ class Graph(object):
             if u.color == 0:
                 cc = cc + 1
                 t.strongly_connected_components_dfs_visit(u)
+
     def strongly_connected_components_dfs_visit(self, u):
         global time, cc
         u.cc = cc
@@ -424,9 +248,9 @@ class Graph(object):
                 cc = cc + 1
                 self.simplified_dfs_visit(u, stack, s)
                 for i in range(0, len(stack) - 1):
-                    s.addEdge(stack[i], stack[i + 1])
+                    s._addEdge(stack[i], stack[i + 1])
                 if len(stack) > 1:
-                    s.addEdge(stack[len(stack) - 1], stack[0])
+                    s._addEdge(stack[len(stack) - 1], stack[0])
         return s
     def simplified_dfs_visit(self, u, stack, s):
         global time, cc, status
@@ -444,7 +268,7 @@ class Graph(object):
                     st = status[(v.cc, u.cc)]
                 except KeyError:
                     status[(v.cc, u.cc)] = 1    
-                    s.addEdge(v, u)    
+                    s._addEdge(v, u)    
         u.color = 2
         time = time + 1
         u.f = time
@@ -466,7 +290,7 @@ class Graph(object):
             if u.color == 0:
                 cc = cc + 1
                 vertices_list.append(Vertex(cc))
-                cg.addVertex(vertices_list[cc - 1])
+                cg._addVertex(vertices_list[cc - 1])
                 t.component_graph_dfs_visit(u)
         return cg
     def component_graph_dfs_visit(self, u):
@@ -484,7 +308,7 @@ class Graph(object):
                     st = status[(v.cc, u.cc)]
                 except KeyError:
                     status[(v.cc, u.cc)] = 1    
-                    cg.addEdge(vertices_list[v.cc - 1], vertices_list[u.cc - 1])    
+                    cg._addEdge(vertices_list[v.cc - 1], vertices_list[u.cc - 1])    
         u.color = 2
         time = time + 1
         u.f = time
@@ -764,25 +588,207 @@ class Graph(object):
                     v.d = u.d + w(u, v)
                     A[int(v.d)].add(v)
                     v.p = u
-#    def Johnson(self, w):
-#        G = self
-#        n = len(G.vertices)
-#        s = Vertex("s")
-#        GG = Graph(G.vertices.union({s}), G.edges + [(s, v) for v in G.vertices])
-#        for v in G.vertices:
-#            w((s, v)) = 0
-#        if GG.Bellman_Ford(w, s) == False:
-#            print "the input graph contains a negative-weight cycle"
-#        else:
-#            h = dict()
-#            for v in GG.vertices:
-#                h[v] = v.d
-#            ww = dict()
-#            for u, v in GG.edges:
-#                ww[(u, v)] = w[(u, v)] + h[u] - h[v]
-#            D = np.empty((n, n))
-#            for u in G.vertices:
-#                G.Dijkstra(ww, u)
-#                for v in G.vertices:
-#                    D[u.key - 1, v.key - 1] = v.d + h[v] - h[u]
-#            return D
+
+    def single_edge(self):
+        '''
+        An algorithm that given an adjacency-list representation
+        of a multigraph G = (V, E), compute the adjacency-list 
+        representation of the "equivalent" undirected graph 
+        G2 = (V, E2), where E2 consists of
+        the edges in E with all multiple edges between two vertices
+        replaced by a single edge and with all self-loops removed
+        '''
+        return Graph(self.vertices, self.edges, directed = False)
+
+    def union(self, G2):
+        if self.directed != G2.directed:
+            print "The two graphs must be either both directed graphs or both undirected graphs"
+            return None
+        vertices = self.vertices | G2.vertices
+        edges = self.edges | G2.edges
+        return Graph(vertices, edges, directed = self.directed)
+
+    def square(self):
+        '''
+        The square of a directed graph G = (V, E) is the graph 
+        G^2 = (V, E^2) such that (u, v) belongs to E^2 
+        if and only if G contains a path with at most 
+        two edges between u and v.
+        '''
+        sqrt = self.copy()
+        for u in self.vertices:
+            for v in self.adj[u]:
+                for w in self.adj[v]:
+                    sqrt._addEdge(u, w)
+        return sqrt
+
+    def height(self, u):
+        maximum = 0
+        print u.key
+        for v in self.adj[u]:
+            if v.p == u:
+                maximum = max(maximum, self.height(v) + 1)
+        u.h = maximum
+        print u.key, u.h
+        return u.h
+    def mht(self):
+        s = next(iter(self.vertices))
+        self.bfs(s)
+        self.height(s)
+        s.mh = s.h
+        for u in self.adj[s]:
+            self.mhtAux(u)
+        
+    def mhtAux(self, u):
+        u.mh = max(u.h, u.p.mh + 1)
+        for v in self.adj[u]:
+            if v.p == u:
+                self.mhtAux(v)
+        
+
+class dsf_node(dsf.node):
+    def __init__(self, key):
+        self.key = key
+        key.index = self
+        self.p = self
+        self.rank = 0
+        self.child = []
+
+class max_heap(list):
+    def __init__(self, data, attr):
+        list.__init__(self, data)
+        for i in range(0, len(data)):
+            self[i].index = i
+        self.length = len(data)
+        self.attr = attr
+        self.heap_size = self.length
+        self.build_max_heap()
+    def __contains__(self, y):
+        return y in self[0:self.heap_size]
+    def left(self, i):
+        return 2 * i + 1
+    def right(self, i):
+        return 2 * i + 2
+    def parent(self, i):
+        return (i - 1) / 2
+    def max_heapify(self, i):
+        l = self.left(i)
+        r = self.right(i)
+        if (l <= (self.heap_size - 1)) and (self[l].__dict__[self.attr] > self[i].__dict__[self.attr]):
+            largest = l
+        else:
+            largest = i
+        if (r <= (self.heap_size - 1)) and (self[r].__dict__[self.attr] > self[largest].__dict__[self.attr]):
+            largest = r
+        if     largest != i:
+            self[i],self[largest] = self[largest],self[i]
+            self[i].index = i
+            self[largest].index = largest
+            self.max_heapify(largest)
+    def build_max_heap(self):
+        self.heap_size = self.length
+        for i in range(self.length / 2 - 1, -1, -1):
+            self.max_heapify(i)
+
+class max_priority_queue(max_heap):
+    def heap_maximum(self):
+        return self[0]
+    def heap_extract_max(self):
+        if self.heap_size < 1:
+            sys.exit("heap underflow")
+        maximum = self[0]
+        self[0] = self[self.heap_size - 1]
+        self[0].index = 0
+        self.heap_size = self.heap_size - 1
+        self.max_heapify(0)
+        return maximum
+    def heap_increase_key(self, i, key):
+        if key < self[i].__dict__[self.attr]:
+            sys.exit("new key is smaller than current key")
+        self[i].__dict__[self.attr] = key
+        while i > 0 and self[self.parent(i)].__dict__[self.attr] < self[i].__dict__[self.attr]:
+            self[i],self[self.parent(i)] = self[self.parent(i)], self[i]
+            self[i].index = i
+            self[self.parent(i)].index = self.parent(i)
+            i = self.parent(i)
+    def max_heap_insert(self, element):
+        if self.heap_size >= self.length:
+            sys.exit("heap overflow")
+        self.heap_size = self.heap_size + 1
+        self[self.heap_size - 1] = element
+        element.index = self.heap_size - 1
+        key = element.__dict__[self.attr]    
+        element.__dict__[self.attr] = float("-Inf")
+        self.heap_increase_key(self.heap_size - 1, key)
+
+class min_heap(list):
+    def __init__(self, data, attr):
+        '''
+        data: input data for heap
+        attr: the attribute of input date used as compare key
+        '''
+        list.__init__(self, data)
+        for i in range(0, len(data)):
+            self[i].index = i
+        self.attr = attr
+        self.length = len(data)
+        self.heap_size = self.length
+        self.build_min_heap()
+    def __contains__(self, y):
+        return y in self[0:self.heap_size]
+    def left(self, i):
+        return 2 * i + 1
+    def right(self, i):
+        return 2 * i + 2
+    def parent(self, i):
+        return (i - 1) / 2
+    def min_heapify(self, i):
+        l = self.left(i)
+        r = self.right(i)
+        if (l <= (self.heap_size - 1)) and (self[l].__dict__[self.attr] < self[i].__dict__[self.attr]):
+            smallest = l
+        else:
+            smallest = i
+        if (r <= (self.heap_size - 1)) and (self[r].__dict__[self.attr] < self[smallest].__dict__[self.attr]):
+            smallest = r
+        if     smallest != i:
+            self[i],self[smallest] = self[smallest],self[i]
+            self[i].index = i
+            self[smallest].index = smallest
+            self.min_heapify(smallest)
+    def build_min_heap(self):
+        self.heap_size = self.length
+        for i in range(self.length / 2 - 1, -1, -1):
+            self.min_heapify(i)
+
+class min_priority_queue(min_heap):
+    def heap_minimum(self):
+        return self[0]
+    def heap_extract_min(self):
+        if self.heap_size < 1:
+            sys.exit("heap underflow")
+        minimum = self[0]
+        self[0] = self[self.heap_size - 1]
+        self[0].index = 0
+        self.heap_size = self.heap_size - 1
+        self.min_heapify(0)
+        return minimum
+    def heap_decrease_key(self, i, key):
+        if key > self[i].__dict__[self.attr]:
+            sys.exit("new key is larger than current key")
+        self[i].__dict__[self.attr] = key
+        while i > 0 and self[self.parent(i)].__dict__[self.attr] > self[i].__dict__[self.attr]:
+            self[i],self[self.parent(i)] = self[self.parent(i)], self[i]
+            self[i].index = i
+            self[self.parent(i)].index = self.parent(i)
+            i = self.parent(i)
+    def min_heap_insert(self, element):
+        if self.heap_size >= self.length:
+            sys.exit("heap overflow")
+        self.heap_size = self.heap_size + 1
+        self[self.heap_size - 1] = element
+        element.index = self.heap_size - 1
+        key = element.__dict__[self.attr]
+        element.__dict__[self.attr] = float("Inf")
+        self.heap_decrease_key(self.heap_size - 1, key)
+

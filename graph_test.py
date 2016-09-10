@@ -3,6 +3,42 @@ import unittest
 from graph import Vertex, Graph
 
 class TestGraph(unittest.TestCase):
+    def setUp(self):
+        self.graphs = []
+        v1 = Vertex(1)
+        v2 = Vertex(2)
+        v3 = Vertex(3)
+        v4 = Vertex(4)
+        v5 = Vertex(5)
+        v6 = Vertex(6)
+        self.v1 = v1
+        self.v2 = v2
+        self.v3 = v3
+        self.v4 = v4
+        self.v5 = v5
+        self.v6 = v6
+        vertices = [v1,v2,v3,v4,v5,v6]
+        edges = [(v1, v2), (v1, v3), (v2, v3), (v2, v4), (v2, v5), (v3, v4), (v3, v6), (v4, v5), (v5, v6)]
+        self.graphs.append(Graph(vertices, edges))
+        edges = [(v1, v2), (v2, v3), (v3, v4), (v4, v2), (v3, v5), (v2, v4), (v4, v3)]
+        self.graphs.append(Graph([v1, v2, v3, v4, v5], edges))
+
+    def tearDown(self):
+        pass
+
+    def _buildGraph(self, keys, pairs, directed):
+        d = dict()
+        vertices = [None] * len(keys)
+        edges = [None] * len(pairs)
+        for i in range(len(vertices)):
+            vertices[i] = Vertex(keys[i])
+            d[keys[i]] = vertices[i]
+
+        for i in range(len(edges)):
+            w1, w2 = pairs[i]
+            edges[i] = (d[w1], d[w2])
+        return Graph(vertices, edges, directed)
+
     def testBfs(self):
         s = Vertex('s')
         r = Vertex('r')
@@ -83,6 +119,21 @@ class TestGraph(unittest.TestCase):
         self.assertEquals(g.path_num(x, v), 0)
         self.assertEquals(g.path_num(y, v), 1)
         self.assertEquals(g.path_num(z, v), 0)
+
+        g = self.graphs[0]
+        self.assertEquals(g.path_num(self.v1, self.v2), 1)
+        self.assertEquals(g.path_num(self.v1, self.v3), 2)
+        self.assertEquals(g.path_num(self.v1, self.v4), 3)
+        self.assertEquals(g.path_num(self.v1, self.v5), 4)
+        self.assertEquals(g.path_num(self.v1, self.v6), 6)
+        self.assertEquals(g.path_num(self.v2, self.v1), 0)
+        self.assertEquals(g.path_num(self.v2, self.v3), 1)
+        self.assertEquals(g.path_num(self.v2, self.v4), 2)
+        self.assertEquals(g.path_num(self.v2, self.v5), 3)
+        self.assertEquals(g.path_num(self.v2, self.v6), 4)
+        g = self.graphs[1]
+        self.assertEquals(g.path_num(self.v1, self.v5), 1)
+
     def testSCC(self):
         a = Vertex('a')        
         b = Vertex('b')        
@@ -358,15 +409,16 @@ class TestGraph(unittest.TestCase):
         z = Vertex('z')    
         vertices = [r, s, t, x, y, z]
         edges = [(r, s), (r, t), (s, t), (s, x), (t, x), (t, y), (t, z), (x, y), (x, z), (y, z)]
-        weight = [5, 3, 2, 6, 7, 4, 2, -1, 1, -2]
         G = Graph(vertices, edges)
-        we = dict()
-        for i,j in zip(edges, weight):
-            we[i] = j    
-        def w(x, y):
-            return we[(x, y)]        
         l = G.topological_sort()
         self.assertEquals(l, [r, s, t, x, y, z])
+        
+        result = []
+        l = [self.v1, self.v2, self.v3, self.v4, self.v5, self.v6]
+        result.append(l)
+        for i in range(len(self.graphs)):
+            self.assertEquals(self.graphs[i].topological_sort(), result[i])
+
     def testDagShortestPaths(self):
         r = Vertex('r')    
         s = Vertex('s')    
@@ -492,6 +544,95 @@ class TestGraph(unittest.TestCase):
         g.Dijkstra_modified(w, z, 7)
         self.assertEquals([i.p for i in vertices], [z, s, z, s, None])
         self.assertEquals([i.d for i in vertices], [3, 6, 7, 8, 0])
+    
+    def testSingleEdge(self):
+        a = Vertex(1)
+        b = Vertex(2)
+        c = Vertex(3)
+        d = Vertex(4)
+        vertices = [a, b, c, d]        
+        edges = [(a, b), (b, a), (a, c), (d, d)]
+        G = Graph(vertices, edges)
+        G2 = G.single_edge()
+        edges = set([(a, b), (b, a), (a, c), (c, a)])
+        vertices = set(vertices)
+        self.assertEquals(G2.vertices, vertices)
+        self.assertEquals(G2.edges, edges)
+        self.assertEquals(G2.adj[a], {b, c})
+        self.assertEquals(G2.adj[b], {a})
+        self.assertEquals(G2.adj[c], {a})
+        self.assertEquals(G2.adj[d], set())
+
+    def testUnion(self):
+        a = Vertex(1)
+        b = Vertex(2)
+        c = Vertex(3)
+        d = Vertex(4)
+        G1 = Graph([a, b, c], [(a, b), (a, c)])
+        G2 = Graph([c, d], [(c, d)])
+        G3 = G1.union(G2)
+        self.assertEquals(G3.vertices, {a, b, c, d})
+        self.assertEquals(G3.edges, {(a, b), (a, c), (c, d)})
+        self.assertEquals(G3.adj[a], {b, c})
+        self.assertEquals(G3.adj[b], set())
+        self.assertEquals(G3.adj[c], {d})
+        self.assertEquals(G3.adj[d], set())
+        G1 = Graph([a, b, c], [(a, b), (a, c)], directed = False)
+        G2 = Graph([c, d], [(c, d)], directed = False)
+        G3 = G1.union(G2)
+        self.assertEquals(G3.vertices, {a, b, c, d})
+        self.assertEquals(G3.edges, {(a, b), (b, a), (a, c), (c, a), (c, d), (d, c)})
+        self.assertEquals(G3.adj[a], {b, c})
+        self.assertEquals(G3.adj[b], {a})
+        self.assertEquals(G3.adj[c], {d, a})
+        self.assertEquals(G3.adj[d], {c})
+
+    def testCopy(self):
+        a = Vertex(1)
+        b = Vertex(2)
+        c = Vertex(3)
+        G1 = Graph([a, b, c], [(a, b), (a, c)])
+        G2 = G1.copy()
+        self.assertEquals(G1, G2) 
+
+    def testSquareGraph(self):
+        a = Vertex(1)
+        b = Vertex(2)
+        c = Vertex(3)
+        d = Vertex(4)
+        G = Graph([a, b, c, d], [(a, b), (a, c), (c, d)])
+        sqrt = G.square()
+        self.assertEquals(sqrt.vertices, {a, b, c, d})
+        self.assertEquals(sqrt.edges, {(a, b), (a, c), (a, d), (c, d)})
+        self.assertEquals(sqrt.adj[a], {b, c, d})
+        self.assertEquals(sqrt.adj[b], set())
+        self.assertEquals(sqrt.adj[c], {d})
+        self.assertEquals(sqrt.adj[d], set())
+        a = Vertex(1)
+        b = Vertex(2)
+        c = Vertex(3)
+        G = Graph([a, b, c], [(a, b), (b, c), (a, c)])
+        sqrt = G.square()
+        self.assertEquals(G, sqrt)
+
+    def testMht(self):
+        print "start mht"
+        g = self.graphs[0]
+        g.mht()
+        print "height"
+        print self.v1.h
+        print self.v2.h
+        print self.v3.h
+        print self.v4.h
+        print self.v5.h
+        print self.v6.h
+        print "height"
+        print self.v1.mh
+        print self.v2.mh
+        print self.v3.mh
+        print self.v4.mh
+        print self.v5.mh
+        print self.v6.mh
 #    def testJohnson(self):
 #        a1 = Vertex(1)
 #        a2 = Vertex(2)
