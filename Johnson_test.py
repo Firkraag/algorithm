@@ -2,6 +2,7 @@ from Johnson import Johnson
 from graph import Vertex, Graph
 import unittest
 
+
 class TestJohnson(unittest.TestCase):
     def testJohnson(self):
         a1 = Vertex(1)
@@ -14,10 +15,10 @@ class TestJohnson(unittest.TestCase):
         g = Graph(vertices, edges)
         weight = [3, 8, -4, 1, 7, 4, 2, -5, 6]
         w = dict()
-        for i,j in zip(edges, weight):
-            w[i] = j    
+        for i, j in zip(edges, weight):
+            w[i] = j
         D = Johnson(g, w)
-        print D
+        print(D)
         a1 = Vertex(1)
         a2 = Vertex(2)
         a3 = Vertex(3)
@@ -29,7 +30,7 @@ class TestJohnson(unittest.TestCase):
         g = Graph(vertices, edges)
         weight = [-1, 1, 2, 2, -8, -4, 3, 7, 5, 10]
         w = dict()
-        for i,j in zip(edges, weight):
-            w[i] = j    
+        for i, j in zip(edges, weight):
+            w[i] = j
         D = Johnson(g, w)
-        print D
+        print(D)

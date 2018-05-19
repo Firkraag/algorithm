@@ -1,6 +1,7 @@
 #!/usr/bin/env ipython
 
-from numpy import zeros 
+from numpy import zeros
+
 
 def bottom_up_matrix_chain_order(p):
     n = len(p) - 1
@@ -15,7 +16,9 @@ def bottom_up_matrix_chain_order(p):
                 if q < m[i, j]:
                     m[i, j] = q
                     s[i, j] = k
-    return m,s
+    return m, s
+
+
 def memoized_matrix_chain_order(p):
     n = len(p) - 1
     m = zeros((n + 1, n + 1))
@@ -23,6 +26,8 @@ def memoized_matrix_chain_order(p):
         for j in range(1, n + 1):
             m[i, j] = float("Inf")
     return lookup_chain(m, p, 1, n)
+
+
 def lookup_chain(m, p, i, j):
     if m[i, j] < float("Inf"):
         return m[i, j]
@@ -34,22 +39,27 @@ def lookup_chain(m, p, i, j):
             if q < m[i, j]:
                 m[i, j] = q
     return m[i, j]
+
+
 def print_optimal_parens(s, i, j):
     if i == j:
-        print "A{}".format(int(i)),
+        print("A{}".format(int(i)), )
     else:
-        print "(",
+        print("(", )
         print_optimal_parens(s, i, s[i, j])
         print_optimal_parens(s, s[i, j] + 1, j)
-        print ")",
+        print(")", )
+
 
 # An incorrect greedy approach for matrix chain order problem
 def greedy_matrix_chain_order(p):
     n = len(p) - 1
     return greedy_matrix_chain_order_aux(p, 1, n)
+
+
 def greedy_matrix_chain_order_aux(p, i, j):
     if i == j:
-        return 0    
+        return 0
     q = float("Inf")
     for k in range(i, j):
         value = p[i - 1] * p[k] * p[j]

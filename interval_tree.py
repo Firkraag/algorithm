@@ -2,10 +2,13 @@
 
 from rb_tree import rb_node, rb_tree
 
+
 class interval(object):
     def __init__(self, low, high):
         self.low = low
         self.high = high
+
+
 class interval_node(rb_node):
     def __init__(self, key, p, left, right, color, interval, maximum):
         rb_node.__init__(self, key, p, left, right, color)
@@ -15,7 +18,7 @@ class interval_node(rb_node):
     def list_all_overlapping_intervals(self, T, i):
         x = self
         if x.interval.high >= i.low and i.high >= x.interval.low:
-            print x.interval.low, x.interval.high
+            print(x.interval.low, x.interval.high)
         if x.left != T.nil and x.left.maximum >= i.low:
             self.left.list_all_overlapping_intervals(T, i)
             self.right.list_all_overlapping_intervals(T, i)
@@ -23,7 +26,7 @@ class interval_node(rb_node):
             self.right.list_all_overlapping_intervals(T, i)
 
     def interval_search_exactly(self, T, i):
-        if self.interval.low == i.low and self.interval.high ==  i.high:
+        if self.interval.low == i.low and self.interval.high == i.high:
             return self
         if self.interval.low > i.low:
             if self.left != T.nil:
@@ -36,17 +39,18 @@ class interval_node(rb_node):
             else:
                 return T.nil
 
-        
 
 class interval_tree(rb_tree):
     nil = interval_node(None, None, None, None, 1, None, float("-Inf"))
     root = nil
+
     def __init__(self, intervals):
         if isinstance(intervals, list):
             for i in intervals:
                 self.insert(interval_node(i.low, None, None, None, 0, i, i.high))
         else:
-            print "Not invalid argument"
+            print("Not invalid argument")
+
     def insert(self, z):
         y = self.nil
         x = self.root
@@ -67,8 +71,9 @@ class interval_tree(rb_tree):
         z.p = y
         z.left = self.nil
         z.right = self.nil
-        z.color = 0 #red
+        z.color = 0  # red
         self.insert_fixed(z)
+
     def left_rotate(self, x):
         y = x.right
         x.right = y.left
@@ -85,6 +90,7 @@ class interval_tree(rb_tree):
         x.p = y
         y.maximum = x.maximum
         x.maximum = max(x.left.maximum, x.interval.high, x.right.maximum)
+
     def right_rotate(self, y):
         x = y.left
         y.left = x.right
@@ -101,6 +107,7 @@ class interval_tree(rb_tree):
         y.p = x
         x.maximum = y.maximum
         y.maximum = max(y.left.maximum, y.interval.high, y.right.maximum)
+
     def delete(self, z):
         y = z
         y_original_color = y.color
@@ -168,11 +175,11 @@ class interval_tree(rb_tree):
         return x
 
     def list_all_overlapping_intervals(self, i):
-        if    self.root == self.nil:
+        if self.root == self.nil:
             return
         else:
             self.root.list_all_overlapping_intervals(self, i)
-            print
+            print()
 
     def interval_search_exactly(self, i):
         if self.root == self.nil:

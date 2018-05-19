@@ -1,12 +1,17 @@
 #!/usr/bin/env ipython
 
 def contains(x, n):
-    '''CLRS Exercise 16.2-5
+    """
+    CLRS Exercise 16.2-5
     An algorithm that, given a set {x1, x2, ... ,xn} of points on the
     real line, determines the smallest set of unit-length closed intervals that contains
-    all of the given points.'''
+    all of the given points.
+    :param x:
+    :param n:
+    :return:
+    """
     x.sort()
-    print x
+    print(x)
     i = 0
     a = float("-Inf")
     S = set()
@@ -15,5 +20,5 @@ def contains(x, n):
             S = S.union({(x[i], x[i] + 1)})
             a = x[i] + 1
         i = i + 1
-    print S
+    print(S)
     return S

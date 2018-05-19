@@ -1,9 +1,4 @@
-// AUTHOR: WangQiang
-// CREATE DATE: 	   
-// LAST UPDATE DATE: 20140524
-// EMAIL:  cntqrxj@gmail.com
-
-/* pow: comput x^n; return value: x ^ n */
+/* pow: compute x^n; return value: x ^ n */
 int pow1(int x, unsigned n) {
 	int square;
 

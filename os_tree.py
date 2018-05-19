@@ -2,10 +2,12 @@
 
 from rb_tree import rb_node, rb_tree
 
+
 class os_node(rb_node):
     def __init__(self, key, p, left, right, color, size):
         rb_node.__init__(self, key, p, left, right, color)
         self.size = size
+
     def select_recursive(self, i):
         r = self.left.size + 1
         if i == r:
@@ -14,6 +16,7 @@ class os_node(rb_node):
             return self.left.select_recursive(i)
         else:
             return self.right.select_recursive(i - r)
+
     def select_iterative(self, i):
         x = self
         while True:
@@ -25,6 +28,7 @@ class os_node(rb_node):
             else:
                 x = x.right
                 i = i - r
+
     def key_rank(self, k):
         r = self.left.size + 1
         if k == self.key:
@@ -33,6 +37,7 @@ class os_node(rb_node):
             return self.left.key_rank(k)
         else:
             return r + self.right.key_rank(k)
+
     def ith_successor(self, i):
         if i == 0:
             return self
@@ -47,15 +52,19 @@ class os_node(rb_node):
                 y = y.p
             if y.size != 0:
                 return y.ith_successor(i - r - 1)
+
+
 class os_tree(rb_tree):
     nil = os_node(None, None, None, None, 1, 0)
     root = nil
+
     def __init__(self, values):
         if isinstance(values, list):
             for i in values:
                 self.insert(os_node(i, None, None, None, 0, 1))
         else:
-            print "Not invalid argument"
+            print("Not invalid argument")
+
     def insert(self, z):
         y = self.nil
         x = self.root
@@ -75,8 +84,9 @@ class os_tree(rb_tree):
         z.p = y
         z.left = self.nil
         z.right = self.nil
-        z.color = 0 #red
+        z.color = 0  # red
         self.insert_fixed(z)
+
     def delete(self, z):
         y = z
         y_original_color = y.color
@@ -106,6 +116,7 @@ class os_tree(rb_tree):
             traverse = traverse.p
         if y_original_color == 1:
             self.delete_fixup(x)
+
     def left_rotate(self, x):
         y = x.right
         x.right = y.left
@@ -122,6 +133,7 @@ class os_tree(rb_tree):
         x.p = y
         y.size = x.size
         x.size = x.left.size + x.right.size + 1
+
     def right_rotate(self, y):
         x = y.left
         y.left = x.right
@@ -138,6 +150,7 @@ class os_tree(rb_tree):
         y.p = x
         x.size = y.size
         y.size = y.left.size + y.right.size + 1
+
     def rank(self, x):
         r = x.left.size + 1
         y = x

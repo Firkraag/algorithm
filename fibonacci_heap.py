@@ -5,8 +5,10 @@ class fibonacci_node(object):
     mark = False
     left = None
     right = None
+
     def __init__(self, k):
         self.key = k
+
     def __iter__(self):
         '''generate a list of children of the node for iteration'''
         self.children = []
@@ -20,18 +22,21 @@ class fibonacci_node(object):
                 else:
                     break
         return self
+
     def next(self):
         if self.index < len(self.children):
             self.index = self.index + 1
             return self.children[self.index - 1]
         else:
             raise StopIteration
+
     def insert(self, x):
         '''insert x to the left of node'''
         x.left = self.left
         x.right = self
         self.left.right = x
-        self.left = x    
+        self.left = x
+
     def concatenate(self, x):
         '''concatenate two lists represented by the node and x,
         x mustn't be None'''
@@ -39,9 +44,11 @@ class fibonacci_node(object):
         x.right.left = self.left
         self.left = x
         x.right = self
+
     def remove(self):
-        self.left.right = self.right    
+        self.left.right = self.right
         self.right.left = self.left
+
     def add_child(self, y):
         self.degree = self.degree + 1
         y.mark = False
@@ -51,8 +58,9 @@ class fibonacci_node(object):
             y.left = y
             y.right = y
         else:
-            self.child.insert(y)    
-            print "y.left.key = {}, y.right.key = {}".format(y.left.key, y.right.key)
+            self.child.insert(y)
+            print("y.left.key = {}, y.right.key = {}".format(y.left.key, y.right.key))
+
     def remove_child(self, y):
         self.degree = self.degree - 1
         if y.right == y:
@@ -62,10 +70,13 @@ class fibonacci_node(object):
             y.remove()
         else:
             y.remove()
+
+
 class fibonacci_heap(object):
     def __init__(self):
         self.n = 0
         self.minimum = None
+
     def __iter__(self):
         '''generate a list of children of the node for iteration'''
         self.root_list = []
@@ -79,18 +90,20 @@ class fibonacci_heap(object):
                 else:
                     break
         return self
+
     def next(self):
         if self.index < len(self.root_list):
             self.index = self.index + 1
             return self.root_list[self.index - 1]
         else:
             raise StopIteration
+
     def __repr__(self):
         s = ''
         x = self.minimum
         if x != None:
             while True:
-                s = s + '\t' + str(x.key)    
+                s = s + '\t' + str(x.key)
                 if x == self.minimum.left:
                     break
                 else:
@@ -98,6 +111,7 @@ class fibonacci_heap(object):
             return s
         else:
             return ''
+
     def insert(self, x):
         '''insert the node x into the root list of fibonacci heap'''
         x.p = None
@@ -110,8 +124,10 @@ class fibonacci_heap(object):
             if x.key < self.minimum.key:
                 self.minimum = x
         self.n = self.n + 1
+
     def minimum(self):
         return self.minimum
+
     def union(self, h):
         cat = fibonacci_heap()
         if self.minimum == None:
@@ -126,6 +142,7 @@ class fibonacci_heap(object):
                 cat.minimum = h.minimum
         cat.n = self.n + h.n
         return cat
+
     def extract_min(self):
         z = self.minimum
         if z != None:
@@ -139,6 +156,7 @@ class fibonacci_heap(object):
                 self.consolidate()
             self.n = self.n - 1
         return z
+
     def consolidate(self):
         D = self.n / 2
         A = [None] * (D + 1)
@@ -147,12 +165,12 @@ class fibonacci_heap(object):
         for w in self:
             x = w
             d = x.degree
-            print 'w.key = {}'.format(w.key)
-            print 'w.degree = {}'.format(w.degree)
+            print('w.key = {}'.format(w.key))
+            print('w.degree = {}'.format(w.degree))
             while A[d] != None:
                 y = A[d]
                 if x.key > y.key:
-                    x,y = y,x
+                    x, y = y, x
                 self.link(y, x)
                 A[d] = None
                 d = d + 1
@@ -161,12 +179,14 @@ class fibonacci_heap(object):
         for i in A:
             if i != None:
                 self.insert(i)
+
     def link(self, y, x):
         y.remove()
         x.add_child(y)
+
     def decrease_key(self, x, k):
         if k > x.key:
-            print "new key is greater than current key"
+            print("new key is greater than current key")
             return
         x.key = k
         y = x.p
@@ -175,10 +195,12 @@ class fibonacci_heap(object):
             self.cascading_cut(y)
         if x.key < self.minimum.key:
             self.minimum = x
+
     def cut(self, x, y):
         y.remove_child(x)
         x.mark = False
         self.insert(x)
+
     def cascading_cut(self, y):
         z = y.p
         if z != None:
@@ -187,6 +209,7 @@ class fibonacci_heap(object):
             else:
                 self.cut(y, z)
                 self.cascading_cut(z)
+
     def delete(self, x):
         self.decrease_key(x, float("-Inf"))
         self.extract_min()

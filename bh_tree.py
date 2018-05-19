@@ -1,21 +1,26 @@
 # A variant of red black tree that has black_height attribute
-#!/usr/bin/env ipython
+# !/usr/bin/env ipython
 
 from rb_tree import rb_node, rb_tree
+
 
 class bh_node(rb_node):
     def __init__(self, key, p, left, right, color, bh):
         rb_node.__init__(self, key, p, left, right, color)
         self.bh = bh
+
+
 class bh_tree(rb_tree):
     nil = bh_node(None, None, None, None, 1, 0)
     root = nil
+
     def __init__(self, values):
         if isinstance(values, list):
             for i in values:
                 self.insert(bh_node(i, None, None, None, 0, 1))
         else:
-            print "Not invalid argument"
+            print("Not invalid argument")
+
     def insert_fixed(self, z):
         while z.p.color == 0:
             if z.p.p.left == z.p:
@@ -51,6 +56,7 @@ class bh_tree(rb_tree):
                     z.color = 0
                     z.p.color = 1
         self.root.color = 1
+
     def delete_fixup(self, x):
         while x != self.root and x.color == 1:
             if x == x.p.left:

@@ -1,5 +1,6 @@
 #!/usr/bin/env ipython
 
+
 def segments_intersect(p1, p2, p3, p4):
     d1 = direction(p3, p4, p1)
     d2 = direction(p3, p4, p2)
@@ -17,10 +18,14 @@ def segments_intersect(p1, p2, p3, p4):
         return True
     else:
         return False
+
+
 def direction(pi, pj, pk):
     v1 = (pk[0] - pi[0], pk[1] - pi[1])
     v2 = (pj[0] - pi[0], pj[1] - pi[1])
     return v1[0] * v2[1] - v2[0] * v1[1]
+
+
 def on_segment(pi, pj, pk):
     if min(pi[0], pj[0]) <= pk[0] and pk[0] <= max(pi[0], pj[0]) and min(pi[1], pj[1]) <= pk[1] and pk[1] <= max(pi[1], pj[1]):
         return True

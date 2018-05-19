@@ -290,10 +290,10 @@ def any_segments_intersect(S):
             s = p.segment
             a = T.above(s)
             b = T.below(s)
-#            print a
-#            print b
-#            print type(a)
-#            print type(b)
+#            print( a)
+#            print( b)
+#            print( type(a))
+#            print( type(b))
             if a != None and b != None and segments_intersect(a[0], a[1], b[0], b[1]):
                 return True
             T.delete(s)

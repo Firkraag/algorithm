@@ -4,10 +4,12 @@
 
 from tree import Node, Tree
 
+
 class rb_node(Node):
     def __init__(self, key, p, left, right, color):
         Node.__init__(self, key, p, left, right)
         self.color = color
+
     def minimum(self, nil):
         x = self
         y = x
@@ -16,17 +18,21 @@ class rb_node(Node):
             x = x.left
         return y
 
+
 class rb_tree(Tree):
     nil = rb_node(None, None, None, None, 1)
     root = nil
+
     def __init__(self, values):
         if isinstance(values, list):
             for i in values:
                 self.insert(rb_node(i, None, None, None, 0))
         else:
-            print "Not invalid argument"
+            print("Not invalid argument")
+
     def minimum(self):
         return self.root.minimum(self.nil)
+
     def __getitem__(self, key):
         return self.iterative_tree_search(key)
 
@@ -82,8 +88,9 @@ class rb_tree(Tree):
         z.p = y
         z.left = self.nil
         z.right = self.nil
-        z.color = 0 #red
+        z.color = 0  # red
         self.insert_fixed(z)
+
     def insert_fixed(self, z):
         while z.p.color == 0:
             if z.p.p.left == z.p:
@@ -117,6 +124,7 @@ class rb_tree(Tree):
                     z.color = 0
                     z.p.color = 1
         self.root.color = 1
+
     def iterative_tree_search(self, k):
         x = self.root
         while x != self.nil and x.key != k:
@@ -134,6 +142,7 @@ class rb_tree(Tree):
         else:
             u.p.right = v
         v.p = u.p
+
     def delete(self, z):
         y = z
         y_original_color = y.color
@@ -159,6 +168,7 @@ class rb_tree(Tree):
             y.color = z.color
         if y_original_color == 1:
             self.delete_fixup(x)
+
     def delete_fixup(self, x):
         while x != self.root and x.color == 1:
             if x == x.p.left:

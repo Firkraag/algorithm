@@ -1,5 +1,6 @@
 import random
 
+
 def partition(A, p, r):
     x = A[r]
     i = p - 1
@@ -10,10 +11,11 @@ def partition(A, p, r):
     A[i + 1], A[r] = A[r], A[i + 1]
     return i + 1
 
+
 def partition2(A, p, r):
-    '''
+    """
     Partition A into three parts: < x, = x, > x. The return value is the median of the second part. So the return value is floor((p + r) / 2) when all elements in the array A[p .. r] have the same value. Partition in place.
-    '''
+    """
     x = A[r]
     i = p - 1
     k = i
@@ -28,12 +30,13 @@ def partition2(A, p, r):
             k = k + 1
             A[k], A[j] = A[j], A[k]
     A[k + 1], A[r] = A[r], A[k + 1]
-    return (k + 2 + i) / 2
+    return (k + 2 + i) // 2
+
 
 def partition3(A, p, r):
-    '''
+    """
     Variant of partition2. Requires O(n) extra space, but it is easier to implement.
-    '''
+    """
     x = A[r]
     n = r - p + 1
     i = -1
@@ -50,7 +53,8 @@ def partition3(A, p, r):
         B[j] = x
     for j in range(p, r + 1):
         A[j] = B[j - p]
-    return (2 * p + i + k) / 2
+    return (2 * p + i + k) // 2
+
 
 def randomized_partition(A, p, r):
     i = random.randint(p, r)

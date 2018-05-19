@@ -8,10 +8,11 @@ def extended_bottom_up_cut_rod(p, n):
                 q = p[i - 1] + r[j - i]
                 s[j] = i
         r[j] = q
-    return r, s    
+    return r, s
+
 
 def print_cut_rod_solution(p, n):
-    r,s = extended_bottom_up_cut_rod(p, n)
+    r, s = extended_bottom_up_cut_rod(p, n)
     while n > 0:
-        print s[n]
+        print(s[n])
         n = n - s[n]

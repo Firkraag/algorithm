@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def Bellman_Ford_matrix(W, s):
     n = W.shape[0]
     d = [float("Inf")] * n
@@ -11,9 +12,10 @@ def Bellman_Ford_matrix(W, s):
                 if d[j - 1] > d[i - 1] + W[i - 1, j - 1]:
                     d[j - 1] = d[i - 1] + W[i - 1, j - 1]
                     p[j - 1] = i
-        print d
-        print p
+        print(d)
+        print(p)
     return d, p
+
 
 def extend_shortest_paths(L, W):
     n = W.shape[0]
@@ -23,6 +25,7 @@ def extend_shortest_paths(L, W):
             LW[j] = min(LW[j], L[k] + W[k, j])
     return LW
 
+
 def slow_all_pairs_shortest_paths(W, s):
     n = W.shape[0]
     L = [0] * n
@@ -31,16 +34,17 @@ def slow_all_pairs_shortest_paths(W, s):
             L[i] = 0
         else:
             L[i] = float("Inf")
-    print L
+    print(L)
     for m in range(1, n):
         L = extend_shortest_paths(L, W)
-        print L
+        print(L)
     return L
+
 
 def extend_shortest_paths_with_predecessor_subgraph(s, L, P, W):
     n = W.shape[0]
     LW = [float("Inf")] * n
-    PP = [None] * n 
+    PP = [None] * n
     for j in range(0, n):
         for k in range(0, n):
             if LW[j] > L[k] + W[k, j]:
@@ -50,6 +54,7 @@ def extend_shortest_paths_with_predecessor_subgraph(s, L, P, W):
             PP[j] = P[j]
     return LW, PP
 
+
 def slow_all_pairs_shortest_paths_with_predecessor_subgraph(W, s):
     n = W.shape[0]
     L = [float("Inf")] * n
@@ -57,9 +62,10 @@ def slow_all_pairs_shortest_paths_with_predecessor_subgraph(W, s):
     P = [None] * n
     for m in range(1, n):
         L, P = extend_shortest_paths_with_predecessor_subgraph(s, L, P, W)
-        print L
-        print P
+        print(L)
+        print(P)
     return L, P
+
 
 def faster_all_pairs_shortest_paths(W):
     n = W.shape[0]
@@ -68,8 +74,6 @@ def faster_all_pairs_shortest_paths(W):
     while m < n - 1:
         L = extend_shortest_paths(L, L)
         m = 2 * m
-        print m
-        print L
+        print(m)
+        print(L)
     return Ld, p
-
-

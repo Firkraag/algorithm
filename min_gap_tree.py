@@ -16,7 +16,7 @@ class min_gap_tree(rb_tree):
             for i in values:
                 self.insert(min_gap_node(i, None, None, None, 0, None, None))
         else:
-            print "Not invalid argument"
+            print( "Not invalid argument")
     def insert(self, z):
         y = self.nil
         x = self.root

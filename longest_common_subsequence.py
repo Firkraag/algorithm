@@ -1,5 +1,6 @@
 from numpy import zeros
 
+
 def lcs_length(X, Y):
     m = len(X)
     n = len(Y)
@@ -17,7 +18,9 @@ def lcs_length(X, Y):
             else:
                 c[i, j] = c[i, j - 1]
                 b[i, j] = 2
-    return c,b 
+    return c, b
+
+
 def lcs_length_one_row(X, Y):
     m = len(X)
     n = len(Y)
@@ -35,14 +38,15 @@ def lcs_length_one_row(X, Y):
             a = c[j]
             c[j] = value
     return c[n]
+
+
 def print_lcs(b, X, i, j):
     if i == 0 or j == 0:
         return
     if b[i, j] == 0:
         print_lcs(b, X, i - 1, j - 1)
-        print X[i - 1],
+        print(X[i - 1], )
     elif b[i, j] == 1:
         print_lcs(b, X, i - 1, j)
     else:
         print_lcs(b, X, i, j - 1)
-

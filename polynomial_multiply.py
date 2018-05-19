@@ -1,11 +1,12 @@
 import math
-import ft
+import fft
 
-def polynominal_multiply(a, b, precision = 0):
+
+def polynominal_multiply(a, b, precision=0):
     a_len = len(a)
     b_len = len(b)
     length = int(2 ** (1 + math.ceil(math.log(max(a_len, b_len)))))
-    print length
+    print(length)
     extend_a = [0] * length
     extend_b = [0] * length
     for i in range(0, a_len):
@@ -16,8 +17,8 @@ def polynominal_multiply(a, b, precision = 0):
         extend_b[i] = b[i]
     for i in range(b_len, length):
         extend_b[i] = 0
-    a_fft = ft.recursive_fft(extend_a) 
-    b_fft = ft.recursive_fft(extend_b) 
+    a_fft = fft.recursive_fft(extend_a)
+    b_fft = fft.recursive_fft(extend_b)
     m_fft = [a_fft[i] * b_fft[i] for i in range(0, len(a_fft))]
-    ab = ft.recursive_inverse_fft(m_fft)
-    return [round(ab[i].real, precision) for i in range(0, a_len + b_len - 1)]    
+    ab = fft.recursive_inverse_fft(m_fft)
+    return [round(ab[i].real, precision) for i in range(0, a_len + b_len - 1)]

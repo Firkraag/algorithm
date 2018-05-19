@@ -1,4 +1,6 @@
 from linked_list import linked_list_node, linked_list
+import sys
+
 
 class min_heap(list):
     def __init__(self, data):
@@ -6,14 +8,19 @@ class min_heap(list):
         self.length = len(data)
         self.heap_size = self.length
         self.build_min_heap()
+
     def __contains__(self, y):
         return y in self[0:self.heap_size]
+
     def left(self, i):
         return 2 * i + 1
+
     def right(self, i):
         return 2 * i + 2
+
     def parent(self, i):
         return (i - 1) / 2
+
     def min_heapify(self, i):
         l = self.left(i)
         r = self.right(i)
@@ -23,16 +30,20 @@ class min_heap(list):
             smallest = i
         if (r <= (self.heap_size - 1)) and (self[r].key < self[smallest].key):
             smallest = r
-        if     smallest != i:
-            self[i],self[smallest] = self[smallest],self[i]
+        if smallest != i:
+            self[i], self[smallest] = self[smallest], self[i]
             self.min_heapify(smallest)
+
     def build_min_heap(self):
         self.heap_size = self.length
-        for i in range(self.length / 2 - 1, -1, -1):
+        for i in range(self.length // 2 - 1, -1, -1):
             self.min_heapify(i)
+
+
 class min_priority_queue(min_heap):
     def heap_minimum(self):
         return self[0].head
+
     def heap_extract_min(self):
         if self.heap_size < 1:
             sys.exit("heap underflow")
@@ -42,6 +53,7 @@ class min_priority_queue(min_heap):
             self.heap_size = self.heap_size - 1
             self.min_heapify(0)
         return minimum
+
     def heap_decrease_key(self, i, element, key):
         if key > self[i]:
             sys.exit("new key is larger than current key")
@@ -49,8 +61,9 @@ class min_priority_queue(min_heap):
         while i > 0 and self[self.parent(i)] > self[i]:
             tmp = self[self.parent(i)]
             self[self.parent(i)] = self[i]
-            self[i] = tmp    
+            self[i] = tmp
             i = self.parent(i)
+
     def min_heap_insert(self, key):
         if self.heap_size >= self.length:
             sys.exit("heap overflow")

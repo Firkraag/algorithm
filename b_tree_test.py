@@ -48,25 +48,25 @@ t.root.n = 1
 t.root.leaf = False
 t.root.delete(t, 'F')
 t.root.print_child_first()
-print
+print()
 t.root.delete(t, 'M')
 t.root.print_child_first()
-print
+print()
 t.root.delete(t, 'G')
 t.root.print_child_first()
-print
+print()
 t.root.delete(t, 'D')
 t.root.print_child_first()
-print
+print()
 t.root.delete(t, 'B')
 t.root.print_child_first()
-print
+print()
 t.root.delete(t, 'C')
 t.root.print_child_first()
-print
+print()
 t.root.delete(t, 'P')
 t.root.print_child_first()
-print
+print()
 t.root.delete(t, 'V')
 t.root.print_child_first()
-print
+print()

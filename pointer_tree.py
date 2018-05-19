@@ -2,6 +2,7 @@
 
 from rb_tree import rb_node, rb_tree
 
+
 class pointer_node(rb_node):
     def __init__(self, key, p, left, right, color, minimum, maximum, predecessor, successor):
         rb_node.__init__(self, key, p, left, right, color)
@@ -9,17 +10,21 @@ class pointer_node(rb_node):
         self.maximum = maximum
         self.predecessor = predecessor
         self.successor = successor
+
+
 class pointer_tree(rb_tree):
     negative_infinity = pointer_node(float("-Inf"), None, None, None, 1, None, None, None, None)
     positive_infinity = pointer_node(float("Inf"), None, None, None, 1, None, None, None, None)
     nil = pointer_node(None, None, None, None, 1, negative_infinity, positive_infinity, None, None)
     root = nil
+
     def __init__(self, values):
         if isinstance(values, list):
             for i in values:
                 self.insert(pointer_node(i, None, None, None, 0, None, None, None, None))
         else:
-            print "Not invalid argument"
+            print("Not invalid argument")
+
     def insert(self, z):
         y = self.nil
         x = self.root
@@ -61,8 +66,9 @@ class pointer_tree(rb_tree):
         z.p = y
         z.left = self.nil
         z.right = self.nil
-        z.color = 0 #red
+        z.color = 0  # red
         self.insert_fixed(z)
+
     def left_rotate(self, x):
         y = x.right
         x.right = y.left
@@ -82,6 +88,7 @@ class pointer_tree(rb_tree):
             x.maximum = x
         else:
             x.maximum = x.right.maximum
+
     def right_rotate(self, y):
         x = y.left
         y.left = x.right
@@ -101,6 +108,7 @@ class pointer_tree(rb_tree):
             y.minimum = y
         else:
             y.minimum = y.left.minimum
+
     def delete(self, z):
         y = z
         y_original_color = y.color

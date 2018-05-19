@@ -1,5 +1,6 @@
 #!/usr/bin/env ipython
 
+
 def synthetic_division(A, n, x):
     q = [0] * (n - 1)
     q[n - 2] = A[n - 1]

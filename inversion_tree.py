@@ -10,8 +10,8 @@ def inversion(A):
             i = i + 1
             x = rank_node(key, None, None, None, 0, 1)
             T.insert(x)
-        #    print 'x.key = {}, x.rank = {}'.format(x.key, x.rank)
+            #    print( 'x.key = {}, x.rank = {}'.format(x.key, x.rank))
             inversion = inversion + i - x.rank
         return inversion
     else:
-        print "Not invalid argument"
+        print("Not invalid argument")

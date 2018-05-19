@@ -1,37 +1,17 @@
 #! /usr/bin/python2.7
 
-# AUTHOR: WangQiang
-# CREATE DATE:   20140803
-# LAST UPDATE DATE: 20140803
-# EMAIL:  cntqrxj@gmail.com
-
 from numpy import *
-from square_matrix_multiply_Strassen import square_matrix_multiply
 
 
-def common_matrix_multiply(A, B):
-    if (A.shape[1] != B.shape[0]):
-        print("The width of matrix A not equal the height of matrix B.\nHence no matrix multiplication allowed")
-        return
-    shape = (A.shape[0], B.shape[1])
-    # shape = A.shape
+def square_matrix_multiply(A, B):
+    shape = A.shape
     length = shape[0]
     half = length / 2
-    A_width = A.shape[1]
-    B_width = B.shape[1]
-    A_height = A.shape[0]
-    B_height = B.shape[0]
-    half_A_width = A_width / 2
-    half_A_height = A_height / 2
-    half_B_width = B_width / 2
-    half_B_height = B_height / 2
 
     C = zeros(shape, dtype=int64)
-    if A_height == 1 or B_width == 1:
-        C = dot(A, B)
-        # if length == 1:
-    #    C[0, 0] = A[0, 0] * B[0, 0]
-    #    return C
+    if length == 1:
+        C[0, 0] = A[0, 0] * B[0, 0]
+        return C
 
     S1 = zeros((half, half), dtype=int64)
     S2 = zeros((half, half), dtype=int64)
@@ -79,13 +59,13 @@ def common_matrix_multiply(A, B):
     return C
 
 
-# A = array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
-# B = array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
-# A = array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-# B = array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-A = array([[1, 3], [7, 5]])
-B = array([[6, 8], [4, 2]])
-# A = array([[1, 2, 3], [4, 5, 6]])
-# B = array([[1, 2], [4, 5]])
-print(square_matrix_multiply(A, B))
-# print( dot(A, B))
+# # A = array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+# # B = array([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])
+# # A = array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+# # B = array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+# A = array([[1, 3], [7, 5]])
+# B = array([[6, 8], [4, 2]])
+# # A = array([[1, 2, 3], [4, 5, 6]])
+# # B = array([[1, 2], [4, 5]])
+# print(square_matrix_multiply(A, B))
+# # print( dot(A, B))

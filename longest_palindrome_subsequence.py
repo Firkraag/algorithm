@@ -3,11 +3,12 @@
 
 from longest_common_subsequence import lcs_length, print_lcs
 
+
 def longest_palindrome_subsequence(s):
-    #c, b = lcs_length(s, s[::-1])
-    #print_lcs(b, s, len(s), len(s))
+    # c, b = lcs_length(s, s[::-1])
+    # print(_lcs(b, s, len(s), len(s)))
     n = len(s)
-    c = [[0] * n for i in range(n)]
+    c = [[0] * n for _ in range(n)]
     for i in range(n):
         c[i][i] = 1
     for i in range(n - 1):
@@ -19,11 +20,12 @@ def longest_palindrome_subsequence(s):
         for i in range(0, n - length + 1):
             j = i + length - 1
             if s[i] == s[j]:
-                print i, j, c[i + 1][j - 1]
+                print(i, j, c[i + 1][j - 1])
                 c[i][j] = 2 + c[i + 1][j - 1]
             else:
                 c[i][j] = max(c[i][j - 1], c[i + 1][j])
     return c
+
 
 def print_lps(c, s):
     start = 0
@@ -48,8 +50,3 @@ def print_lps(c, s):
         l.insert(index, s[start])
         idx.insert(index, start)
     return ''.join(l), idx
-       
-    
-
-
-

@@ -7,6 +7,7 @@ class b_tree_node(object):
         self.t = t
         self.key = [0] * (2 * t - 1)
         self.c = [0] * (2 * t)
+
     def split_child(self, i):
         y = self.c[i - 1]
         t = y.t
@@ -21,9 +22,10 @@ class b_tree_node(object):
             self.c[j] = self.c[j - 1]
         self.c[i] = z
         for j in range(self.n, i - 1, -1):
-            self.key[j] = self.key[j -1]
+            self.key[j] = self.key[j - 1]
         self.key[i - 1] = y.key[t - 1]
         self.n = self.n + 1
+
     def insert_nonfull(self, k):
         i = self.n
         t = self.t
@@ -42,6 +44,7 @@ class b_tree_node(object):
                 if k > self.key[i - 1]:
                     i = i + 1
             self.c[i - 1].insert_nonfull(k)
+
     def search(self, k):
         i = 1
         while i <= self.n and k > self.key[i - 1]:
@@ -52,21 +55,24 @@ class b_tree_node(object):
             return None
         else:
             return self.c[i - 1].search(k)
+
     def print_inorder(self):
         if self.leaf:
             for i in range(1, self.n + 1):
-                print self.key[i - 1],
+                print(self.key[i - 1], )
         else:
             for i in range(1, self.n + 1):
                 self.c[i - 1].print_inorder()
-                print self.key[i - 1],
+                print(self.key[i - 1], )
             self.c[self.n].print_inorder()
+
     def print_child_first(self):
         if not self.leaf:
             for i in range(1, self.n + 2):
                 self.c[i - 1].print_child_first()
         for i in range(1, self.n + 1):
-            print self.key[i - 1],
+            print(self.key[i - 1], )
+
     def delete(self, tree, k):
         t = self.t
         i = 1
@@ -133,7 +139,8 @@ class b_tree_node(object):
                 self.merge(tree, i - 1)
                 self.c[i - 2].delete(tree, k)
         else:
-            self.c[i - 1].delete(tree, k)        
+            self.c[i - 1].delete(tree, k)
+
     def merge(self, tree, i):
         y = self.c[i - 1]
         z = self.c[i]
@@ -154,10 +161,13 @@ class b_tree_node(object):
         self.n = self.n - 1
         if tree.root == self and self.n == 0:
             tree.root = y
+
+
 class b_tree(object):
     def __init__(self, t):
         self.t = t
         self.root = b_tree_node(t, True, 0)
+
     def insert(self, k):
         r = self.root
         t = self.t
@@ -169,34 +179,36 @@ class b_tree(object):
             s.insert_nonfull(k)
         else:
             r.insert_nonfull(k)
+
     def print_b_tree(self):
         r = self.root
         r.print_inorder()
-#    def predecessor(self, k):
-#        m = []
-#        x = self.root
-#        while not x.leaf:
-#            i = 1
-#            while i <= x.n and k > x.key[i - 1]:
-#                i = i + 1
-#            if i <= x.n and k == x.key[i - 1]:
-#                x = x.c[i - 1]
-#                while not x.leaf:
-#                    x = x.c[x.n]
-#                return x.key[x.n - 1]
-#            else:
-#                x = x.c[i - 1]
-#                if i > 1:
-#                    m.append(x.key[i - 1])
-#        i = 1
-#        while i <= x.n and k != x.key[i - 1]:
-#            i = i + 1
-#        if i > x.n or len(m) == 0:
-#            return None
-#        elif i > 1:
-#            return x.key[i - 2]
-#        else:
-#            return max(m)
+
+    #    def predecessor(self, k):
+    #        m = []
+    #        x = self.root
+    #        while not x.leaf:
+    #            i = 1
+    #            while i <= x.n and k > x.key[i - 1]:
+    #                i = i + 1
+    #            if i <= x.n and k == x.key[i - 1]:
+    #                x = x.c[i - 1]
+    #                while not x.leaf:
+    #                    x = x.c[x.n]
+    #                return x.key[x.n - 1]
+    #            else:
+    #                x = x.c[i - 1]
+    #                if i > 1:
+    #                    m.append(x.key[i - 1])
+    #        i = 1
+    #        while i <= x.n and k != x.key[i - 1]:
+    #            i = i + 1
+    #        if i > x.n or len(m) == 0:
+    #            return None
+    #        elif i > 1:
+    #            return x.key[i - 2]
+    #        else:
+    #            return max(m)
     def predecessor(self, k):
         s = []
         x = self.root
