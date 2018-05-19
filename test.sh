@@ -1,1 +1,1 @@
-for f in $(ls *test.py | cut -d '.' -f1); do ipython -m unittest $f;done
+for f in $(ls *test.py | cut -d '.' -f1); do python2.7 -m unittest $f;done
