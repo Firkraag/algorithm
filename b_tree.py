@@ -1,5 +1,6 @@
 #!/usr/bin/env ipython
 
+
 class b_tree_node(object):
     def __init__(self, t, leaf, n):
         self.leaf = leaf
@@ -50,7 +51,7 @@ class b_tree_node(object):
         while i <= self.n and k > self.key[i - 1]:
             i = i + 1
         if i <= self.n and k == self.key[i - 1]:
-            return (self, i)
+            return self, i
         elif self.leaf:
             return None
         else:

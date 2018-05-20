@@ -1,26 +1,31 @@
-def merge(A, p, q, r):
-    n1 = q - p + 1
-    n2 = r - q
-    L = [0] * (n1 + 1)
-    R = [0] * (n2 + 1)
-    for i in range(0, n1):
-        L[i] = A[p + i]
-    for j in range(0, n2):
-        R[j] = A[q + j + 1]
-    L[n1] = float("Inf")
-    R[n2] = float("Inf")
+def merge_sort(array):
+    """
+    inplace O(nlgn) sort
+    :param array:
+    :return:
+    """
+    _merge_sort(array, 0, len(array) - 1)
+
+
+def _merge_sort(array, left, right):
+    if left < right:
+        mid = (left + right) // 2
+        _merge_sort(array, left, mid)
+        _merge_sort(array, mid + 1, right)
+        _merge(array, left, mid, right)
+
+
+def _merge(array, left, mid, right):
+    left_part = array[left: mid + 1]
+    left_part.append(float("Inf"))
+    right_part = array[mid + 1: right + 1]
+    right_part.append(float("Inf"))
     i = 0
     j = 0
-    for k in range(p, r + 1):
-        if L[i] <= R[j]:
-            A[k] = L[i]
+    for k in range(left, right + 1):
+        if left_part[i] <= right_part[j]:
+            array[k] = left_part[i]
             i = i + 1
         else:
-            A[k] = R[j]
+            array[k] = right_part[j]
             j = j + 1
-def merge_sort(A, p, r):
-    if p < r:
-        q = (p + r) / 2
-        merge_sort(A, p, q)
-        merge_sort(A, q + 1, r)
-        merge(A, p, q, r)

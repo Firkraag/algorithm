@@ -3,7 +3,7 @@ import unittest
 from bh_tree import bh_tree, bh_node
 
 
-class TestRbtree(unittest.TestCase):
+class TestRbTree(unittest.TestCase):
     def test_insert_one(self):
         T = bh_tree([41])
         self.wrap(T, 41, 1)
