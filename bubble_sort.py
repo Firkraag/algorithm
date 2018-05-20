@@ -1,7 +1,7 @@
 def bubble_sort(array):
     """
     O(n ^ 2) inplace sort
-    :param array:
+    :param array: list
     :return:
     """
     n = len(array)
