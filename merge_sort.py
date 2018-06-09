@@ -1,6 +1,12 @@
+from insertion_sort import insertion_sort
+import math
+
+
 def merge_with_sentinel(array, left, mid, right):
     """
     merge procedure with sentinels
+
+    merge array[left...mid] and array[mid + 1...right]
     :param array:
     :param left:
     :param mid:
@@ -71,3 +77,30 @@ def merge_sort(array, merge_method=merge_with_sentinel):
     :return:
     """
     _merge_sort(array, 0, len(array) - 1, merge_method)
+
+
+def merge_ins_sort(array, partition=2):
+    """
+    Although merge sort runs faster than insertion sort asymptotically, the constant factors in insertion sort can make
+    it faster in practice for small problem sizes on many machines.
+    Thus, it makes sense to coarsen the leaves of the recursion by using insertion sort within merge sort when
+    subproblems become sufficiently small. Consider a modification to merge sort in which n/k sublists of length k are
+    sorted using insertion sort and then merged using the standard merging mechanism, where k is a value to be determined.
+    :param array:
+    :param partition: number of sublists
+    :return:
+    """
+    assert partition > 0
+    n = len(array)
+    sublist_length = math.ceil(n / partition)
+    sublist_number = partition
+    for i in range(sublist_number):
+        left = sublist_length * i
+        right = min(sublist_length * (i + 1) - 1, n - 1)
+        insertion_sort(array, left, right)
+    while sublist_number > 1:
+        for i in range(0, sublist_number - 1, 2):
+            merge_with_sentinel(array, sublist_length * i, sublist_length * (i + 1) - 1,
+                                min(sublist_length * (i + 2) - 1, n - 1))
+        sublist_length *= 2
+        sublist_number = math.ceil(sublist_number / 2)

@@ -10,14 +10,14 @@ class TestInsertionSort(unittest.TestCase):
         for _ in range(100):
             array = [random.randint(1, 10000) for _ in range(0, 100)]
             array_copy = array[:]
-            insertion_sort(array, insert_with_linear_search)
+            insertion_sort(array, insert_method=insert_with_linear_search)
             self.assertEqual(array, sorted(array_copy))
 
     def test_insertion_sort_with_binary_search(self):
         for _ in range(100):
             array = [random.randint(1, 10000) for _ in range(0, 100)]
             array_copy = array[:]
-            insertion_sort(array, insert_with_binary_search)
+            insertion_sort(array, insert_method=insert_with_binary_search)
             self.assertEqual(array, sorted(array_copy))
 
     def test_insertion_sort_recursive(self):
@@ -29,5 +29,5 @@ class TestInsertionSort(unittest.TestCase):
         for _ in range(100):
             array = [random.randint(1, 10000) for _ in range(0, 100)]
             array_copy = array[:]
-            insertion_sort_recursive(array, insert_with_binary_search)
+            insertion_sort_recursive(array, insert_method=insert_with_binary_search)
             self.assertEqual(array, sorted(array_copy))
