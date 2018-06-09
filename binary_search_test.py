@@ -1,7 +1,7 @@
 #!/usr/bin/env ipython
 import unittest
 import random
-from binary_search import binary_search, bisect_left
+from binary_search import binary_search, bisect_left, bisect_right
 
 
 class TestBinarySearch(unittest.TestCase):
@@ -22,3 +22,11 @@ class TestBinarySearch(unittest.TestCase):
             index = bisect_left(array, target)
             self.assertTrue(all(val < target for val in array[:index]))
             self.assertTrue(all(val >= target for val in array[index:]))
+
+    def test_bisect_right(self):
+        for length in range(10):
+            array = sorted([random.randint(1, 10) for _ in range(length)])
+            target = random.randint(0, 15)
+            index = bisect_right(array, target)
+            self.assertTrue(all(val <= target for val in array[:index]))
+            self.assertTrue(all(val > target for val in array[index:]))
