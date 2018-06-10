@@ -1,7 +1,7 @@
 #!/usr/bin/env ipython
 import unittest
 import random
-from merge_sort import merge_sort, merge_with_sentinel, merge_without_sentinel, merge_ins_sort
+from merge_sort import merge_sort, merge_with_sentinel, merge_without_sentinel, merge_ins_sort, merge_ins_sort2
 
 
 class TestMergeSort(unittest.TestCase):
@@ -24,4 +24,9 @@ class TestMergeSort(unittest.TestCase):
             array = [random.randint(1, 10000) for _ in range(length)]
             array_copy = array[:]
             merge_ins_sort(array, partition=1)
+            self.assertEqual(array, sorted(array_copy))
+        for length in range(100, 200):
+            array = [random.randint(1, 10000) for _ in range(length)]
+            array_copy = array[:]
+            merge_ins_sort2(array, sublist_length=15)
             self.assertEqual(array, sorted(array_copy))
