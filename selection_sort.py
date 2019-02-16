@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 
-def selection_sort(array):
+def selection_sort(array:list):
     """
     Inplace sort
     Consider sorting n numbers stored in array A by first finding the smallest element of A
