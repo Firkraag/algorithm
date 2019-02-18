@@ -6,7 +6,7 @@ def insert_with_linear_search(array, right_index):
     Use linear search to find a position in already sorted array[0...right_index-1] to insert array[right_index] into,
     making array[0...right_index] a sorted array.
     :param array:
-    :param right_index: ridht_index > 0
+    :param right_index: right_index > 0
     :return:
     """
     key = array[right_index]
@@ -31,9 +31,9 @@ def insert_with_binary_search(array, right_index):
     array[index] = x
 
 
-def _insertion_sort_recursive_aux(array, length, insert_method):
+def _insertion_sort_recursive(array, length, insert_method):
     if length > 1:
-        _insertion_sort_recursive_aux(array, length - 1, insert_method)
+        _insertion_sort_recursive(array, length - 1, insert_method)
         insert_method(array, length - 1)
 
 
@@ -61,4 +61,4 @@ def insertion_sort_recursive(array, insert_method=insert_with_linear_search):
     :param insert_method:
     :return:
     """
-    _insertion_sort_recursive_aux(array, len(array), insert_method)
+    _insertion_sort_recursive(array, len(array), insert_method)
