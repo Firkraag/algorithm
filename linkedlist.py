@@ -1,8 +1,7 @@
-class linked_list(object):
-    def __init__(self, key=None):
+class LinkedList(object):
+    def __init__(self):
         self.head = None
         self.size = 0
-        self.key = key
 
     def empty(self):
         return self.size == 0
@@ -35,7 +34,7 @@ class linked_list(object):
         return x
 
 
-class linked_list_node(object):
+class LinkedListNode(object):
     def __init__(self, element):
         self.key = element
         self.prev = None
