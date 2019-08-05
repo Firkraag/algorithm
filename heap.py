@@ -1,20 +1,20 @@
-import math
-
-
-class max_heap(list):
+class MaxHeap(list):
     def __init__(self, data):
         list.__init__(self, data)
         self.length = len(data)
         self.heap_size = self.length
         self.build_max_heap()
 
-    def left(self, i):
+    @staticmethod
+    def left(i):
         return 2 * i + 1
 
-    def right(self, i):
+    @staticmethod
+    def right(i):
         return 2 * i + 2
 
-    def parent(self, i):
+    @staticmethod
+    def parent(i):
         return (i - 1) // 2
 
     def max_heapify(self, i):
@@ -32,7 +32,6 @@ class max_heap(list):
 
     def build_max_heap(self):
         self.heap_size = self.length
-        print(self.length)
         for i in range(self.length // 2 - 1, -1, -1):
             self.max_heapify(i)
 
@@ -44,8 +43,7 @@ class max_heap(list):
             self.max_heapify(0)
 
 
-#            print( self)
-class min_heap(list):
+class MinHeap(list):
     def __init__(self, data):
         list.__init__(self, data)
         self.length = len(data)
@@ -53,15 +51,18 @@ class min_heap(list):
         self.build_min_heap()
 
     def __contains__(self, y):
-        return y in self[0:self.heap_size]
+        return y in self[:self.heap_size]
 
-    def left(self, i):
+    @staticmethod
+    def left(i):
         return 2 * i + 1
 
-    def right(self, i):
+    @staticmethod
+    def right(i):
         return 2 * i + 2
 
-    def parent(self, i):
+    @staticmethod
+    def parent(i):
         return (i - 1) // 2
 
     def min_heapify(self, i):
