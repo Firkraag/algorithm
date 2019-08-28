@@ -2,6 +2,7 @@
 
 import math
 
+
 def recursive_fft(a):
     n = len(a)
     if n == 1:
@@ -13,16 +14,19 @@ def recursive_fft(a):
     y0 = recursive_fft(a0)
     y1 = recursive_fft(a1)
     y = [0.0] * n
-    for k in range(0, n / 2):
+    for k in range(0, n // 2):
         y[k] = y0[k] + w * y1[k]
         y[k + n / 2] = y0[k] - w * y1[k]
         w = w * wn
     return y
 
+
 def recursive_inverse_fft(y):
     n = len(y)
     result = recursive_inverse_fft_aux(y)
     return [result[i] / n for i in range(0, n)]
+
+
 def recursive_inverse_fft_aux(y):
     n = len(y)
     if n == 1:
@@ -34,7 +38,7 @@ def recursive_inverse_fft_aux(y):
     a0 = recursive_inverse_fft_aux(y0)
     a1 = recursive_inverse_fft_aux(y1)
     a = [0.0] * n
-    for k in range(0, n / 2):
+    for k in range(0, n // 2):
         a[k] = (a0[k] + w * a1[k])
         a[k + n / 2] = (a0[k] - w * a1[k])
         w = w * wn

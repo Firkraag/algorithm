@@ -1,4 +1,4 @@
-from linked_list import linked_list_node, linked_list
+from linkedlist import LinkedListNode, LinkedList
 import sys
 
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env ipython
 
+
 def polygon_area(P):
     n = len(P)
     S = 0

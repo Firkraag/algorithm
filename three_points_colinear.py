@@ -1,6 +1,6 @@
 #!/usr/bin/env ipython
 
-from heap import max_heap
+from heap import MaxHeap
 
 
 class vector(object):
@@ -47,7 +47,7 @@ def three_points_colinear(points_list):
         for j in range(i + 1, n):
             vectors_list.append(vector(points_list[i], points_list[j], i, j))
     v0 = vector((1, 0), (0, 0))
-    heap_vectors = max_heap(vectors_list)
+    heap_vectors = MaxHeap(vectors_list)
     heap_vectors.heapsort()
     status = [False] * n
     v = heap_vectors[0]

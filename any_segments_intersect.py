@@ -3,7 +3,7 @@
 # we use 0 to mean red, 1 to mean black
 
 from tree import Node, Tree
-from heap import max_heap
+from heap import MaxHeap
 from segment_intersect import segments_intersect
 
 def vertical(a):
@@ -276,7 +276,7 @@ def any_segments_intersect(S):
     for s in segment_list:
         point_list.append(point([s[0][0], 0, s[0][1]], s))    
         point_list.append(point([s[1][0], 1, s[1][1]], s))    
-    heap_point = max_heap(point_list)
+    heap_point = MaxHeap(point_list)
     heap_point.heapsort()
     for p in heap_point:
         if p[1] == 0:

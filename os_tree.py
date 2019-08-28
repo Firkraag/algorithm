@@ -3,7 +3,7 @@
 from rb_tree import rb_node, rb_tree
 
 
-class os_node(rb_node):
+class OSNode(rb_node):
     def __init__(self, key, p, left, right, color, size):
         rb_node.__init__(self, key, p, left, right, color)
         self.size = size
@@ -55,13 +55,13 @@ class os_node(rb_node):
 
 
 class os_tree(rb_tree):
-    nil = os_node(None, None, None, None, 1, 0)
+    nil = OSNode(None, None, None, None, 1, 0)
     root = nil
 
     def __init__(self, values):
         if isinstance(values, list):
             for i in values:
-                self.insert(os_node(i, None, None, None, 0, 1))
+                self.insert(OSNode(i, None, None, None, 0, 1))
         else:
             print("Not invalid argument")
 
