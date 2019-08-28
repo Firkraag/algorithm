@@ -13,7 +13,7 @@ class fibonacci_node(object):
         '''generate a list of children of the node for iteration'''
         self.children = []
         self.index = 0
-        if self.child != None:
+        if self.child is not None:
             child = self.child
             while True:
                 self.children.append(child)
@@ -203,8 +203,8 @@ class fibonacci_heap(object):
 
     def cascading_cut(self, y):
         z = y.p
-        if z != None:
-            if y.mark == False:
+        if z is not None:
+            if y.mark is False:
                 y.mark = True
             else:
                 self.cut(y, z)
