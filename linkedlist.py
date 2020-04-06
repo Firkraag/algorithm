@@ -9,9 +9,10 @@ class LinkedListNode:
 
 
 class LinkedList:
-    def __init__(self):
+    def __init__(self, key=None):
         self.head: Optional[LinkedListNode] = None
         self.size: int = 0
+        self.key = key
 
     def empty(self) -> bool:
         return self.size == 0
