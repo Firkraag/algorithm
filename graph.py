@@ -1,4 +1,4 @@
-from Queue import Queue
+from queue import Queue
 import disjoint_sets_forest as dsf
 import sys
 
@@ -81,15 +81,15 @@ class Graph(object):
         s.d = 0
         s.p = None
         q = Queue(2 * len(self.vertices))
-        q.enqueue(s)
+        q.put(s)
         while not q.empty():
-            u = q.dequeue()
+            u = q.get()
             for v in self.adj[u]:
                 if v.color == 0:
                     v.color = 1
                     v.d = u.d + 1
                     v.p = u
-                    q.enqueue(v)
+                    q.put(v)
             u.color = 2
 
     def dfs(self):
@@ -319,7 +319,9 @@ class Graph(object):
                     st = status[(v.cc, u.cc)]
                 except KeyError:
                     status[(v.cc, u.cc)] = 1
-                    cg._addEdge(vertices_list[v.cc - 1], vertices_list[u.cc - 1])
+                    cg._addEdge(
+                        vertices_list[v.cc - 1],
+                        vertices_list[u.cc - 1])
         u.color = 2
         time = time + 1
         u.f = time

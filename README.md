@@ -6,4 +6,4 @@ Since python2 is outdated, the original python2.7 code is moved to python2.7 bra
 The master branch support python3 only.
 
 ## test
-test.sh is the shell script to run all the testcases
+Run testcase in tests folder

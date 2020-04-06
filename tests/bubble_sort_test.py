@@ -11,4 +11,3 @@ class TestBubbleSort(unittest.TestCase):
             array_copy = array[:]
             bubble_sort(array)
             self.assertEqual(array, sorted(array_copy))
-
