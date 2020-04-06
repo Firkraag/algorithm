@@ -3,7 +3,7 @@
 from heap import MaxHeap
 
 
-class vector(object):
+class Vector(object):
     def __init__(self, p2, p1=(0, 0)):
         self.x = p2[0] - p1[0]
         self.y = p2[1] - p1[0]
@@ -31,12 +31,15 @@ def polar_angle(p0, point_list):
     '''sort a sequence <p1, p2, ... , pn> of n points according to
     their polar angles with respect to a given origin point p0.
     '''
-    v0 = vector((p0[0] + 1, p0[1]), p0)  # The polar angle of v0 is 0
-    vector_list = [vector(p, p0) for p in point_list]
+    v0 = Vector((p0[0] + 1, p0[1]), p0)  # The polar angle of v0 is 0
+    vector_list = [Vector(p, p0) for p in point_list]
     angle_0 = []  # list of vectors whose polar angles are  0
     angle_pi = []  # list of vectors whose polar angles are pi
-    angle_0_pi = []  # list of vectors whose polar angles are larger than 0 and smaller than pi
-    angle_pi_2pi = []  # list of vectors whose polar angles are larger than pi and smaller than 2pi
+    # list of vectors whose polar angles are larger than 0 and smaller than pi
+    angle_0_pi = []
+    # list of vectors whose polar angles are larger than pi and
+    # smaller than 2pi
+    angle_pi_2pi = []
     for v in vector_list:
         if v == v0:
             if v.x > 0:
