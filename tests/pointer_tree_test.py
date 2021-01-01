@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 from pointer_tree import pointer_tree, pointer_node
 
@@ -101,8 +101,10 @@ class TestOstree(unittest.TestCase):
     def wrap(self, tree, node, minimum, maximum, predecessor, successor):
         self.assertEqual(tree.iterative_tree_search(node).minimum.key, minimum)
         self.assertEqual(tree.iterative_tree_search(node).maximum.key, maximum)
-        self.assertEqual(tree.iterative_tree_search(node).predecessor.key, predecessor)
-        self.assertEqual(tree.iterative_tree_search(node).successor.key, successor)
+        self.assertEqual(tree.iterative_tree_search(
+            node).predecessor.key, predecessor)
+        self.assertEqual(tree.iterative_tree_search(
+            node).successor.key, successor)
 
 
 if __name__ == '__main__':

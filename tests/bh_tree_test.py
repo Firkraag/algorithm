@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 from bh_tree import bh_tree, bh_node
 

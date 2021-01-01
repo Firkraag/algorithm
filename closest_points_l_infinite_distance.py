@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 from math import ceil, sqrt
 from heap import MaxHeap

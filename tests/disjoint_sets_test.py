@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 import unittest
 import disjoint_sets_linked_list as ds

@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 import random
 from binary_search import binary_search, bisect_left, bisect_right

@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 from min_gap_tree import min_gap_tree, min_gap_node
 

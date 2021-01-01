@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 import math
 
@@ -102,15 +102,19 @@ class vEB_node(object):
                     if summary_max == None:
                         self.max = self.min
                     else:
-                        self.max = self.index(summary_max, self.cluster[summary_max].max)
+                        self.max = self.index(
+                            summary_max, self.cluster[summary_max].max)
             elif x == self.max:
-                self.max = self.index(self.high(x), self.cluster[self.high(x)].max)
+                self.max = self.index(
+                    self.high(x), self.cluster[self.high(x)].max)
 
     def print_veb(self):
         if self.u == 2:
-            print("u = {}, min = {}, max = {}".format(self.u, self.min, self.max))
+            print("u = {}, min = {}, max = {}".format(
+                self.u, self.min, self.max))
         else:
-            print("u = {}, min = {}, max = {}".format(self.u, self.min, self.max))
+            print("u = {}, min = {}, max = {}".format(
+                self.u, self.min, self.max))
             print("Summary: \t", )
             self.summary.print_veb()
             print()

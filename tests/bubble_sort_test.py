@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 import random
 from bubble_sort import bubble_sort

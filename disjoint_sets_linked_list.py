@@ -1,12 +1,14 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 class node(object):
     def __init__(self, key):
         self.key = key
         self.set = None
         self.next = None
+
     def find_set(self):
         return self.set.head
+
     def union(self, y):
         if self.set.length < y.set.length:
             x = y
@@ -23,12 +25,16 @@ class node(object):
         xs.tail = ys.tail
         xs.length = xs.length + ys.length
         return x
+
+
 class header(object):
     def __init__(self, element):
         self.length = 1
         self.head = element
         element.set = self
         self.tail = self.head
+
+
 class node_notail(node):
     def union(self, y):
         if self.set.length < y.set.length:
@@ -47,6 +53,8 @@ class node_notail(node):
         xs.head = ys.head
         xs.length = xs.length + ys.length
         return y
+
+
 class header_notail(object):
     def __init__(self, element):
         self.length = 1

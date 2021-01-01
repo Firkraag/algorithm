@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 # we use 0 to mean red, 1 to mean black
 

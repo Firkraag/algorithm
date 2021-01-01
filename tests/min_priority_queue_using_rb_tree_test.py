@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 from min_priority_queue_using_rb_tree import min_priority_queue
 from rb_tree import rb_node

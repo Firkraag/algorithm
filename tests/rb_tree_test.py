@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 from rb_tree import rb_tree, rb_node
 
@@ -112,9 +112,12 @@ class TestRbtree(unittest.TestCase):
         self.assertEqual(T.root, T.nil)
 
     def wrap(self, tree, node, left, right, p, color):
-        self.assertEqual(tree.iterative_tree_search(node).left, tree.iterative_tree_search(left))
-        self.assertEqual(tree.iterative_tree_search(node).right, tree.iterative_tree_search(right))
-        self.assertEqual(tree.iterative_tree_search(node).p, tree.iterative_tree_search(p))
+        self.assertEqual(tree.iterative_tree_search(
+            node).left, tree.iterative_tree_search(left))
+        self.assertEqual(tree.iterative_tree_search(
+            node).right, tree.iterative_tree_search(right))
+        self.assertEqual(tree.iterative_tree_search(
+            node).p, tree.iterative_tree_search(p))
         self.assertEqual(tree.iterative_tree_search(node).color, color)
 
 

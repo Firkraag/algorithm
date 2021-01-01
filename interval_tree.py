@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 from rb_tree import rb_node, rb_tree
 
@@ -47,7 +47,8 @@ class interval_tree(rb_tree):
     def __init__(self, intervals):
         if isinstance(intervals, list):
             for i in intervals:
-                self.insert(interval_node(i.low, None, None, None, 0, i, i.high))
+                self.insert(interval_node(
+                    i.low, None, None, None, 0, i, i.high))
         else:
             print("Not invalid argument")
 
@@ -133,7 +134,8 @@ class interval_tree(rb_tree):
             y.color = z.color
         traverse = x.p
         while traverse != self.nil:
-            traverse.maximum = max(traverse.left.maximum, traverse.interval.high, traverse.right.maximum)
+            traverse.maximum = max(
+                traverse.left.maximum, traverse.interval.high, traverse.right.maximum)
             traverse = traverse.p
         if y_original_color == 1:
             self.delete_fixup(x)

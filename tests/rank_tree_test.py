@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 from rank_tree import rank_tree, rank_node
 
@@ -113,9 +113,12 @@ class TestOstree(unittest.TestCase):
         self.assertEqual(T.nil.rank, 0)
 
     def wrap(self, tree, node, left, right, p, color, rank):
-        self.assertEqual(tree.iterative_tree_search(node).left, tree.iterative_tree_search(left))
-        self.assertEqual(tree.iterative_tree_search(node).right, tree.iterative_tree_search(right))
-        self.assertEqual(tree.iterative_tree_search(node).p, tree.iterative_tree_search(p))
+        self.assertEqual(tree.iterative_tree_search(
+            node).left, tree.iterative_tree_search(left))
+        self.assertEqual(tree.iterative_tree_search(
+            node).right, tree.iterative_tree_search(right))
+        self.assertEqual(tree.iterative_tree_search(
+            node).p, tree.iterative_tree_search(p))
         self.assertEqual(tree.iterative_tree_search(node).color, color)
         self.assertEqual(tree.iterative_tree_search(node).rank, rank)
 
