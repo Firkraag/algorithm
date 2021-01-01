@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 
 def universal_sink(M):
@@ -6,7 +6,7 @@ def universal_sink(M):
     An algorithm to determine whether a directed graph G contains
     a universal sink---a vertex with in-degree |V| - 1 and
     out-degree 0---in time O(V), given an adjacency matrix for G
-    
+
     M: numpy matrix, the adjacency matrix for the graph
     rtype: vertex index if G contains a universal sink, otherwise, return None
     """

@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 import random
 from merge_sort import merge_sort, merge_with_sentinel, merge_without_sentinel, merge_ins_sort, merge_ins_sort2

@@ -1,5 +1,5 @@
 # A variant of red black tree that has black_height attribute
-# !/usr/bin/env ipython
+# !/usr/bin/env python
 
 from rb_tree import rb_node, rb_tree
 

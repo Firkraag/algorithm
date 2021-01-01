@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 from rb_tree import rb_node, rb_tree
 
@@ -13,15 +13,19 @@ class pointer_node(rb_node):
 
 
 class pointer_tree(rb_tree):
-    negative_infinity = pointer_node(float("-Inf"), None, None, None, 1, None, None, None, None)
-    positive_infinity = pointer_node(float("Inf"), None, None, None, 1, None, None, None, None)
-    nil = pointer_node(None, None, None, None, 1, negative_infinity, positive_infinity, None, None)
+    negative_infinity = pointer_node(
+        float("-Inf"), None, None, None, 1, None, None, None, None)
+    positive_infinity = pointer_node(
+        float("Inf"), None, None, None, 1, None, None, None, None)
+    nil = pointer_node(None, None, None, None, 1,
+                       negative_infinity, positive_infinity, None, None)
     root = nil
 
     def __init__(self, values):
         if isinstance(values, list):
             for i in values:
-                self.insert(pointer_node(i, None, None, None, 0, None, None, None, None))
+                self.insert(pointer_node(i, None, None,
+                                         None, 0, None, None, None, None))
         else:
             print("Not invalid argument")
 
@@ -132,7 +136,7 @@ class pointer_tree(rb_tree):
             y.left = z.left
             y.left.p = y
             y.color = z.color
-        # After we delete z, the only nodes whose predecessor and successor attributes need to be updated are z's successor and z's predecessor 
+        # After we delete z, the only nodes whose predecessor and successor attributes need to be updated are z's successor and z's predecessor
         z.predecessor.successor = z.successor
         z.successor.predecessor = z.predecessor
         traverse = x.p

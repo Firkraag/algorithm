@@ -1,9 +1,9 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 from heap import MaxHeap
 
 
-class Vector:
+class Vector(object):
     def __init__(self, p2, p1=(0, 0)):
         self.x = p2[0] - p1[0]
         self.y = p2[1] - p1[0]

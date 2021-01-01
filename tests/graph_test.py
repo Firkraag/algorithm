@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 from graph import Vertex, Graph
 
@@ -19,9 +19,11 @@ class TestGraph(unittest.TestCase):
         self.v5 = v5
         self.v6 = v6
         vertices = [v1, v2, v3, v4, v5, v6]
-        edges = [(v1, v2), (v1, v3), (v2, v3), (v2, v4), (v2, v5), (v3, v4), (v3, v6), (v4, v5), (v5, v6)]
+        edges = [(v1, v2), (v1, v3), (v2, v3), (v2, v4), (v2, v5), (v3, v4),
+                 (v3, v6), (v4, v5), (v5, v6)]
         self.graphs.append(Graph(vertices, edges))
-        edges = [(v1, v2), (v2, v3), (v3, v4), (v4, v2), (v3, v5), (v2, v4), (v4, v3), (v1, v6)]
+        edges = [(v1, v2), (v2, v3), (v3, v4), (v4, v2), (v3, v5), (v2, v4),
+                 (v4, v3), (v1, v6)]
         self.graphs.append(Graph([v1, v2, v3, v4, v5, v6], edges))
 
     def tearDown(self):
@@ -51,7 +53,8 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [v, r, s, w, t, x, u, y, z]
-        edges = [(s, r), (s, w), (r, v), (r, s), (v, r), (w, s), (w, t), (w, x), (t, w), (t, x), (t, u), (u, t), (u, x),
+        edges = [(s, r), (s, w), (r, v), (r, s), (v, r), (w, s), (w, t),
+                 (w, x), (t, w), (t, x), (t, u), (u, t), (u, x),
                  (u, y), (x, w), (x, t), (x, u), (x, y), (y, x), (y, u)]
         g = Graph(vertices, edges)
         # g.print(AllEdges())
@@ -78,19 +81,28 @@ class TestGraph(unittest.TestCase):
         x = Vertex('x')
         t = Vertex('t')
         u = Vertex('u')
-        # edges_list = [(z, w), (s, w), (y, w), (x, ), (x, ), (z, ), (v, u), (v, t)]
+        # edges_list = [(z, w), (s, w), (y, w),
+        #               (x, ), (x, ), (z, ), (v, u), (v, t)]
         # vertices = (s, v, z, w, y, x, t, u)
-        # map(lambda vertex, edges: map(lambda vertex, edge: vertex.addEdge(edge), zip([vertex] * len(edges) , edges)),  zip(vertices, edges_list))
+        # map(
+        #     lambda vertex, edges:
+        #           map(lambda vertex, edge:
+        #               vertex.addEdge(edge),
+        #               zip([vertex] * len(edges) , edges)),
+        #     zip(vertices, edges_list))
         vertices = [s, v, z, w, y, x, t, u]
-        edges = [(y, x), (x, z), (z, y), (z, w), (w, x), (s, z), (s, w), (v, w), (v, s), (t, v), (t, u), (u, v), (u, t)]
+        edges = [(y, x), (x, z), (z, y), (z, w), (w, x), (s, z),
+                 (s, w), (v, w), (v, s), (t, v), (t, u), (u, v), (u, t)]
         g = Graph(vertices, edges)
         g.dfs()
         vertices = (s, v, z, w, y, x, t, u)
 
     #        for u in vertices:
     #            print( u, u.d, u.f)
-    # df = [(1, 10), (12, 13), (2, 9), (7, 8), (3, 6), (4, 5), (11, 16), (14, 15)]
-    # edges_list = [(z, w), (s, w), (y, w), (x, ), (x, ), (z, ), (v, u), (v, t)]
+    # df = [(1, 10), (12, 13), (2, 9), (7, 8),
+    #       (3, 6), (4, 5), (11, 16), (14, 15)]
+    # edges_list = [(z, w), (s, w), (y, w),
+    #               (x, ), (x, ), (z, ), (v, u), (v, t)]
     def testPathNum(self):
         m = Vertex('m')
         n = Vertex('n')
@@ -107,8 +119,10 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [m, n, o, p, q, r, s, t, u, v, w, x, y, z]
-        edges = [(m, q), (m, r), (m, x), (n, q), (n, o), (n, u), (o, r), (o, s), (o, v), (p, o), (p, s), (p, z), (q, t),
-                 (r, u), (r, y), (s, r), (u, t), (v, w), (v, x), (w, z), (y, v)]
+        edges = [(m, q), (m, r), (m, x), (n, q), (n, o), (n, u),
+                 (o, r), (o, s), (o, v), (p, o), (p, s), (p, z), (q, t),
+                 (r, u), (r, y), (s, r), (u, t), (v, w),
+                 (v, x), (w, z), (y, v)]
         g = Graph(vertices, edges)
         self.assertEqual(g.path_num(m, v), 1)
         self.assertEqual(g.path_num(n, v), 3)
@@ -149,7 +163,8 @@ class TestGraph(unittest.TestCase):
         g = Vertex('g')
         h = Vertex('h')
         vertices = [a, b, c, d, e, f, g, h]
-        edges = [(e, a), (a, b), (b, c), (d, c), (c, d), (b, e), (e, f), (b, f), (g, f), (f, g), (c, g), (g, h), (h, h)]
+        edges = [(e, a), (a, b), (b, c), (d, c), (c, d), (b, e),
+                 (e, f), (b, f), (g, f), (f, g), (c, g), (g, h), (h, h)]
         G = Graph(vertices, edges)
         G.strongly_connected_components()
         self.assertEqual(a.cc, 1)
@@ -171,8 +186,11 @@ class TestGraph(unittest.TestCase):
         g = Vertex('g')
         h = Vertex('h')
         vertices = [a, b, c, d, e, f, g, h]
-        # edges = [(a, c), (b, a), (d, h), (d, f), (e, a), (a, b), (b, c), (d, c), (c, d), (b, e), (e, f), (b, f), (g, f), (f, g), (c, g), (g, h), (h, h)]
-        edges = [(e, a), (a, b), (b, c), (d, c), (c, d), (b, e), (e, f), (b, f), (g, f), (f, g), (c, g), (g, h), (h, h)]
+        # edges = [(a, c), (b, a), (d, h), (d, f), (e, a), (a, b), (b, c),
+        #  (d, c), (c, d), (b, e), (e, f), (b, f), (g, f), (f, g), (c, g),
+        # (g, h), (h, h)]
+        edges = [(e, a), (a, b), (b, c), (d, c), (c, d), (b, e),
+                 (e, f), (b, f), (g, f), (f, g), (c, g), (g, h), (h, h)]
         G = Graph(vertices, edges)
         s = G.simplified()
         #        for u in s.vertices:
@@ -185,7 +203,8 @@ class TestGraph(unittest.TestCase):
         e = Vertex('e')
         f = Vertex('f')
         vertices = [a, b, c, d, e, f]
-        edges = [(a, b), (b, a), (b, c), (b, d), (c, b), (d, b), (c, e), (b, e), (d, f), (e, f), (f, e)]
+        edges = [(a, b), (b, a), (b, c), (b, d), (c, b), (d, b),
+                 (c, e), (b, e), (d, f), (e, f), (f, e)]
         G = Graph(vertices, edges)
         s = G.simplified()
         # for u in s.vertices:
@@ -202,8 +221,8 @@ class TestGraph(unittest.TestCase):
         g = Vertex('g')
         h = Vertex('h')
         vertices = [a, b, c, d, e, f, g, h]
-        edges = [(e, a), (a, b), (b, c), (d, c), (c, d), (d, h), (b, e), (e, f), (b, f), (g, f), (f, g), (c, g), (g, h),
-                 (h, h)]
+        edges = [(e, a), (a, b), (b, c), (d, c), (c, d), (d, h), (b, e),
+                 (e, f), (b, f), (g, f), (f, g), (c, g), (g, h), (h, h)]
         G = Graph(vertices, edges)
         cg = G.component_graph()
         #        print()
@@ -217,7 +236,8 @@ class TestGraph(unittest.TestCase):
         e = Vertex('e')
         f = Vertex('f')
         vertices = [a, b, c, d, e, f]
-        edges = [(a, b), (b, a), (b, c), (b, d), (c, b), (d, b), (c, e), (b, e), (d, f), (e, f), (f, e)]
+        edges = [(a, b), (b, a), (b, c), (b, d), (c, b), (d, b),
+                 (c, e), (b, e), (d, f), (e, f), (f, e)]
         G = Graph(vertices, edges)
         cg = G.component_graph()
 
@@ -236,7 +256,8 @@ class TestGraph(unittest.TestCase):
         g = Vertex('g')
         h = Vertex('h')
         vertices = [a, b, c, d, e, f, g, h]
-        edges = [(e, a), (a, b), (b, c), (d, c), (c, d), (d, h), (b, e), (e, f), (b, f), (g, f), (f, g), (c, g), (g, h),
+        edges = [(e, a), (a, b), (b, c), (d, c), (c, d), (d, h), (b, e),
+                 (e, f), (b, f), (g, f), (f, g), (c, g), (g, h),
                  (h, h)]
         G = Graph(vertices, edges)
         self.assertEqual(G.semiconnected(), True)
@@ -247,7 +268,8 @@ class TestGraph(unittest.TestCase):
         e = Vertex('e')
         f = Vertex('f')
         vertices = [a, b, c, d, e, f]
-        edges = [(a, b), (b, a), (b, c), (b, d), (c, b), (d, b), (c, e), (b, e), (d, f), (e, f), (f, e)]
+        edges = [(a, b), (b, a), (b, c), (b, d), (c, b), (d, b),
+                 (c, e), (b, e), (d, f), (e, f), (f, e)]
         G = Graph(vertices, edges)
         self.assertEqual(G.semiconnected(), True)
         edges = [(a, b), (b, a), (b, c), (b, d), (c, b), (d, b), (e, f)]
@@ -285,8 +307,8 @@ class TestGraph(unittest.TestCase):
         h = Vertex('h')
         i = Vertex('i')
         vertices = [a, b, c, d, e, f, g, h, i]
-        edges = [(a, b), (b, c), (b, h), (c, i), (d, c), (e, d), (f, d), (f, e), (f, c), (g, f), (g, h), (g, i), (h, a),
-                 (h, i)]
+        edges = [(a, b), (b, c), (b, h), (c, i), (d, c), (e, d), (f, d),
+                 (f, e), (f, c), (g, f), (g, h), (g, i), (h, a), (h, i)]
         G = Graph(vertices, edges, directed=False)
         # weight = [4, 8, 11, 2, 7, 9, 14, 10, 4, 2, 2, 1, 8, 7]
         weight = [4, 8, 11, 2, 7, 9, 14, 10, 4, 2, 1, 6, 8, 7]
@@ -322,11 +344,14 @@ class TestGraph(unittest.TestCase):
         h = Vertex('h')
         i = Vertex('i')
         vertices = [a, b, c, d, e, f, g, h, i]
-        edges = [(a, b), (a, h), (b, a), (b, c), (b, h), (c, b), (c, i), (c, f), (c, d), (d, c), (d, e), (d, f), (e, d),
-                 (e, f), (f, d), (f, e), (f, c), (f, g), (g, f), (g, h), (g, i), (h, a), (h, b), (h, i), (h, g), (i, c),
+        edges = [(a, b), (a, h), (b, a), (b, c), (b, h), (c, b), (c, i),
+                 (c, f), (c, d), (d, c), (d, e), (d, f), (e, d),
+                 (e, f), (f, d), (f, e), (f, c), (f, g), (g, f), (g, h),
+                 (g, i), (h, a), (h, b), (h, i), (h, g), (i, c),
                  (i, h), (i, g)]
         G = Graph(vertices, edges)
-        weight = [4, 8, 4, 8, 11, 8, 2, 4, 7, 7, 9, 14, 9, 10, 14, 10, 4, 2, 2, 1, 6, 8, 11, 7, 1, 2, 7, 6]
+        weight = [4, 8, 4, 8, 11, 8, 2, 4, 7, 7, 9, 14, 9,
+                  10, 14, 10, 4, 2, 2, 1, 6, 8, 11, 7, 1, 2, 7, 6]
         z = dict()
         for x, y in zip(edges, weight):
             z[x] = y
@@ -349,10 +374,14 @@ class TestGraph(unittest.TestCase):
         h = Vertex('h')
         i = Vertex('i')
         vertices = [a, b, c, d, e, f, g, h, i]
-        # edges = [(a, b), (a, h), (b, a), (b, c), (b, h), (c, b), (c, i), (c, f), (c, d), (d, c), (d, e), (d, f), (e, d), (e, f), (f, d), (f, e), (f, c), (f, g), (g, f), (g, h), (g, i), (h, a), (h, b), (h, i), (h, g), (i, c), (i, h), (i, g)]
-        # weight = [4, 8, 4, 8, 11, 8, 2, 4, 7, 7, 9, 14, 9, 10, 14, 10, 4, 2, 2, 1, 6, 8, 11, 7, 1, 2, 7, 6]
-        edges = [(a, b), (b, c), (b, h), (c, i), (d, c), (e, d), (f, d), (f, e), (f, c), (g, f), (g, h), (g, i), (h, a),
-                 (h, i)]
+        # edges = [(a, b), (a, h), (b, a), (b, c), (b, h), (c, b), (c, i),
+        # (c, f), (c, d), (d, c), (d, e), (d, f), (e, d), (e, f), (f, d),
+        #  (f, e), (f, c), (f, g), (g, f), (g, h), (g, i), (h, a), (h, b),
+        #  (h, i), (h, g), (i, c), (i, h), (i, g)]
+        # weight = [4, 8, 4, 8, 11, 8, 2, 4, 7, 7, 9, 14, 9, 10, 14, 10, 4, 2,
+        #  2, 1, 6, 8, 11, 7, 1, 2, 7, 6]
+        edges = [(a, b), (b, c), (b, h), (c, i), (d, c), (e, d), (f, d),
+                 (f, e), (f, c), (g, f), (g, h), (g, i), (h, a), (h, i)]
         weight = [4, 8, 11, 2, 7, 9, 14, 10, 4, 2, 1, 6, 8, 7]
         G = Graph(vertices, edges, False)
         z = dict()
@@ -368,7 +397,8 @@ class TestGraph(unittest.TestCase):
         s = set()
         for u in G.vertices:
             s.add((u.p, u))
-        #        self.assertEqual(s, set([(g, h), (f, g), (None, i), (c, d), (c, f), (i, c), (h, a), (d, e), (a, b)]))
+        #        self.assertEqual(s, set([(g, h), (f, g), (None, i), (c, d),
+        #  (c, f), (i, c), (h, a), (d, e), (a, b)]))
 
     def testBellmanFord(self):
         s = Vertex('s')
@@ -377,7 +407,8 @@ class TestGraph(unittest.TestCase):
         x = Vertex('x')
         z = Vertex('z')
         vertices = [s, t, y, x, z]
-        edges = [(s, t), (s, y), (t, y), (t, x), (t, z), (y, x), (y, z), (x, t), (z, s), (z, x)]
+        edges = [(s, t), (s, y), (t, y), (t, x), (t, z),
+                 (y, x), (y, z), (x, t), (z, s), (z, x)]
         weight = [6, 7, 8, 5, -4, -3, 9, -2, 2, 7]
         G = Graph(vertices, edges)
         we = dict()
@@ -418,7 +449,8 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [r, s, t, x, y, z]
-        edges = [(r, s), (r, t), (s, t), (s, x), (t, x), (t, y), (t, z), (x, y), (x, z), (y, z)]
+        edges = [(r, s), (r, t), (s, t), (s, x), (t, x),
+                 (t, y), (t, z), (x, y), (x, z), (y, z)]
         weight = [5, 3, 2, 6, 7, 4, 2, -1, 1, -2]
         G = Graph(vertices, edges)
         we = dict()
@@ -430,7 +462,8 @@ class TestGraph(unittest.TestCase):
 
         G.Bellman_Ford_modified(w, s)
         self.assertEqual([i.p for i in vertices], [None, None, s, s, x, y])
-        self.assertEqual([i.d for i in vertices], [float("Inf"), 0, 2, 6, 5, 3])
+        self.assertEqual([i.d for i in vertices], [
+                         float("Inf"), 0, 2, 6, 5, 3])
 
     def testTopologicalSort(self):
         r = Vertex('r')
@@ -440,7 +473,8 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [r, s, t, x, y, z]
-        edges = [(r, s), (r, t), (s, t), (s, x), (t, x), (t, y), (t, z), (x, y), (x, z), (y, z)]
+        edges = [(r, s), (r, t), (s, t), (s, x), (t, x),
+                 (t, y), (t, z), (x, y), (x, z), (y, z)]
         G = Graph(vertices, edges)
         l = G.topological_sort()
         self.assertEqual(l, [r, s, t, x, y, z])
@@ -459,7 +493,8 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [r, s, t, x, y, z]
-        edges = [(r, s), (r, t), (s, t), (s, x), (t, x), (t, y), (t, z), (x, y), (x, z), (y, z)]
+        edges = [(r, s), (r, t), (s, t), (s, x), (t, x),
+                 (t, y), (t, z), (x, y), (x, z), (y, z)]
         weight = [5, 3, 2, 6, 7, 4, 2, -1, 1, -2]
         G = Graph(vertices, edges)
         we = dict()
@@ -471,7 +506,8 @@ class TestGraph(unittest.TestCase):
 
         G.dag_shortest_paths(w, s)
         self.assertEqual([i.p for i in vertices], [None, None, s, s, x, y])
-        self.assertEqual([i.d for i in vertices], [float("Inf"), 0, 2, 6, 5, 3])
+        self.assertEqual([i.d for i in vertices], [
+                         float("Inf"), 0, 2, 6, 5, 3])
         G.dag_shortest_paths(w, r)
         self.assertEqual([i.p for i in vertices], [None, r, r, t, t, t])
         self.assertEqual([i.d for i in vertices], [0, 5, 3, 10, 7, 5])
@@ -498,7 +534,8 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [r, s, t, x, y, z]
-        edges = [(r, s), (r, t), (s, t), (s, x), (t, x), (t, y), (t, z), (x, y), (x, z), (y, z)]
+        edges = [(r, s), (r, t), (s, t), (s, x), (t, x),
+                 (t, y), (t, z), (x, y), (x, z), (y, z)]
         weight = [5, 3, 2, 6, 7, 4, 2, -1, 1, -2]
         G = Graph(vertices, edges)
         number = G.total_path_number()
@@ -512,7 +549,8 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [s, t, x, y, z]
-        edges = [(s, t), (s, y), (t, x), (t, y), (x, z), (y, t), (y, x), (y, z), (z, s), (z, x)]
+        edges = [(s, t), (s, y), (t, x), (t, y), (x, z),
+                 (y, t), (y, x), (y, z), (z, s), (z, x)]
         g = Graph(vertices, edges)
         weight = [10, 5, 1, 2, 4, 3, 9, 2, 7, 6]
         we = dict()
@@ -531,7 +569,8 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [s, t, x, y, z]
-        edges = [(s, t), (s, y), (t, x), (t, y), (x, z), (y, t), (y, x), (y, z), (z, s), (z, x)]
+        edges = [(s, t), (s, y), (t, x), (t, y), (x, z),
+                 (y, t), (y, x), (y, z), (z, s), (z, x)]
         g = Graph(vertices, edges)
         weight = [3, 5, 6, 2, 2, 1, 4, 6, 3, 7]
         we = dict()
@@ -555,7 +594,8 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [s, t, x, y, z]
-        edges = [(s, t), (s, y), (t, x), (t, y), (x, z), (y, t), (y, x), (y, z), (z, s), (z, x)]
+        edges = [(s, t), (s, y), (t, x), (t, y), (x, z),
+                 (y, t), (y, x), (y, z), (z, s), (z, x)]
         g = Graph(vertices, edges)
         weight = [10, 5, 1, 2, 4, 3, 9, 2, 7, 6]
         we = dict()
@@ -574,7 +614,8 @@ class TestGraph(unittest.TestCase):
         y = Vertex('y')
         z = Vertex('z')
         vertices = [s, t, x, y, z]
-        edges = [(s, t), (s, y), (t, x), (t, y), (x, z), (y, t), (y, x), (y, z), (z, s), (z, x)]
+        edges = [(s, t), (s, y), (t, x), (t, y), (x, z),
+                 (y, t), (y, x), (y, z), (z, s), (z, x)]
         g = Graph(vertices, edges)
         weight = [3, 5, 6, 2, 2, 1, 4, 6, 3, 7]
         we = dict()
@@ -627,7 +668,8 @@ class TestGraph(unittest.TestCase):
         G2 = Graph([c, d], [(c, d)], directed=False)
         G3 = G1.union(G2)
         self.assertEqual(G3.vertices, {a, b, c, d})
-        self.assertEqual(G3.edges, {(a, b), (b, a), (a, c), (c, a), (c, d), (d, c)})
+        self.assertEqual(
+            G3.edges, {(a, b), (b, a), (a, c), (c, a), (c, d), (d, c)})
         self.assertEqual(G3.adj[a], {b, c})
         self.assertEqual(G3.adj[b], {a})
         self.assertEqual(G3.adj[c], {d, a})
@@ -686,12 +728,13 @@ class TestGraph(unittest.TestCase):
 #        a4 = Vertex(4)
 #        a5 = Vertex(5)
 #        vertices = [a1, a2, a3, a4, a5]
-#        edges = [(a1, a2), (a1, a3), (a1, a5), (a2, a4), (a2, a5), (a3, a2), (a4, a1), (a4, a3), (a5, a4)]
+#        edges = [(a1, a2), (a1, a3), (a1, a5), (a2, a4), (a2, a5), (a3, a2),
+#                (a4, a1), (a4, a3), (a5, a4)]
 #        g = Graph(vertices, edges)
 #        weight = [3, 8, -4, 1, 7, 4, 2, -5, 6]
 #        we = dict()
 #        for i,j in zip(edges, weight):
-#            we[i] = j    
+#            we[i] = j
 #        def w(x, y):
-#            return we[(x, y)]        
+#            return we[(x, y)]
 #        g.Johnson(w)

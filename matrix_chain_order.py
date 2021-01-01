@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 from numpy import zeros
 
@@ -35,7 +35,8 @@ def lookup_chain(m, p, i, j):
         m[i, j] = 0
     else:
         for k in range(i, j):
-            q = lookup_chain(m, p, i, k) + lookup_chain(m, p, k + 1, j) + p[i - 1] * p[k] * p[j]
+            q = lookup_chain(m, p, i, k) + lookup_chain(m, p,
+                                                        k + 1, j) + p[i - 1] * p[k] * p[j]
             if q < m[i, j]:
                 m[i, j] = q
     return m[i, j]

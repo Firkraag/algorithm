@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 # we use 0 to mean red, 1 to mean black
 
@@ -6,8 +6,11 @@ from tree import Node, Tree
 from heap import MaxHeap
 from segment_intersect import segments_intersect
 
+
 def vertical(a):
     return a[0][0] == a[1][0]
+
+
 def comparable(a, b, x):
     '''Given two segments a and b that are comparable at x, determine whether a is above b or not. Assume that neither segment is vertical '''
     p1 = a[0]
@@ -43,7 +46,8 @@ def comparable(a, b, x):
             return False
     else:
         v1 = (p2[0] - p1[0], p2[1] - p1[1])
-        v2 = ((x4 - x3) * (p2[0] - p4[0]) + (x4 - x) * (p4[0] - p3[0]), (x4 - x3) * (p2[1] - p4[1]) + (x4 - x) * (p4[1] - p3[1]))
+        v2 = ((x4 - x3) * (p2[0] - p4[0]) + (x4 - x) * (p4[0] - p3[0]),
+              (x4 - x3) * (p2[1] - p4[1]) + (x4 - x) * (p4[1] - p3[1]))
         result = v1[0] * v2[1] - v2[0] * v1[1]
         # a is above b
         if result >= 0:
@@ -51,20 +55,27 @@ def comparable(a, b, x):
         # a is below b
         else:
             return False
+
+
 class segment(tuple):
     def __init__(self, seg):
         super(segment, self).__init__(seg)
         self.pointer = None
+
+
 class point(list):
     def __init__(self, info, segment):
         super(point, self).__init__(info)
         self.segment = segment
+
+
 class rb_node(Node):
     def __init__(self, key, p, left, right, color):
         Node.__init__(self, key, p, left, right)
         self.color = color
         if key != None:
             key.pointer = self
+
     def minimum(self, nil):
         x = self
         y = x
@@ -72,16 +83,21 @@ class rb_node(Node):
             y = x
             x = x.left
         return y
+
     def maximum(self, nil):
         x = self
         while x.right != nil:
             x = x.right
         return x
+
+
 class rb_tree(Tree):
     nil = rb_node(None, None, None, None, 1)
     root = nil
+
     def __init__(self):
         pass
+
     def above(self, s):
         x = s.pointer
         if x.right != self.nil:
@@ -90,6 +106,7 @@ class rb_tree(Tree):
             while x.p != self.nil and x.p.right == x:
                 x = x.p
             return x.p.key
+
     def below(self, s):
         x = s.pointer
         if x.left != self.nil:
@@ -98,10 +115,13 @@ class rb_tree(Tree):
             while x.p != self.nil and x.p.left == x:
                 x = x.p
             return x.p.key
+
     def minimum(self):
         return self.root.minimum(self.nil)
+
     def __getitem__(self, key):
         return self.iterative_tree_search(key)
+
     def left_rotate(self, x):
         y = x.right
         x.right = y.left
@@ -116,6 +136,7 @@ class rb_tree(Tree):
             x.p.right = y
         y.left = x
         x.p = y
+
     def right_rotate(self, y):
         x = y.left
         y.left = x.right
@@ -130,6 +151,7 @@ class rb_tree(Tree):
             y.p.left = x
         x.right = y
         y.p = x
+
     def insert(self, z):
         ''' the segment z will only be inserted when the left endpoint of z is being processed'''
         # this is the x_coordinate of the left endpoint of z
@@ -152,8 +174,9 @@ class rb_tree(Tree):
         z.p = y
         z.left = self.nil
         z.right = self.nil
-        z.color = 0 #red
+        z.color = 0  # red
         self.insert_fixed(z)
+
     def insert_fixed(self, z):
         while z.p.color == 0:
             if z.p.p.left == z.p:
@@ -187,6 +210,7 @@ class rb_tree(Tree):
                     z.color = 0
                     z.p.color = 1
         self.root.color = 1
+
     def transplant(self, u, v):
         if u.p == self.nil:
             self.root = v
@@ -195,6 +219,7 @@ class rb_tree(Tree):
         else:
             u.p.right = v
         v.p = u.p
+
     def delete(self, z):
         z = z.pointer
         y = z
@@ -221,6 +246,7 @@ class rb_tree(Tree):
             y.color = z.color
         if y_original_color == 1:
             self.delete_fixup(x)
+
     def delete_fixup(self, x):
         while x != self.root and x.color == 1:
             if x == x.p.left:
@@ -266,6 +292,8 @@ class rb_tree(Tree):
                     self.right_rotate(x.p)
                     x = self.root
         x.color = 1
+
+
 def any_segments_intersect(S):
     '''This algorithm takes as input a set S of n line segments, returning the boolean value TRUE if any pair of segments in S intersects, and FALSE otherwise.'''
     T = rb_tree()
@@ -274,8 +302,8 @@ def any_segments_intersect(S):
     for s in S:
         segment_list.append(segment(s))
     for s in segment_list:
-        point_list.append(point([s[0][0], 0, s[0][1]], s))    
-        point_list.append(point([s[1][0], 1, s[1][1]], s))    
+        point_list.append(point([s[0][0], 0, s[0][1]], s))
+        point_list.append(point([s[1][0], 1, s[1][1]], s))
     heap_point = MaxHeap(point_list)
     heap_point.heapsort()
     for p in heap_point:

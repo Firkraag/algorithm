@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 from os_tree import os_tree, OSNode
 
@@ -166,9 +166,12 @@ class TestOstree(unittest.TestCase):
     #        self.wrap(T, 31, -1, -1, 19, 1)
     #        self.wrap(T, 9, -1, -1, 12, 0)
     def wrap(self, tree, node, left, right, p, color, size):
-        self.assertEqual(tree.iterative_tree_search(node).left, tree.iterative_tree_search(left))
-        self.assertEqual(tree.iterative_tree_search(node).right, tree.iterative_tree_search(right))
-        self.assertEqual(tree.iterative_tree_search(node).p, tree.iterative_tree_search(p))
+        self.assertEqual(tree.iterative_tree_search(
+            node).left, tree.iterative_tree_search(left))
+        self.assertEqual(tree.iterative_tree_search(
+            node).right, tree.iterative_tree_search(right))
+        self.assertEqual(tree.iterative_tree_search(
+            node).p, tree.iterative_tree_search(p))
         self.assertEqual(tree.iterative_tree_search(node).color, color)
         self.assertEqual(tree.iterative_tree_search(node).size, size)
 

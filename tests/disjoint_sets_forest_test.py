@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 import unittest
 import disjoint_sets_forest as ds
@@ -34,10 +34,12 @@ class TestDisjointSets(unittest.TestCase):
         for i in range(1, 17):
             self.assertEqual(pool[i].p, pool[parent_list[i - 1]])
         self.assertTrue(pool[2].find_set() == pool[16])
-        parent_list = [8, 16, 4, 16, 8, 8, 8, 16, 10, 16, 12, 16, 16, 16, 16, 16]
+        parent_list = [8, 16, 4, 16, 8, 8, 8,
+                       16, 10, 16, 12, 16, 16, 16, 16, 16]
         for i in range(1, 17):
             self.assertEqual(pool[i].p, pool[parent_list[i - 1]])
         self.assertTrue(pool[9].find_set() == pool[16])
-        parent_list = [8, 16, 4, 16, 8, 8, 8, 16, 16, 16, 12, 16, 16, 16, 16, 16]
+        parent_list = [8, 16, 4, 16, 8, 8, 8,
+                       16, 16, 16, 12, 16, 16, 16, 16, 16]
         for i in range(1, 17):
             self.assertEqual(pool[i].p, pool[parent_list[i - 1]])

@@ -1,41 +1,45 @@
-class LinkedList(object):
-    def __init__(self):
-        self.head = None
-        self.size = 0
+from typing import Any, Optional
 
-    def empty(self):
+
+class LinkedListNode:
+    def __init__(self, key: Any):
+        self.key: Any = key
+        self.prev: Optional[LinkedListNode] = None
+        self.next: Optional[LinkedListNode] = None
+
+
+class LinkedList:
+    def __init__(self, key=None):
+        self.head: Optional[LinkedListNode] = None
+        self.size: int = 0
+        self.key = key
+
+    def empty(self) -> bool:
         return self.size == 0
 
-    def search(self, k):
-        x = self.head
-        while x and x.key != k:
-            x = x.next
-        return x
+    def search(self, key: Any) -> Optional[LinkedListNode]:
+        node = self.head
+        while node and node.key != key:
+            node = node.next
+        return node
 
-    def insert(self, x):
+    def insert(self, node: LinkedListNode) -> None:
         self.size = self.size + 1
-        x.next = self.head
+        node.next = self.head
         if self.head:
-            self.head.prev = x
-        self.head = x
-        x.prev = None
+            self.head.prev = node
+        self.head = node
+        node.prev = None
 
-    def delete(self, x):
+    def delete(self, node: LinkedListNode) -> None:
         self.size = self.size - 1
-        if x.prev:
-            x.prev.next = x.next
+        if node.prev:
+            node.prev.next = node.next
         else:
-            self.head = x.next
-        if x.next:
-            x.next.prev = x.prev
+            self.head = node.next
+        if node.next:
+            node.next.prev = node.prev
 
-    def extract(self, x):
-        self.delete(x)
-        return x
-
-
-class LinkedListNode(object):
-    def __init__(self, element):
-        self.key = element
-        self.prev = None
-        self.next = None
+    def extract(self, node: LinkedListNode) -> LinkedListNode:
+        self.delete(node)
+        return node

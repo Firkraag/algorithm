@@ -1,4 +1,4 @@
-from Queue import Queue
+from queue import Queue
 from graph import Graph, Vertex
 
 
@@ -37,9 +37,9 @@ def wrestlers(wrestlersList, rivalriesList):
 def _bfs(g, s):
     s.type = 1
     q = Queue(2 * len(g.vertices))
-    q.enqueue(s)
+    q.put(s)
     while not q.empty():
-        u = q.dequeue()
+        u = q.get()
         for v in g.adj[u]:
             if u.type == v.type:
                 return False
@@ -48,5 +48,5 @@ def _bfs(g, s):
                     v.type = 2
                 else:
                     v.type = 1
-                q.enqueue(v)
+                q.put(v)
     return True

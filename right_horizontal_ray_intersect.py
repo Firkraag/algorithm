@@ -1,6 +1,7 @@
-#!/usr/bin/ipython
+#!/usr/bin/python
 
 from segment_intersect import segments_intersect
+
 
 def right_horizontal_ray_intersect(p0, p1, p2):
     '''An algorithm to determine whether a given right horizontal ray from p0 intersects a line segment p1p2'''
@@ -15,6 +16,7 @@ def right_horizontal_ray_intersect(p0, p1, p2):
             return equal(p0, p1) or equal(p0, p2)
     else:
         return segments_intersect(p1, p2, p0, (max_x, p0[1]))
-    
+
+
 def equal(p1, p2):
     return p1[0] == p2[0] and p1[1] == p2[1]

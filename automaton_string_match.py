@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 
 def finite_automaton_matcher(T, s, m):

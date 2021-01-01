@@ -1,4 +1,5 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
+
 
 
 def hash_insert(T, k, h):

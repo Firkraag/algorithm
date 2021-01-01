@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 import random
 from bubble_sort import bubble_sort
@@ -11,4 +11,3 @@ class TestBubbleSort(unittest.TestCase):
             array_copy = array[:]
             bubble_sort(array)
             self.assertEqual(array, sorted(array_copy))
-

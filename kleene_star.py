@@ -1,6 +1,7 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 from numpy import zeros
+
 
 def kleene_star(x, L, A):
     length = len(x)

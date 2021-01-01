@@ -2,7 +2,7 @@ from linkedlist import LinkedListNode, LinkedList
 import sys
 
 
-class min_heap(list):
+class MinHeap(list):
     def __init__(self, data):
         list.__init__(self, data)
         self.length = len(data)
@@ -40,7 +40,7 @@ class min_heap(list):
             self.min_heapify(i)
 
 
-class min_priority_queue(min_heap):
+class MinPriorityQueue(MinHeap):
     def heap_minimum(self):
         return self[0].head
 

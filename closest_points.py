@@ -1,12 +1,15 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 
 from math import ceil, sqrt
 from heap import MaxHeap
+
 
 def x_sort(S):
     X = MaxHeap(S)
     X.heapsort()
     return X
+
+
 def y_sort(S):
     Y = []
     for p in S:
@@ -17,8 +20,12 @@ def y_sort(S):
     for i in range(0, len(YY)):
         Y.append((YY[i][1], YY[i][0]))
     return Y
+
+
 def distance(p1, p2):
     return sqrt((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2)
+
+
 def brute_force(P):
     P = list(P)
     d = float("Inf")
@@ -26,10 +33,14 @@ def brute_force(P):
         for j in range(i + 1, len(P)):
             d = min(d, distance(P[i], P[j]))
     return d
+
+
 def closest_points(S):
     X = x_sort(S)
     Y = y_sort(S)
     return closest_points_aux(S, X, Y)
+
+
 def closest_points_aux(P, X, Y):
     length = len(P)
     half = int(ceil(length / 2))

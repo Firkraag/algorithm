@@ -1,4 +1,4 @@
-#!/usr/bin/env ipython
+#!/usr/bin/env python
 import unittest
 from longest_common_subsequence import lcs_length_one_row, lcs_length
 
