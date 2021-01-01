@@ -1,8 +1,8 @@
-from priority_queue import min_priority_queue
+from priority_queue import MinPriorityQueue
 import sys
 
 
-class Min_priority_queue(min_priority_queue):
+class Min_priority_queue(MinPriorityQueue):
     def min_heap_insert(self, key):
         if self.heap_size >= self.length:
             sys.exit("heap overflow")

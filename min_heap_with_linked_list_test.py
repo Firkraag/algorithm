@@ -2,6 +2,7 @@ import unittest
 from min_heap_with_linked_list import min_heap, min_priority_queue
 from linkedlist import LinkedList, LinkedListNode
 
+
 class TestHeap(unittest.TestCase):
     def test_min_heapify(self):
         L1 = LinkedList(1)
@@ -20,6 +21,7 @@ class TestHeap(unittest.TestCase):
         h = min_heap([L5, L1, L2, L3, L4])
         h.min_heapify(0)
         self.assertEqual(h, [L1, L3, L2, L5, L4])
+
     def test_build_min_heap(self):
         L1 = LinkedList(1)
         L2 = LinkedList(2)
@@ -37,6 +39,7 @@ class TestHeap(unittest.TestCase):
         h = min_heap([L3, L4, L5, L2, L1])
         h.build_min_heap()
         self.assertEqual(h, [L1, L2, L5, L3, L4])
+
     def test_heap_minimum(self):
         L1 = LinkedList(1)
         L1.insert(LinkedListNode(1))
@@ -55,6 +58,7 @@ class TestHeap(unittest.TestCase):
         L3.insert(LinkedListNode(5))
         q = min_priority_queue([L1, L2, L3, L4, L5])
         self.assertEqual(q.heap_minimum().key, 1)
+
     def test_heap_extract_min(self):
         L1 = LinkedList(1)
         L1.insert(LinkedListNode(1))
@@ -78,12 +82,12 @@ class TestHeap(unittest.TestCase):
         self.assertEqual(q, [L2, L4, L3, L5, L5])
 #    def test_heap_decrease_key(self):
 #        a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]
-#        q = min_priority_queue(a) 
+#        q = MinPriorityQueue(a)
 #        q.heap_decrease_key(8, 1)
 #        self.assertEqual(q, [1, 1, 3, 2, 7, 8, 9, 10, 4, 16])
 #    def test_heap_insert(self):
 #        a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]
-#        q = min_priority_queue(a)
+#        q = MinPriorityQueue(a)
 #        q.heap_extract_min()
 #        q.min_heap_insert(0)
 #        self.assertEqual(q, [0, 2, 3, 10, 4, 8, 9, 16, 14, 7])

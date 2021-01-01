@@ -1,5 +1,4 @@
-from all_pairs_shortest_paths import extend_shortest_paths, slow_all_pairs_shortest_paths, \
-    faster_all_pairs_shortest_paths
+from all_pairs_shortest_paths import slow_all_pairs_shortest_paths, faster_all_pairs_shortest_paths
 import unittest
 import numpy as np
 

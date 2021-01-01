@@ -83,12 +83,12 @@ class TestHeap(unittest.TestCase):
         self.assertEqual(q, [L2, L4, L3, L5, L5])
 #    def test_heap_decrease_key(self):
 #        a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]
-#        q = min_priority_queue(a)
+#        q = MinPriorityQueue(a)
 #        q.heap_decrease_key(8, 1)
 #        self.assertEqual(q, [1, 1, 3, 2, 7, 8, 9, 10, 4, 16])
 #    def test_heap_insert(self):
 #        a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]
-#        q = min_priority_queue(a)
+#        q = MinPriorityQueue(a)
 #        q.heap_extract_min()
 #        q.min_heap_insert(0)
 #        self.assertEqual(q, [0, 2, 3, 10, 4, 8, 9, 16, 14, 7])

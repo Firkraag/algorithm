@@ -1,15 +1,15 @@
-from partition import partition, partition2, partition3, randomized_partition
+from partition import partition, randomized_partition
 
 
-def quicksort(A, p, r, partition_method=partition):
+def quicksort(array, p, r, partition_method=partition):
     if p < r:
-        q = partition_method(A, p, r)
-        quicksort(A, p, q - 1)
-        quicksort(A, q + 1, r)
+        q = partition_method(array, p, r)
+        quicksort(array, p, q - 1)
+        quicksort(array, q + 1, r)
 
 
-def randomized_quicksort(A, p, r):
+def randomized_quicksort(array, p, r):
     if p < r:
-        q = randomized_partition(A, p, r)
-        randomized_quicksort(A, p, q - 1)
-        randomized_quicksort(A, q + 1, r)
+        q = randomized_partition(array, p, r)
+        randomized_quicksort(array, p, q - 1)
+        randomized_quicksort(array, q + 1, r)

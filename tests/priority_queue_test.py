@@ -1,5 +1,5 @@
 import unittest
-from priority_queue import MaxPriorityQueue, min_priority_queue
+from priority_queue import MaxPriorityQueue, MinPriorityQueue
 
 
 class TestMaxPriorityQueue(unittest.TestCase):
@@ -59,28 +59,28 @@ class TestMaxPriorityQueue(unittest.TestCase):
 class TestMinPriorityQueue(unittest.TestCase):
     def test_init(self):
         a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]
-        q = min_priority_queue(a)
+        q = MinPriorityQueue(a)
         self.assertEqual(q, [1, 2, 3, 4, 7, 8, 9, 10, 14, 16])
 
     def test_heap_minimum(self):
         a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]
-        self.assertEqual(min_priority_queue(a).heap_minimum(), 1)
+        self.assertEqual(MinPriorityQueue(a).heap_minimum(), 1)
 
     def test_heap_extract_min(self):
         a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]
-        q = min_priority_queue(a)
+        q = MinPriorityQueue(a)
         self.assertEqual(q.heap_extract_min(), 1)
         self.assertEqual(q, [2, 4, 3, 10, 7, 8, 9, 16, 14, 16])
 
     def test_heap_decrease_key(self):
         a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]
-        q = min_priority_queue(a)
+        q = MinPriorityQueue(a)
         q.heap_decrease_key(8, 1)
         self.assertEqual(q, [1, 1, 3, 2, 7, 8, 9, 10, 4, 16])
 
     def test_heap_insert(self):
         a = [1, 10, 3, 2, 7, 8, 9, 4, 14, 16]
-        q = min_priority_queue(a)
+        q = MinPriorityQueue(a)
         q.heap_extract_min()
         q.min_heap_insert(0)
         self.assertEqual(q, [0, 2, 3, 10, 4, 8, 9, 16, 14, 7])

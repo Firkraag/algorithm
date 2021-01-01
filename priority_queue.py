@@ -39,7 +39,7 @@ class MaxPriorityQueue(MaxHeap):
         self.max_heapify(0)
 
 
-class min_priority_queue(MinHeap):
+class MinPriorityQueue(MinHeap):
     def heap_minimum(self):
         return self[0]
 
