@@ -1,8 +1,9 @@
-from queue import queue
+from Queue import Queue
 from graph import Graph, Vertex
 
+
 def wrestlers(wrestlersList, rivalriesList):
-    '''
+    """
     There are two types of professional wrestlers: "babyfaces"
     ("good guys") and "heels" ("bad guys"). Between any pair of
     professional wrestlers, there may or may not be a rivalry.
@@ -11,7 +12,7 @@ def wrestlers(wrestlersList, rivalriesList):
     possible to designate some of the wrestlers as babyfaces and There
     remainder as heels such that each rivalry is between a babyfaces
     and a heel.
-    '''
+    """
     d = dict()
     vertices = [None] * len(wrestlersList)
     edges = [None] * len(rivalriesList)
@@ -28,13 +29,14 @@ def wrestlers(wrestlersList, rivalriesList):
         u.type = 0
     for u in g.vertices:
         if u.type == 0:
-            if _bfs(g, u) == False:
+            if not _bfs(g, u):
                 return False
     return True
 
+
 def _bfs(g, s):
     s.type = 1
-    q = queue(2 * len(g.vertices))
+    q = Queue(2 * len(g.vertices))
     q.enqueue(s)
     while not q.empty():
         u = q.dequeue()

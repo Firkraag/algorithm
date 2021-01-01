@@ -32,15 +32,16 @@ def median_of_two_arrays(X, x_start, x_end, Y, y_start, y_end, size):
                                     math.floor(size / 2))
 
 
-A = [random.randint(1, 100) for i in range(0, 15)]
-print(A)
-randomized_quicksort(A, 0, 14)
-print(A)
-B = [random.randint(1, 100) for i in range(0, 15)]
-print(B)
-randomized_quicksort(B, 0, 14)
-print(B)
-print(median_of_two_arrays(A, 0, 14, B, 0, 14, 3.0))
+if __name__ == '__main__':
+    A = [random.randint(1, 100) for i in range(0, 15)]
+    print(A)
+    randomized_quicksort(A, 0, 14)
+    print(A)
+    B = [random.randint(1, 100) for i in range(0, 15)]
+    print(B)
+    randomized_quicksort(B, 0, 14)
+    print(B)
+    print(median_of_two_arrays(A, 0, 14, B, 0, 14, 3.0))
 # randomized_select(A, 0, 14, 7)
 # print( A)
 # for i in range(1, 16):

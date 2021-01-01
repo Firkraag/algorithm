@@ -1,4 +1,4 @@
-from queue import queue
+from Queue import Queue
 import disjoint_sets_forest as dsf
 import sys
 
@@ -11,11 +11,11 @@ class Vertex(object):
         return str(self.key)
 
     def print_path(self, v):
-        '''print( out the vertices on a shortest path from s to)
-        v, assuming that BFS has already computed a breadth-first tree'''
+        """print( out the vertices on a shortest path from s to)
+        v, assuming that BFS has already computed a breadth-first tree"""
         if self == v:
             print(self, )
-        elif v.p == None:
+        elif v.p is None:
             print("No path from {} to {} exists".format(self.key, v.key))
         else:
             self.print_path(v.p)
@@ -80,7 +80,7 @@ class Graph(object):
         s.color = 1
         s.d = 0
         s.p = None
-        q = queue(2 * len(self.vertices))
+        q = Queue(2 * len(self.vertices))
         q.enqueue(s)
         while not q.empty():
             u = q.dequeue()

@@ -1,39 +1,39 @@
 import unittest
-from priority_queue import max_priority_queue, min_priority_queue
+from priority_queue import MaxPriorityQueue, min_priority_queue
 
 
 class TestMaxPriorityQueue(unittest.TestCase):
     def test_init(self):
         a = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
-        q = max_priority_queue(a)
+        q = MaxPriorityQueue(a)
         self.assertEqual(q, [16, 14, 10, 8, 7, 9, 3, 2, 4, 1])
 
     def test_heap_maximum(self):
         a = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
-        self.assertEqual(max_priority_queue(a).heap_maximum(), 16)
+        self.assertEqual(MaxPriorityQueue(a).heap_maximum(), 16)
 
     def test_heap_extract_max(self):
         a = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
-        h = max_priority_queue(a)
+        h = MaxPriorityQueue(a)
         self.assertEqual(h.heap_extract_max(), 16)
         self.assertEqual(h, [14, 8, 10, 4, 7, 9, 3, 2, 1, 1])
 
     def test_heap_increase_key(self):
         a = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
-        h = max_priority_queue(a)
+        h = MaxPriorityQueue(a)
         h.heap_increase_key(8, 15)
         self.assertEqual(h, [16, 15, 10, 14, 7, 9, 3, 2, 8, 1])
 
     def test_heap_insert(self):
         a = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
-        queue = max_priority_queue(a)
+        queue = MaxPriorityQueue(a)
         queue.heap_extract_max()
         queue.max_heap_insert(100)
         self.assertEqual(queue, [100, 14, 10, 4, 8, 9, 3, 2, 1, 7])
 
     def test_heap_delete(self):
         a = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
-        h = max_priority_queue(a)
+        h = MaxPriorityQueue(a)
         h.heap_delete(4)
         self.assertEqual(h[0:h.heap_size], [16, 14, 10, 8, 1, 9, 3, 2, 4])
         h.heap_delete(2)

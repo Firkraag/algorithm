@@ -3,11 +3,11 @@
 # we use 0 to mean red, 1 to mean black
 
 from tree import Node, Tree
-from heap import max_heap
+from heap import MaxHeap
 
 
 def comparable(a, b):
-    '''Given two disks a and b that are comparable at x, determine whether a is above b or not.'''
+    """Given two disks a and b that are comparable at x, determine whether a is above b or not."""
     a_y = a[0][1]
     b_y = b[0][1]
     if a_y >= b_y:
@@ -271,7 +271,7 @@ def any_disks_intersect(S):
         y = center_point[1]
         point_list.append(point([x - radius, 0, y], s))
         point_list.append(point([x + radius, 1, y], s))
-    heap_point = max_heap(point_list)
+    heap_point = MaxHeap(point_list)
     heap_point.heapsort()
     print(heap_point)
     for p in heap_point:

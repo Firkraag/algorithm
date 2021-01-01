@@ -1,11 +1,11 @@
 #!/usr/bin/env ipython
 
-from heap import max_heap
+from heap import MaxHeap
 
 
 class vector(object):
     def __init__(self, p1, p2, p1_index=0, p2_index=0):
-        # gurantee that the polar angle of this vector with respect to the origin point is in the range [0, pi)
+        # gurantee that the polar angle of this Vector with respect to the origin point is in the range [0, pi)
         if p1[1] > p2[1]:
             self.x = p1[0] - p2[0]
             self.y = p1[1] - p2[1]
@@ -40,14 +40,14 @@ class vector(object):
 
 
 def three_points_colinear(points_list):
-    '''An algorithm to determine whether any three points in a set of n points are colinear'''
+    """ to determine whether any three points in a set of n points are colinear"""
     n = len(points_list)
     vectors_list = []
     for i in range(n):
         for j in range(i + 1, n):
             vectors_list.append(vector(points_list[i], points_list[j], i, j))
     v0 = vector((1, 0), (0, 0))
-    heap_vectors = max_heap(vectors_list)
+    heap_vectors = MaxHeap(vectors_list)
     heap_vectors.heapsort()
     status = [False] * n
     v = heap_vectors[0]

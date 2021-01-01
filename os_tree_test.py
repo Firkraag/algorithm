@@ -1,6 +1,6 @@
 #!/usr/bin/env ipython
 import unittest
-from os_tree import os_tree, os_node
+from os_tree import os_tree, OSNode
 
 
 class TestOstree(unittest.TestCase):
@@ -156,7 +156,7 @@ class TestOstree(unittest.TestCase):
     #    def test_insert_stack(self):
     #        T = os_tree([])
     #        for i in 41, 38, 31, 12, 19, 9:
-    #            T.insert_stack(os_node(i, None, None, None, 0))
+    #            T.insert_stack(OSNode(i, None, None, None, 0))
     #        self.assertEqual(T.root, T.iterative_tree_search(38))
     #        self.assertEqual(T.nil.color, 1)
     #        self.wrap(T, 38, 19, 41, -1, 1)

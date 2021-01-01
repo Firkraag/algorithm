@@ -1,17 +1,17 @@
 #!/usr/bin/env ipython
 
 from math import ceil, sqrt
-from heap import max_heap
+from heap import MaxHeap
 
 def x_sort(S):
-    X = max_heap(S)
+    X = MaxHeap(S)
     X.heapsort()
     return X
 def y_sort(S):
     Y = []
     for p in S:
         Y.append((p[1], p[0]))
-    YY = max_heap(Y)
+    YY = MaxHeap(Y)
     YY.heapsort()
     Y = []
     for i in range(0, len(YY)):

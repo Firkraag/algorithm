@@ -1,15 +1,15 @@
 import unittest
-from linked_list import linked_list, linked_list_node
+from linkedlist import LinkedList, LinkedListNode
 
 
 class TestLinkedList(unittest.TestCase):
     def test_insert(self):
-        L = linked_list()
-        a = linked_list_node(1)
-        b = linked_list_node(4)
-        c = linked_list_node(16)
-        d = linked_list_node(9)
-        e = linked_list_node(25)
+        L = LinkedList()
+        a = LinkedListNode(1)
+        b = LinkedListNode(4)
+        c = LinkedListNode(16)
+        d = LinkedListNode(9)
+        e = LinkedListNode(25)
         L.insert(a)
         L.insert(b)
         L.insert(c)
@@ -23,12 +23,12 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(l, [e, d, c, b, a])
 
     def test_search(self):
-        L = linked_list()
-        a = linked_list_node(1)
-        b = linked_list_node(4)
-        c = linked_list_node(16)
-        d = linked_list_node(9)
-        e = linked_list_node(25)
+        L = LinkedList()
+        a = LinkedListNode(1)
+        b = LinkedListNode(4)
+        c = LinkedListNode(16)
+        d = LinkedListNode(9)
+        e = LinkedListNode(25)
         L.insert(a)
         L.insert(b)
         L.insert(c)
@@ -37,12 +37,12 @@ class TestLinkedList(unittest.TestCase):
         self.assertEqual(L.search(4), b)
 
     def test_delete(self):
-        L = linked_list()
-        a = linked_list_node(1)
-        b = linked_list_node(4)
-        c = linked_list_node(16)
-        d = linked_list_node(9)
-        e = linked_list_node(25)
+        L = LinkedList()
+        a = LinkedListNode(1)
+        b = LinkedListNode(4)
+        c = LinkedListNode(16)
+        d = LinkedListNode(9)
+        e = LinkedListNode(25)
         L.insert(a)
         L.insert(b)
         L.insert(c)

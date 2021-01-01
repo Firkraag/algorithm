@@ -1,10 +1,11 @@
 #!/usr/bin/env ipython
 
+
 def hash_insert(T, k, h):
     i = 0
     while i < len(T):
         j = h(k, i)
-        if T[j] == None:
+        if T[j] is None:
             T[j] = k
             return j
         else:
