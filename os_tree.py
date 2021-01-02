@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 
-from rb_tree import rb_node, rb_tree
+from rb_tree import RbNode, RbTree
 
 
-class OSNode(rb_node):
+class OSNode(RbNode):
     def __init__(self, key, p, left, right, color, size):
-        rb_node.__init__(self, key, p, left, right, color)
+        RbNode.__init__(self, key, p, left, right, color)
         self.size = size
 
     def select_recursive(self, i):
@@ -54,7 +54,7 @@ class OSNode(rb_node):
                 return y.ith_successor(i - r - 1)
 
 
-class os_tree(rb_tree):
+class os_tree(RbTree):
     nil = OSNode(None, None, None, None, 1, 0)
     root = nil
 

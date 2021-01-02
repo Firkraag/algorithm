@@ -5,7 +5,7 @@ import math
 
 class vEB_node(object):
     def __init__(self, u):
-        '''u must be exact power of 2, as required by CLRS; otherwise, the behavior is undefined'''
+        """u must be exact power of 2, as required by CLRS; otherwise, the behavior is undefined"""
         self.u = u
         self.min = None
         self.max = None

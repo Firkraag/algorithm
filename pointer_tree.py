@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 
-from rb_tree import rb_node, rb_tree
+from rb_tree import RbNode, RbTree
 
 
-class pointer_node(rb_node):
+class pointer_node(RbNode):
     def __init__(self, key, p, left, right, color, minimum, maximum, predecessor, successor):
-        rb_node.__init__(self, key, p, left, right, color)
+        RbNode.__init__(self, key, p, left, right, color)
         self.minimum = minimum
         self.maximum = maximum
         self.predecessor = predecessor
         self.successor = successor
 
 
-class pointer_tree(rb_tree):
+class pointer_tree(RbTree):
     negative_infinity = pointer_node(
         float("-Inf"), None, None, None, 1, None, None, None, None)
     positive_infinity = pointer_node(

@@ -1,26 +1,26 @@
 #!/usr/bin/env python
 
-from rb_tree import rb_node, rb_tree
+from rb_tree import RbNode, RbTree
 
 
-class min_gap_node(rb_node):
+class MinGapNode(RbNode):
     def __init__(self, key, p, left, right, color, successor, min_gap):
-        rb_node.__init__(self, key, p, left, right, color)
+        RbNode.__init__(self, key, p, left, right, color)
         self.successor = successor
         self.min_gap = min_gap
 
 
-class min_gap_tree(rb_tree):
-    positive_infinity = min_gap_node(
+class MinGapTree(RbTree):
+    positive_infinity = MinGapNode(
         float("Inf"), None, None, None, 1, None, float("Inf"))
-    nil = min_gap_node(None, None, None, None, 1,
-                       positive_infinity, float("Inf"))
+    nil = MinGapNode(None, None, None, None, 1,
+                     positive_infinity, float("Inf"))
     root = nil
 
     def __init__(self, values):
         if isinstance(values, list):
             for i in values:
-                self.insert(min_gap_node(i, None, None, None, 0, None, None))
+                self.insert(MinGapNode(i, None, None, None, 0, None, None))
         else:
             print("Not invalid argument")
 

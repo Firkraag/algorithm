@@ -1,5 +1,7 @@
 def interval_graph_coloring(graph):
-    '''The input graph is represented as an adjacency matrix since all we need is edge information about the graph'''
+    """
+    The input graph is represented as an adjacency matrix since all we need is edge information about the graph
+    """
     m = graph.shape[0]
     color = [1] * m
     number = 1

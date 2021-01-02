@@ -1,12 +1,12 @@
 # The variant of os_tree that use rank instead of size
 # !/usr/bin/env python
 
-from rb_tree import rb_node, rb_tree
+from rb_tree import RbNode, RbTree
 
 
-class rank_node(rb_node):
+class rank_node(RbNode):
     def __init__(self, key, p, left, right, color, rank):
-        rb_node.__init__(self, key, p, left, right, color)
+        RbNode.__init__(self, key, p, left, right, color)
         self.rank = rank
 
     def update_rank_whole_tree(self, amount):
@@ -27,7 +27,7 @@ class rank_node(rb_node):
             y.decrease_all_successors(amount)
 
 
-class rank_tree(rb_tree):
+class rank_tree(RbTree):
     nil = rank_node(None, None, None, None, 1, 0)
     root = nil
 

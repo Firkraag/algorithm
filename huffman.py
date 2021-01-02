@@ -148,9 +148,11 @@ def decode_compact_prefix_code(store):
 
 
 def huffman_tenary(chars, freqs, m):
-    ''' generalize Huffman's algorithm to tenary codewords
+    """
+    generalize Huffman's algorithm to tenary codewords
     the parameter m is the number of symbols we use, eg, in
-    original huffman algorithm, we use 0 and 1, so m = 2'''
+    original huffman algorithm, we use 0 and 1, so m = 2
+    """
     n = len(chars)
     c = [0] * n
     for i in range(0, n):

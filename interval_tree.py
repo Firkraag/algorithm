@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from rb_tree import rb_node, rb_tree
+from rb_tree import RbNode, RbTree
 
 
 class interval(object):
@@ -9,9 +9,9 @@ class interval(object):
         self.high = high
 
 
-class interval_node(rb_node):
+class interval_node(RbNode):
     def __init__(self, key, p, left, right, color, interval, maximum):
-        rb_node.__init__(self, key, p, left, right, color)
+        RbNode.__init__(self, key, p, left, right, color)
         self.interval = interval
         self.maximum = maximum
 
@@ -40,7 +40,7 @@ class interval_node(rb_node):
                 return T.nil
 
 
-class interval_tree(rb_tree):
+class interval_tree(RbTree):
     nil = interval_node(None, None, None, None, 1, None, float("-Inf"))
     root = nil
 
@@ -150,8 +150,10 @@ class interval_tree(rb_tree):
         return x
 
     def closed_interval_search_minimum_low_end(self, interval):
-        '''given an interval, returns an interval over-
-        lapping i that has the minimum low endpoint, or T.nil if no such interval exists'''
+        """
+        given an interval, returns an interval over-
+        lapping i that has the minimum low endpoint, or T.nil if no such interval exists
+        """
         x = self.root
         overlap = False
         i = self.nil

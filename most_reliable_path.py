@@ -1,7 +1,8 @@
 from graph import max_priority_queue
 
+
 def most_reliable_path(G, r, s):
-    '''
+    """
     We are given a directed graph G = (V, E) on which
     each edge (u, v) that belongs to E has an associated
     value r(u, v), which is a real number in the range
@@ -16,7 +17,7 @@ def most_reliable_path(G, r, s):
      s: the source
      r: the function that returns the probability that the
      channel from u to v will not fail.
-    '''
+    """
     initialize_single_source(G, s)
     S = set()
     Q = max_priority_queue(G.vertices, 'r')
@@ -28,6 +29,7 @@ def most_reliable_path(G, r, s):
                 v.r = u.r * r(u, v)
                 v.p = u
                 Q.heap_increase_key(v.index, u.r * r(u, v))
+
 
 def initialize_single_source(G, s):
     for v in G.vertices:

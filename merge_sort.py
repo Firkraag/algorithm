@@ -77,7 +77,7 @@ def _merge_sort(array, left, right, merge_method):
         merge_method(array, left, mid, right)
 
 
-def merge_ins_sort(array, partition: int = 2):
+def merge_ins_sort_bottom_to_top(array, partition: int = 2):
     """
     Although merge sort runs faster than insertion sort asymptotically,
     the constant factors in insertion sort can make it faster in practice for small problem sizes on many machines.
@@ -106,7 +106,7 @@ def merge_ins_sort(array, partition: int = 2):
         sublist_number = sublist_number // 2
 
 
-def merge_ins_sort2(array, sublist_length):
+def merge_ins_sort_top_to_bottom(array, sublist_length):
     """
     Although merge sort runs faster than insertion sort asymptotically, the constant factors in insertion sort can make
     it faster in practice for small problem sizes on many machines.
@@ -121,10 +121,10 @@ def merge_ins_sort2(array, sublist_length):
     """
     n = len(array)
     assert 0 < sublist_length < n
-    _merge_ins_sort2(array, 0, n - 1, sublist_length)
+    _merge_ins_sort_top_to_bottom(array, 0, n - 1, sublist_length)
 
 
-def _merge_ins_sort2(array, start, end, sublist_length):
+def _merge_ins_sort_top_to_bottom(array, start, end, sublist_length):
     """
 
     :param array:
@@ -136,8 +136,8 @@ def _merge_ins_sort2(array, start, end, sublist_length):
     length = end - start + 1
     if length > sublist_length:
         mid = (start + end) // 2
-        _merge_ins_sort2(array, start, mid, sublist_length)
-        _merge_ins_sort2(array, mid + 1, end, sublist_length)
+        _merge_ins_sort_top_to_bottom(array, start, mid, sublist_length)
+        _merge_ins_sort_top_to_bottom(array, mid + 1, end, sublist_length)
         merge_with_sentinel(array, start, mid, end)
     else:
         insertion_sort(array, start, end)

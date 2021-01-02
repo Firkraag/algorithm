@@ -12,7 +12,7 @@ def vertical(a):
 
 
 def comparable(a, b, x):
-    '''Given two segments a and b that are comparable at x, determine whether a is above b or not. Assume that neither segment is vertical '''
+    """Given two segments a and b that are comparable at x, determine whether a is above b or not. Assume that neither segment is vertical """
     p1 = a[0]
     p2 = a[1]
     p3 = b[0]
@@ -153,7 +153,7 @@ class rb_tree(Tree):
         y.p = x
 
     def insert(self, z):
-        ''' the segment z will only be inserted when the left endpoint of z is being processed'''
+        """ the segment z will only be inserted when the left endpoint of z is being processed"""
         # this is the x_coordinate of the left endpoint of z
         x_coordinate = z[0][0]
         z = rb_node(z, None, None, None, 0)
@@ -295,7 +295,7 @@ class rb_tree(Tree):
 
 
 def any_segments_intersect(S):
-    '''This algorithm takes as input a set S of n line segments, returning the boolean value TRUE if any pair of segments in S intersects, and FALSE otherwise.'''
+    """This algorithm takes as input a set S of n line segments, returning the boolean value TRUE if any pair of segments in S intersects, and FALSE otherwise."""
     T = rb_tree()
     segment_list = []
     point_list = []

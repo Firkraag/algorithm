@@ -18,7 +18,7 @@ def Bellman_Ford(self, w, s):
     :param s:
     :return:
     """
-    initialize_signle_source(self, s)
+    initialize_single_source(self, s)
     for i in range(1, len(self.vertices)):
         for u, v in self.edges:
             relax(self, u, v, w)
@@ -28,26 +28,26 @@ def Bellman_Ford(self, w, s):
     return True
 
 
-def initialize_signle_source(self, s):
+def initialize_single_source(self, s):
     for v in self.vertices:
         v.d = float("Inf")
         v.p = None
     s.d = 0
 
 
-def relax(self, u, v, w):
+def relax(u, v, w):
     if v.d > u.d + w[u, v]:
         v.d = u.d + w[u, v]
         v.p = u
 
 
 def Dijkstra(self, w, s):
-    '''
+    """
     Dijkstra's algorithm solves the single-source shortest-paths problem
     on a weighted, directed graph G = (V, E) for the case in which all edge
     weights are nonnegative.
-    '''
-    initialize_signle_source(self, s)
+    """
+    initialize_single_source(self, s)
     S = set()
     Q = min_priority_queue(self.vertices, 'd')
     while Q.heap_size > 1:

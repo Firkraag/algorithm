@@ -5,7 +5,7 @@
 from tree import Node, Tree
 
 
-class rb_node(Node):
+class RbNode(Node):
     def __init__(self, key, p, left, right, color):
         Node.__init__(self, key, p, left, right)
         self.color = color
@@ -19,14 +19,14 @@ class rb_node(Node):
         return y
 
 
-class rb_tree(Tree):
-    nil = rb_node(None, None, None, None, 1)
+class RbTree(Tree):
+    nil = RbNode(None, None, None, None, 1)
     root = nil
 
     def __init__(self, values):
         if isinstance(values, list):
             for i in values:
-                self.insert(rb_node(i, None, None, None, 0))
+                self.insert(RbNode(i, None, None, None, 0))
         else:
             print("Not invalid argument")
 

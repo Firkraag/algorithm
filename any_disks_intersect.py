@@ -112,7 +112,7 @@ class rb_tree(Tree):
         y.p = x
 
     def insert(self, z):
-        ''' the disk z will only be inserted when the left endpoint of z is being processed'''
+        """ the disk z will only be inserted when the left endpoint of z is being processed"""
         # this is the x_coordinate of the left endpoint of z
         x_coordinate = z[0][0]
         z = rb_node(z, None, None, None, 0)

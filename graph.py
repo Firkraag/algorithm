@@ -180,11 +180,11 @@ class Graph(object):
                 print((v, u))
 
     def path_num(self, s, t):
-        '''
+        """
         A linear-time algorithm that takes as input a directed acyclic graph
         G = (V, E) and two vertices s and t, and returns the number of simple
         paths from s to t in G.
-        '''
+        """
         for u in self.vertices:
             u.color = 0
             u.num = 0
@@ -231,9 +231,11 @@ class Graph(object):
         u.f = time
 
     def simplified(self):
-        '''create a simplified graph that has the same strong
+        """
+        create a simplified graph that has the same strong
         connected components and component graph as G and that is as small 
-        as possible'''
+        as possible
+        """
         self.dfs()
         t = self.transpose()
         return t.simplified_dfs()
@@ -335,10 +337,12 @@ class Graph(object):
         return True
 
     def cut(self, x, y, w):
-        '''For a given edge (x, y) contained in some minimum spanning tree, 
+        """
+        For a given edge (x, y) contained in some minimum spanning tree,
         form a minimum spanning tree that contains (x, y) using a method like Prim's algorithm,
         and construct a cut (S, V - S) such that (x, y) is the light edge crossing
-        the cut, S = {u: u.root = x}'''
+        the cut, S = {u: u.root = x}
+        """
         for v in self.vertices:
             v.weight = float("Inf")
             v.p = None
@@ -396,9 +400,11 @@ class Graph(object):
         return A
 
     def Prim(self, w, r):
-        '''G.Prim(weight, root) -- Given weight function 
+        """
+        G.Prim(weight, root) -- Given weight function
         and an arbitrary vertex root of the graph G, 
-        compute minimum spanning tree using Prim's algorithm'''
+        compute minimum spanning tree using Prim's algorithm
+        """
         for v in self.vertices:
             v.weight = float("Inf")
             v.p = None
@@ -412,9 +418,9 @@ class Graph(object):
                     q.heap_decrease_key(v.index, w(u, v))
 
     #    def Prim_vEB(self, w, r, bound):
-    #        '''G.Prim(weight, root) -- Given weight function
+    #        """G.Prim(weight, root) -- Given weight function
     #        and an arbitrary vertex root of the graph G,
-    #        compute minimum spanning tree using Prim's algorithm'''
+    #        compute minimum spanning tree using Prim's algorithm"""
     #        for v in self.vertices:
     #            v.weight = bound - 1
     #            v.p = None
@@ -432,7 +438,7 @@ class Graph(object):
     #                    v.weight = w(u, v)
     #                    t.insert(v)
     def Bellman_Ford(self, w, s):
-        '''
+        """
         The Bellman-Ford algorithm solves the single-source
         shortest-paths problem in the general case in which edge
         weights may be negative.
@@ -441,7 +447,7 @@ class Graph(object):
         no solution exists.
         If there is no such cycle, this function returns True and produces
         the shortest paths and their weights.
-        '''
+        """
         self.initialize_signle_source(s)
         for i in range(1, len(self.vertices)):
             for u, v in self.edges:
@@ -463,14 +469,14 @@ class Graph(object):
             v.p = u
 
     def Bellman_Ford_modified(self, w, s):
-        '''
+        """
         Given a weighted, directed graph G = (V, E) with
         no negative-weight cycles, let m be the maximum
         over all vertices v of the minimum number of edges
         in a shortest path from the source s to v. This variant to
         the Bellman-Ford algorithm terminates in m + 1 passes, even
         if m is not known in advance.
-        '''
+        """
         modified = True
         number = 0
         self.initialize_signle_source(s)
@@ -497,10 +503,10 @@ class Graph(object):
             return 0
 
     def dag_shortest_paths(self, w, s):
-        '''
+        """
         compute shortest paths from a single source
         s for a directed acyclic graph with a weight function w
-        '''
+        """
         l = self.topological_sort()
         self.initialize_signle_source(s)
         for u in l:
@@ -508,7 +514,7 @@ class Graph(object):
                 self.relax(u, v, w)
 
     def dag_shortest_paths_modified(self, s):
-        '''
+        """
         In the PERT chart analysis, vertices repre
         sent jobs and edges represent sequencing
         contraints; that is, edge (u, v) would
@@ -522,7 +528,7 @@ class Graph(object):
         vertices in linear time.
         This function return a list of vertices in
         a longest path
-        '''
+        """
         sink = Vertex("sink")
         vertices = self.vertices.union({sink})
         edges = self.edges.union(set([(v, sink) for v in G.vertices]))
@@ -536,10 +542,10 @@ class Graph(object):
         return l[::-1]
 
     def total_path_number(self):
-        '''
+        """
         A algorithm to count the total number of paths in
         a directed acyclic graph
-        '''
+        """
         number = 0
         self._total_path_number_dfs()
         for v in self.vertices:
@@ -572,11 +578,11 @@ class Graph(object):
         u.f = time
 
     def Dijkstra(self, w, s):
-        '''
+        """
         Dijkstra's algorithm solves the single-source shortest-paths problem
         on a weighted, directed graph G = (V, E) for the case in which all edge
         weights are nonnegative.
-        '''
+        """
         self.initialize_signle_source(s)
         S = set()
         Q = min_priority_queue(self.vertices, 'd')
@@ -590,11 +596,11 @@ class Graph(object):
                     Q.heap_decrease_key(v.index, u.d + w(u, v))
 
     def Dijkstra_modified(self, w, s, W):
-        '''
+        """
         A algorithm to the the case when the values of 
         the weight function w is in the range {0, 1, ..., W}
         for some nonnegative integer W.
-        '''
+        """
         self.initialize_signle_source(s)
         A = []
         for i in range(0, W * len(self.vertices) + 1):
@@ -621,14 +627,14 @@ class Graph(object):
                     v.p = u
 
     def single_edge(self):
-        '''
+        """
         An algorithm that given an adjacency-list representation
         of a multigraph G = (V, E), compute the adjacency-list 
         representation of the "equivalent" undirected graph 
         G2 = (V, E2), where E2 consists of
         the edges in E with all multiple edges between two vertices
         replaced by a single edge and with all self-loops removed
-        '''
+        """
         return Graph(self.vertices, self.edges, directed=False)
 
     def union(self, G2):
@@ -640,12 +646,12 @@ class Graph(object):
         return Graph(vertices, edges, directed=self.directed)
 
     def square(self):
-        '''
+        """
         The square of a directed graph G = (V, E) is the graph 
         G^2 = (V, E^2) such that (u, v) belongs to E^2 
         if and only if G contains a path with at most 
         two edges between u and v.
-        '''
+        """
         sqrt = self.copy()
         for u in self.vertices:
             for v in self.adj[u]:
@@ -767,10 +773,10 @@ class max_priority_queue(max_heap):
 
 class min_heap(list):
     def __init__(self, data, attr):
-        '''
+        """
         data: input data for heap
         attr: the attribute of input date used as compare key
-        '''
+        """
         list.__init__(self, data)
         for i in range(0, len(data)):
             self[i].index = i

@@ -10,3 +10,4 @@ class TestGcd(TestCase):
         self.assertEqual(gcd(10, 3), 1)
         self.assertEqual(gcd(10, 4), 2)
         self.assertEqual(gcd(10, 1), 1)
+        self.assertEqual(gcd(10, 5), 5)
