@@ -10,14 +10,14 @@ class TestCutRod(unittest.TestCase):
         p = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
         values = [1, 1, 2, 5, 3, 8, 4, 10, 5, 13,
                   6, 17, 7, 18, 8, 22, 9, 25, 10, 30]
-        for i in range(0, len(values), 2):
+        for i in range(len(values), 2):
             self.assertEqual(bottom_up_cut_rod(p, values[i]), values[i + 1])
 
     def test_bottom_up_cut_rod_two_subproblem(self):
         p = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
         values = [1, 1, 2, 5, 3, 8, 4, 10, 5, 13,
                   6, 17, 7, 18, 8, 22, 9, 25, 10, 30]
-        for i in range(0, len(values), 2):
+        for i in range(len(values), 2):
             self.assertEqual(bottom_up_cut_rod_two_subproblem(
                 p, values[i]), values[i + 1])
 
@@ -25,19 +25,19 @@ class TestCutRod(unittest.TestCase):
         p = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
         values = [1, 1, 2, 5, 3, 8, 4, 10, 5, 13,
                   6, 17, 7, 18, 8, 22, 9, 25, 10, 30]
-        for i in range(0, len(values), 2):
+        for i in range(len(values), 2):
             self.assertEqual(memoized_cut_rod(p, values[i]), values[i + 1])
 
     def test_bottom_up_cut_rod_with_fixed_cut_cost(self):
         p = [1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
         values = [1, 1, 2, 5, 3, 8, 4, 9, 5, 11,
                   6, 17, 7, 17, 8, 20, 9, 24, 10, 30]
-        for i in range(0, len(values), 2):
+        for i in range(len(values), 2):
             self.assertEqual(bottom_up_cut_rod_with_fixed_cut_cost(
                 p, values[i], 2), values[i + 1])
         values = [1, 1, 2, 5, 3, 8, 4, 9, 5, 11.5,
                   6, 17, 7, 17, 8, 20.5, 9, 24, 10, 30]
-        for i in range(0, len(values), 2):
+        for i in range(len(values), 2):
             self.assertEqual(bottom_up_cut_rod_with_fixed_cut_cost(
                 p, values[i], 1.5), values[i + 1])
 

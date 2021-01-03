@@ -17,7 +17,7 @@ def y_sort(S):
     YY = MaxHeap(Y)
     YY.heapsort()
     Y = []
-    for i in range(0, len(YY)):
+    for i in range(len(YY)):
         Y.append((YY[i][1], YY[i][0]))
     return Y
 
@@ -29,7 +29,7 @@ def distance(p1, p2):
 def brute_force(P):
     P = list(P)
     d = float("Inf")
-    for i in range(0, len(P)):
+    for i in range(len(P)):
         for j in range(i + 1, len(P)):
             d = min(d, distance(P[i], P[j]))
     return d
@@ -53,7 +53,7 @@ def closest_points_aux(P, X, Y):
     l = X[half - 1][0]
     YL = []
     YR = []
-    for i in range(0, len(Y)):
+    for i in range(len(Y)):
         if Y[i] in PL:
             YL.append(Y[i])
         else:
@@ -62,11 +62,11 @@ def closest_points_aux(P, X, Y):
     dr = closest_points_aux(PR, XR, YR)
     d1 = min(dl, dr)
     YY = []
-    for i in range(0, len(Y)):
+    for i in range(len(Y)):
         if abs(Y[i][0] - l) < d1:
             YY.append(Y[i])
     d2 = float("Inf")
-    for i in range(0, len(YY)):
+    for i in range(len(YY)):
         for j in range(1, 10):
             if i + j < len(YY):
                 d2 = min(distance(YY[i], YY[i + j]), d2)

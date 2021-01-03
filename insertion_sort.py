@@ -31,27 +31,21 @@ def insert_with_binary_search(array, right_index):
     array[index] = x
 
 
-def _insertion_sort_recursive(array, length, insert_method):
-    if length > 1:
-        _insertion_sort_recursive(array, length - 1, insert_method)
-        insert_method(array, length - 1)
-
-
-def insertion_sort(array, left=0, right=None, insert_method=insert_with_linear_search):
+def insertion_sort(array, insert_method=insert_with_linear_search):
     """
     inplace sort O(n ^ 2) sort
     :param array:
     :param insert_method:
-    :param left:
-    :param right:
     :return:
     """
-    if right is None:
-        right = len(array)
-    else:
-        right += 1
-    for j in range(left, right):
+    for j in range(len(array)):
         insert_method(array, j)
+
+
+def _insertion_sort_recursive(array, length, insert_method):
+    if length > 1:
+        _insertion_sort_recursive(array, length - 1, insert_method)
+        insert_method(array, length - 1)
 
 
 def insertion_sort_recursive(array, insert_method=insert_with_linear_search):

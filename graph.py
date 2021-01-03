@@ -254,7 +254,7 @@ class Graph(object):
                 stack = []
                 cc = cc + 1
                 self.simplified_dfs_visit(u, stack, s)
-                for i in range(0, len(stack) - 1):
+                for i in range(len(stack) - 1):
                     s._addEdge(stack[i], stack[i + 1])
                 if len(stack) > 1:
                     s._addEdge(stack[len(stack) - 1], stack[0])
@@ -331,7 +331,7 @@ class Graph(object):
     def semiconnected(self):
         cg = self.component_graph()
         vertices_list = sorted(cg.vertices, key=lambda u: u.key, reverse=False)
-        for i in range(0, len(vertices_list) - 1):
+        for i in range(len(vertices_list) - 1):
             if vertices_list[i + 1] not in cg.adj[vertices_list[i]]:
                 return False
         return True
@@ -603,7 +603,7 @@ class Graph(object):
         """
         self.initialize_signle_source(s)
         A = []
-        for i in range(0, W * len(self.vertices) + 1):
+        for i in range(W * len(self.vertices) + 1):
             A.append(set())
         A[0].add(s)
         i = 0
@@ -696,7 +696,7 @@ class dsf_node(dsf.node):
 class max_heap(list):
     def __init__(self, data, attr):
         list.__init__(self, data)
-        for i in range(0, len(data)):
+        for i in range(len(data)):
             self[i].index = i
         self.length = len(data)
         self.attr = attr
@@ -778,7 +778,7 @@ class min_heap(list):
         attr: the attribute of input date used as compare key
         """
         list.__init__(self, data)
-        for i in range(0, len(data)):
+        for i in range(len(data)):
             self[i].index = i
         self.attr = attr
         self.length = len(data)

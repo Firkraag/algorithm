@@ -65,7 +65,7 @@ def initialize_simplex(A, b, c):
     m = len(b)
     n = len(c)
     minimum = float("Inf")
-    for i in range(0, m):
+    for i in range(m):
         if minimum > b[i]:
             k = i + 1
             minimum = b[i]
@@ -98,7 +98,7 @@ def initialize_simplex(A, b, c):
     A = new_A
     b = new_b
     c = new_c
-    N = set(range(0, n + 1))
+    N = set(range(n + 1))
     B = set(range(n + 1, n + m + 1))
     v = 0
     l = n + k

@@ -95,10 +95,10 @@ class tenary_node(object):
 def huffman(chars, freqs):
     n = len(chars)
     c = [0] * n
-    for i in range(0, n):
+    for i in range(n):
         c[i] = character(chars[i], freqs[i])
     q = Min_priority_queue(c)
-    for i in range(0, n - 1):
+    for i in range(n - 1):
         x = q.heap_extract_min()
         y = q.heap_extract_min()
         q.min_heap_insert(node(x, y, x.freq + y.freq))
@@ -134,7 +134,7 @@ def compact_store_prefix_code_aux(node, store, string):
 def decode_compact_prefix_code(store):
     code = ''
     pos = 0
-    for i in range(0, len(store)):
+    for i in range(len(store)):
         last_len = len(code)
         char = store[i][1][0]
         for pos in range(last_len - 1, -1, -1):
@@ -155,7 +155,7 @@ def huffman_tenary(chars, freqs, m):
     """
     n = len(chars)
     c = [0] * n
-    for i in range(0, n):
+    for i in range(n):
         c[i] = character(chars[i], freqs[i])
     q = Min_priority_queue(c)
     while q.heap_size >= m:

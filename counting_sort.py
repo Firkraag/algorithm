@@ -1,8 +1,8 @@
 def counting_sort(A, B, k):
     C = []
-    for i in range(0, k + 1):
+    for i in range(k + 1):
         C.append(0)
-    for j in range(0, len(A)):
+    for j in range(len(A)):
         C[A[j]] = C[A[j]] + 1
     for i in range(1, k + 1):
         C[i] = C[i] + C[i - 1]

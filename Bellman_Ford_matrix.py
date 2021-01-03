@@ -18,8 +18,8 @@ def Bellman_Ford_matrix(W, s):
 def extend_shortest_paths(L, W):
     n = W.shape[0]
     LW = [float("Inf")] * n
-    for j in range(0, n):
-        for k in range(0, n):
+    for j in range(n):
+        for k in range(n):
             LW[j] = min(LW[j], L[k] + W[k, j])
     return LW
 
@@ -27,7 +27,7 @@ def extend_shortest_paths(L, W):
 def slow_all_pairs_shortest_paths(W, s):
     n = W.shape[0]
     L = [0] * n
-    for i in range(0, n):
+    for i in range(n):
         if i + 1 == s:
             L[i] = 0
         else:
@@ -43,8 +43,8 @@ def extend_shortest_paths_with_predecessor_subgraph(s, L, P, W):
     n = W.shape[0]
     LW = [float("Inf")] * n
     PP = [None] * n
-    for j in range(0, n):
-        for k in range(0, n):
+    for j in range(n):
+        for k in range(n):
             if LW[j] > L[k] + W[k, j]:
                 LW[j] = L[k] + W[k, j]
                 PP[j] = k + 1

@@ -7,7 +7,7 @@ def activity_selection(s, f, n):
     s = [float("-Inf")] + s[0:n] + [float("Inf")]
     f = [float("-Inf")] + f[0:n] + [float("Inf")]
     for l in range(3, n + 3):
-        for i in range(0, n + 3 - l):
+        for i in range(n + 3 - l):
             j = i + l - 1
             print("i = {}, j = {}".format(i, j))
             for k in range(i + 1, j):
@@ -34,7 +34,7 @@ def activity_selection_with_weight(s, f, v, n):
     s = [float("-Inf")] + s[0:n] + [float("Inf")]
     f = [float("-Inf")] + f[0:n] + [float("Inf")]
     for l in range(3, n + 3):
-        for i in range(0, n + 3 - l):
+        for i in range(n + 3 - l):
             j = i + l - 1
             for k in range(i + 1, j):
                 if f[i] <= s[k] and f[k] <= s[j]:

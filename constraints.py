@@ -50,12 +50,12 @@ def difference_constraints(A, b):
     vertices = []
     edges = []
     weights = dict()
-    for i in range(0, vertices_num + 1):
+    for i in range(vertices_num + 1):
         vertices.append(Vertex(i))
     for i in range(1, vertices_num + 1):
         edges.append((vertices[0], vertices[i]))
         weights[(vertices[0], vertices[i])] = 0
-    for i in range(0, row):
+    for i in range(row):
         u = A[i].index(-1) + 1
         v = A[i].index(1) + 1
         edges.append((vertices[u], vertices[v]))
@@ -79,12 +79,12 @@ def difference_constraints_with_arbitrary_weight(A, b):
     edges = []
     weights = dict()
     distribute = sample(range(-10, 10), vertices_num)
-    for i in range(0, vertices_num + 1):
+    for i in range(vertices_num + 1):
         vertices.append(Vertex(i))
     for i in range(1, vertices_num + 1):
         edges.append((vertices[0], vertices[i]))
         weights[(vertices[0], vertices[i])] = distribute[i - 1]
-    for i in range(0, row):
+    for i in range(row):
         u = A[i].index(-1) + 1
         v = A[i].index(1) + 1
         edges.append((vertices[u], vertices[v]))
@@ -103,12 +103,12 @@ def equality_constraints(A, b):
     vertices = []
     edges = []
     weights = dict()
-    for i in range(0, vertices_num + 1):
+    for i in range(vertices_num + 1):
         vertices.append(Vertex(i))
     for i in range(1, vertices_num + 1):
         edges.append((vertices[0], vertices[i]))
         weights[(vertices[0], vertices[i])] = 0
-    for i in range(0, row):
+    for i in range(row):
         u = A[i].index(-1) + 1
         v = A[i].index(1) + 1
         edges.append((vertices[u], vertices[v]))
@@ -131,7 +131,7 @@ def difference_constraints_without_aux_vertex(A, b):
     weights = dict()
     for i in range(vertices_num):
         vertices.append(Vertex(i + 1))
-    for i in range(0, row):
+    for i in range(row):
         u = A[i].index(-1)
         v = A[i].index(1)
         edges.append((vertices[u], vertices[v]))
@@ -167,10 +167,10 @@ def single_variable_constraints(A, b):
     vertices = []
     edges = []
     weights = dict()
-    for i in range(0, vertices_num + 1):
+    for i in range(vertices_num + 1):
         vertices.append(Vertex(i))
-    for i in range(0, row):
-        for j in range(0, len(A[i])):
+    for i in range(row):
+        for j in range(len(A[i])):
             if A[i][j] == 1:
                 edges.append((vertices[0], vertices[j + 1]))
                 weights[(vertices[0], vertices[j + 1])] = b[i]
