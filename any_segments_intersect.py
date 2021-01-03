@@ -73,7 +73,7 @@ class rb_node(Node):
     def __init__(self, key, p, left, right, color):
         Node.__init__(self, key, p, left, right)
         self.color = color
-        if key != None:
+        if key is not None:
             key.pointer = self
 
     def minimum(self, nil):
@@ -312,7 +312,7 @@ def any_segments_intersect(S):
             T.insert(s)
             a = T.above(s)
             b = T.below(s)
-            if (a != None and segments_intersect(a[0], a[1], s[0], s[1])) or (b != None and segments_intersect(b[0], b[1], s[0], s[1])):
+            if (a is not None and segments_intersect(a[0], a[1], s[0], s[1])) or (b is not None and segments_intersect(b[0], b[1], s[0], s[1])):
                 return True
         if p[1] == 1:
             s = p.segment
@@ -322,7 +322,7 @@ def any_segments_intersect(S):
 #            print( b)
 #            print( type(a))
 #            print( type(b))
-            if a != None and b != None and segments_intersect(a[0], a[1], b[0], b[1]):
+            if a is not None and b is not None and segments_intersect(a[0], a[1], b[0], b[1]):
                 return True
             T.delete(s)
     return False

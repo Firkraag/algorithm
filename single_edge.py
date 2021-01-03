@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
-class node(object):
+class node:
     def __init__(self, key, right):
         self.right = right
         self.key = key
 
 
-class graph(object):
+class graph:
     def __init__(self, data, option=0):
         if option == 0:
             self.vertices_number = len(data)

@@ -18,7 +18,7 @@ class TestJohnson(unittest.TestCase):
         for i, j in zip(edges, weight):
             w[i] = j
         D = Johnson(g, w)
-        print(D)
+        # print(D)
         a1 = Vertex(1)
         a2 = Vertex(2)
         a3 = Vertex(3)
@@ -33,4 +33,4 @@ class TestJohnson(unittest.TestCase):
         for i, j in zip(edges, weight):
             w[i] = j
         D = Johnson(g, w)
-        print(D)
+        # print(D)

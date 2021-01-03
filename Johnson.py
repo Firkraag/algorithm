@@ -21,7 +21,7 @@ def Bellman_Ford(self, w, s):
     initialize_single_source(self, s)
     for i in range(1, len(self.vertices)):
         for u, v in self.edges:
-            relax(self, u, v, w)
+            relax(u, v, w)
     for u, v in self.edges:
         if v.d > u.d + w[(u, v)]:
             return False

@@ -3,7 +3,7 @@
 import random
 
 
-class Node(object):
+class Node:
     def __init__(self, key, p, left, right):
         self.key = key
         self.p = p
@@ -87,7 +87,7 @@ class Node(object):
             return x.p
 
 
-class Tree(object):
+class Tree:
     root = None
 
     def __init__(self, values):

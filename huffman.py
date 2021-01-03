@@ -11,7 +11,7 @@ class Min_priority_queue(MinPriorityQueue):
         self.heap_decrease_key(self.heap_size - 1, key)
 
 
-class character(object):
+class character:
     def __init__(self, char, freq, sibling=None):
         self.char = char
         self.freq = freq
@@ -38,7 +38,7 @@ class character(object):
             return True
 
 
-class node(object):
+class node:
     def __init__(self, left, right, freq):
         self.left = left
         self.right = right
@@ -65,7 +65,7 @@ class node(object):
             return True
 
 
-class tenary_node(object):
+class tenary_node:
     def __init__(self, freq, child=None, sibling=None):
         self.freq = freq
         self.child = child

@@ -3,7 +3,7 @@
 from heap import MaxHeap
 
 
-class vector(object):
+class vector:
     def __init__(self, p1, p2, p1_index=0, p2_index=0):
         # gurantee that the polar angle of this Vector with respect to the origin point is in the range [0, pi)
         if p1[1] > p2[1]:

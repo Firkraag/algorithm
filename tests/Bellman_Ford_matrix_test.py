@@ -18,5 +18,5 @@ class TestBellmanFordMatrix(unittest.TestCase):
                          [float("Inf"), float("Inf"), 0, -3., 9.], [float("Inf"), -2., float("Inf"), 0, float("Inf")],
                          [2., float("Inf"), float("Inf"), 7., 0]])
         L = slow_all_pairs_shortest_paths(W, 1)
-        print(L)
+        # print(L)
         self.assertEqual(L, [0, 2.0, 7.0, 4.0, -2.0])

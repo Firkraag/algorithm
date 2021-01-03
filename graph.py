@@ -3,7 +3,7 @@ import disjoint_sets_forest as dsf
 import sys
 
 
-class Vertex(object):
+class Vertex:
     def __init__(self, key):
         self.key = key
 
@@ -22,7 +22,7 @@ class Vertex(object):
             print(v, )
 
 
-class Graph(object):
+class Graph:
     def __init__(self, vertices=tuple(), edges=tuple(), directed=True):
         self.directed = directed
         self.vertices = set(vertices)
@@ -391,7 +391,7 @@ class Graph(object):
     def Kruskal(self, w):
         A = set()
         for v in self.vertices:
-            dsf_node(v)
+            DfsNode(v)
         #        ls = self.alledges_undirected_dfs()
         for u, v in sorted(self.edges, key=lambda x: w(x[0], x[1]), reverse=False):
             if u.index.find_set() != v.index.find_set():
@@ -536,7 +536,7 @@ class Graph(object):
         Ga.dag_shortest_paths(lambda u, v: -u.weight, s)
         u = sink
         l = []
-        while u.p != None:
+        while u.p is not None:
             l.append(u.p)
             u = u.p
         return l[::-1]
@@ -684,7 +684,7 @@ class Graph(object):
                 self._mht_aux(v)
 
 
-class dsf_node(dsf.node):
+class DfsNode(dsf.node):
     def __init__(self, key):
         self.key = key
         key.index = self

@@ -3,7 +3,7 @@
 from rb_tree import RbNode, RbTree
 
 
-class interval(object):
+class interval:
     def __init__(self, low, high):
         self.low = low
         self.high = high

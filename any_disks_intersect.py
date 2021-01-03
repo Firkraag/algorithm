@@ -32,7 +32,7 @@ class rb_node(Node):
     def __init__(self, key, p, left, right, color):
         Node.__init__(self, key, p, left, right)
         self.color = color
-        if key != None:
+        if key is not None:
             key.pointer = self
 
     def minimum(self, nil):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-class node(object):
+class node:
     def __init__(self, key):
         self.key = key
         # key.index = self
