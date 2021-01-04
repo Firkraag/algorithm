@@ -1,6 +1,10 @@
 from queue import Queue
 import disjoint_sets_forest as dsf
 import sys
+from typing import Iterable, Optional, Tuple, Set, Dict
+from enum import Enum
+
+Color = Enum('Color', ('WHITE', 'GREY', 'BLACK'))
 
 
 class Vertex:
@@ -8,46 +12,47 @@ class Vertex:
         self.key = key
 
     def __repr__(self):
-        return str(self.key)
+        return f"Vertex({self.key})"
 
     def print_path(self, v):
-        """print( out the vertices on a shortest path from s to)
-        v, assuming that BFS has already computed a breadth-first tree"""
+        """
+        print out the vertices on a shortest path from s to
+        v, assuming that BFS has already computed a breadth-first tree
+        """
         if self == v:
-            print(self, )
+            print(self)
         elif v.p is None:
             print("No path from {} to {} exists".format(self.key, v.key))
         else:
             self.print_path(v.p)
-            print(v, )
+            print(v)
+
+
+Vertices = Optional[Iterable[Vertex]]
+Edge = Tuple[Vertex, Vertex]
+Edges = Optional[Iterable[Edge]]
 
 
 class Graph:
-    def __init__(self, vertices=tuple(), edges=tuple(), directed=True):
-        self.directed = directed
-        self.vertices = set(vertices)
-        self.edges = set()
-        self.adj = dict()
-        for u in vertices:
+    def __init__(self, vertices: Optional[Vertices] = None,
+                 edges: Optional[Edges] = None, directed: bool = True):
+        self.directed: bool = directed
+        self.vertices: Set[Vertex] = set() if vertices is None else set(vertices)
+        self.edges: Set[Edge] = set()
+        self.adj: Dict[Vertex, Set[Vertex]] = dict()
+        self._time: int = 0
+        for u in self.vertices:
             self.adj[u] = set()
-        for u, v in edges:
-            self._addEdge(u, v)
+        if edges is not None:
+            for u, v in edges:
+                self._add_edge(u, v)
 
-    def __eq__(self, G2):
-        G1 = self
-        if G1.directed != G2.directed:
-            return False
-        elif G1.vertices != G2.vertices:
-            return False
-        elif G1.edges != G2.edges:
-            return False
-        else:
-            for u in G1.vertices:
-                if G1.adj[u] != G2.adj[u]:
-                    return False
-            return True
+    def __eq__(self, graph2: 'Graph'):
+        graph1 = self
+        return (graph1.directed == graph2.directed) and (graph1.vertices == graph2.vertices) and (
+                graph1.edges == graph2.edges)
 
-    def _addEdge(self, u, v):
+    def _add_edge(self, u: Vertex, v: Vertex):
         if self.directed:
             self.adj[u].add(v)
             self.edges.add((u, v))
@@ -57,94 +62,87 @@ class Graph:
             self.adj[v].add(u)
             self.edges.add((v, u))
 
-    def _addVertex(self, u, edges=tuple()):
+    def _add_vertex(self, u: Vertex, edges: Optional[Edges] = None):
         self.vertices.add(u)
-        for u, v in edges:
-            self._addEdge(u, v)
+        if edges is not None:
+            for u, v in edges:
+                self._add_edge(u, v)
 
     def copy(self):
         return Graph(self.vertices, self.edges, self.directed)
 
     def transpose(self):
-        t = Graph(self.vertices)
-        for u in self.vertices:
-            for v in self.adj[u]:
-                t._addEdge(v, u)
-        return t
+        return Graph(self.vertices, [(v, u) for u, v in self.edges], self.directed)
 
-    def bfs(self, s):
+    def bfs(self, s: Vertex):
         for u in self.vertices:
-            u.d = float("Inf")
-            u.color = 0
-            u.p = None
-        s.color = 1
-        s.d = 0
-        s.p = None
-        q = Queue(2 * len(self.vertices))
-        q.put(s)
-        while not q.empty():
-            u = q.get()
+            u.distance = float("Inf")
+            u.color = Color.WHITE
+            u.parent = None
+        s.color = Color.GREY
+        s.distance = 0
+        s.parent = None
+        queue = Queue()
+        queue.put(s)
+        while not queue.empty():
+            u = queue.get()
             for v in self.adj[u]:
-                if v.color == 0:
-                    v.color = 1
-                    v.d = u.d + 1
-                    v.p = u
-                    q.put(v)
-            u.color = 2
+                if v.color == Color.WHITE:
+                    v.color = Color.GREY
+                    v.distance = u.distance + 1
+                    v.parent = u
+                    queue.put(v)
+            u.color = Color.BLACK
 
     def dfs(self):
-        global time
+        self._time = 0
         for u in self.vertices:
-            u.color = 0
+            u.color = Color.WHITE
             u.p = None
-        time = 0
         for u in self.vertices:
-            if u.color == 0:
+            if u.color == Color.WHITE:
                 self._dfs_visit(u)
 
-    def _dfs_visit(self, u):
-        global time
-        time = time + 1
-        u.d = time
-        u.color = 1
+    def _dfs_visit(self, u: Vertex):
+        self._time += 1
+        u.d = self._time
+        u.color = Color.GREY
         for v in self.adj[u]:
-            if v.color == 0:
+            if v.color == Color.WHITE:
                 v.p = u
                 self._dfs_visit(v)
-        u.color = 2
-        time = time + 1
-        u.f = time
+        u.color = Color.BLACK
+        self._time += 1
+        u.f = self._time
 
-    def isCyclic(self):
-        global time
+    def is_cyclic(self):
         for u in self.vertices:
-            u.color = 0
-            u.p = None
-        time = 0
+            u.color = Color.WHITE
         for u in self.vertices:
-            if u.color == 0:
+            if u.color == Color.WHITE:
                 if self._is_cyclic_aux(u):
                     return True
         return False
 
     def _is_cyclic_aux(self, u):
-        global time
-        time = time + 1
-        u.d = time
-        u.color = 1
+        u.color = Color.GREY
         for v in self.adj[u]:
-            if v.color == 0:
-                v.p = u
+            if v.color == Color.WHITE:
                 if self._is_cyclic_aux(v):
                     return True
-            elif v.color == 1:
+            elif v.color == Color.GREY:
                 return True
-        u.color = 2
-        time = time + 1
-        u.f = time
+        u.color = Color.BLACK
         return False
 
     def topological_sort(self):
+        """
+        Perform topological sort for dag
+
+        A topological sort of a dag(directed acyclic graph) G = (V, E) is a linear ordering of all the vertices
+        such that if G contains an edge (u, v), then u appears before v in the ordering.
+        """
+        assert (not self.is_cyclic()) and self.directed
         self.dfs()
         return sorted(self.vertices, key=lambda x: x.f, reverse=True)
 
@@ -255,9 +253,9 @@ class Graph:
                 cc = cc + 1
                 self.simplified_dfs_visit(u, stack, s)
                 for i in range(len(stack) - 1):
-                    s._addEdge(stack[i], stack[i + 1])
+                    s._add_edge(stack[i], stack[i + 1])
                 if len(stack) > 1:
-                    s._addEdge(stack[len(stack) - 1], stack[0])
+                    s._add_edge(stack[len(stack) - 1], stack[0])
         return s
 
     def simplified_dfs_visit(self, u, stack, s):
@@ -276,7 +274,7 @@ class Graph:
                     st = status[(v.cc, u.cc)]
                 except KeyError:
                     status[(v.cc, u.cc)] = 1
-                    s._addEdge(v, u)
+                    s._add_edge(v, u)
         u.color = 2
         time = time + 1
         u.f = time
@@ -302,7 +300,7 @@ class Graph:
             if u.color == 0:
                 cc = cc + 1
                 vertices_list.append(Vertex(cc))
-                cg._addVertex(vertices_list[cc - 1])
+                cg._add_vertex(vertices_list[cc - 1])
                 t.component_graph_dfs_visit(u)
         return cg
 
@@ -321,7 +319,7 @@ class Graph:
                     st = status[(v.cc, u.cc)]
                 except KeyError:
                     status[(v.cc, u.cc)] = 1
-                    cg._addEdge(
+                    cg._add_edge(
                         vertices_list[v.cc - 1],
                         vertices_list[u.cc - 1])
         u.color = 2
@@ -656,7 +654,7 @@ class Graph:
         for u in self.vertices:
             for v in self.adj[u]:
                 for w in self.adj[v]:
-                    sqrt._addEdge(u, w)
+                    sqrt._add_edge(u, w)
         return sqrt
 
     def height(self, u):

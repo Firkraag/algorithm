@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 import unittest
+from typing import List
 from graph import Vertex, Graph
 
 
 class TestGraph(unittest.TestCase):
     def setUp(self):
-        self.graphs = []
+        self.graphs: List[Graph] = []
         v1 = Vertex(1)
         v2 = Vertex(2)
         v3 = Vertex(3)
@@ -29,7 +30,8 @@ class TestGraph(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def _buildGraph(self, keys, pairs, directed):
+    @staticmethod
+    def _build_graph(cls, keys, pairs, directed):
         d = dict()
         vertices = [None] * len(keys)
         edges = [None] * len(pairs)
@@ -63,46 +65,48 @@ class TestGraph(unittest.TestCase):
         #        print()
         g.bfs(s)
         #    g.print(Vertices())
-        self.assertEqual(s.d, 0)
-        self.assertEqual(r.d, 1)
-        self.assertEqual(v.d, 2)
-        self.assertEqual(w.d, 1)
-        self.assertEqual(t.d, 2)
-        self.assertEqual(x.d, 2)
-        self.assertEqual(u.d, 3)
-        self.assertEqual(y.d, 3)
+        self.assertEqual(s.distance, 0)
+        self.assertEqual(r.distance, 1)
+        self.assertEqual(v.distance, 2)
+        self.assertEqual(w.distance, 1)
+        self.assertEqual(t.distance, 2)
+        self.assertEqual(x.distance, 2)
+        self.assertEqual(u.distance, 3)
+        self.assertEqual(y.distance, 3)
 
-    def testDfs(self):
+    # def testDfs(self):
+    #     s = Vertex('s')
+    #     v = Vertex('v')
+    #     z = Vertex('z')
+    #     w = Vertex('w')
+    #     y = Vertex('y')
+    #     x = Vertex('x')
+    #     t = Vertex('t')
+    #     u = Vertex('u')
+    #     # edges_list = [(z, w), (s, w), (y, w),
+    #     #               (x, ), (x, ), (z, ), (v, u), (v, t)]
+    #     # vertices = (s, v, z, w, y, x, t, u)
+    #     # map(
+    #     #     lambda vertex, edges:
+    #     #           map(lambda vertex, edge:
+    #     #               vertex.addEdge(edge),
+    #     #               zip([vertex] * len(edges) , edges)),
+    #     #     zip(vertices, edges_list))
+    #     vertices = [s, v, z, w, y, x, t, u]
+    #     edges = [(y, x), (x, z), (z, y), (z, w), (w, x), (s, z),
+    #              (s, w), (v, w), (v, s), (t, v), (t, u), (u, v), (u, t)]
+    #     g = Graph(vertices, edges)
+    #     g.dfs()
+    #     # vertices = (s, v, z, w, y, x, t, u)
+
+    def testIsCyclic(self):
         s = Vertex('s')
         v = Vertex('v')
         z = Vertex('z')
-        w = Vertex('w')
-        y = Vertex('y')
-        x = Vertex('x')
-        t = Vertex('t')
-        u = Vertex('u')
-        # edges_list = [(z, w), (s, w), (y, w),
-        #               (x, ), (x, ), (z, ), (v, u), (v, t)]
-        # vertices = (s, v, z, w, y, x, t, u)
-        # map(
-        #     lambda vertex, edges:
-        #           map(lambda vertex, edge:
-        #               vertex.addEdge(edge),
-        #               zip([vertex] * len(edges) , edges)),
-        #     zip(vertices, edges_list))
-        vertices = [s, v, z, w, y, x, t, u]
-        edges = [(y, x), (x, z), (z, y), (z, w), (w, x), (s, z),
-                 (s, w), (v, w), (v, s), (t, v), (t, u), (u, v), (u, t)]
-        g = Graph(vertices, edges)
-        g.dfs()
-        vertices = (s, v, z, w, y, x, t, u)
+        vertices = [s, v, z]
+        self.assertFalse(Graph(vertices, [(s, v), (v, z)]).is_cyclic())
+        self.assertTrue(Graph(vertices, [(s, v), (v, z), (z, s)]).is_cyclic())
 
-    #        for u in vertices:
-    #            print( u, u.d, u.f)
-    # df = [(1, 10), (12, 13), (2, 9), (7, 8),
-    #       (3, 6), (4, 5), (11, 16), (14, 15)]
-    # edges_list = [(z, w), (s, w), (y, w),
-    #               (x, ), (x, ), (z, ), (v, u), (v, t)]
     def testPathNum(self):
         m = Vertex('m')
         n = Vertex('n')
@@ -463,7 +467,7 @@ class TestGraph(unittest.TestCase):
         G.Bellman_Ford_modified(w, s)
         self.assertEqual([i.p for i in vertices], [None, None, s, s, x, y])
         self.assertEqual([i.d for i in vertices], [
-                         float("Inf"), 0, 2, 6, 5, 3])
+            float("Inf"), 0, 2, 6, 5, 3])
 
     def testTopologicalSort(self):
         r = Vertex('r')
@@ -475,15 +479,12 @@ class TestGraph(unittest.TestCase):
         vertices = [r, s, t, x, y, z]
         edges = [(r, s), (r, t), (s, t), (s, x), (t, x),
                  (t, y), (t, z), (x, y), (x, z), (y, z)]
-        G = Graph(vertices, edges)
-        l = G.topological_sort()
-        self.assertEqual(l, [r, s, t, x, y, z])
-
-        result = []
-        l = [self.v1, self.v2, self.v3, self.v4, self.v5, self.v6]
-        result.append(l)
-        for i in range(len(self.graphs)):
-            self.assertEqual(self.graphs[i].topological_sort(), l)
+        graph = Graph(vertices, edges)
+        # Prove that Graph.topological_sort actually does a topological sort.
+        # A topological sort of a dag(directed acyclic graph) G = (V, E) is a linear ordering of all the vertices
+        # such that if G contains an edge (u, v), then u appears before v in the ordering.
+        mapping = {vertex: index for index, vertex in enumerate(graph.topological_sort())}
+        self.assertTrue(all(mapping[u] < mapping[v] for u, v in graph.edges))
 
     def testDagShortestPaths(self):
         r = Vertex('r')
@@ -507,12 +508,12 @@ class TestGraph(unittest.TestCase):
         G.dag_shortest_paths(w, s)
         self.assertEqual([i.p for i in vertices], [None, None, s, s, x, y])
         self.assertEqual([i.d for i in vertices], [
-                         float("Inf"), 0, 2, 6, 5, 3])
+            float("Inf"), 0, 2, 6, 5, 3])
         G.dag_shortest_paths(w, r)
         self.assertEqual([i.p for i in vertices], [None, r, r, t, t, t])
         self.assertEqual([i.d for i in vertices], [0, 5, 3, 10, 7, 5])
 
-    def TestDagShortestPathsModified(self):
+    def testDagShortestPathsModified(self):
         u = Vertex('u')
         v = Vertex('v')
         w = Vertex('w')
@@ -524,7 +525,7 @@ class TestGraph(unittest.TestCase):
         vertices = [u, v, w, z]
         edges = [(u, v), (v, w), (v, z)]
         G = Graph(vertices, edges)
-        self.assertEqual(dag_shortest_paths_modified(G, u), [u, v, z])
+        self.assertEqual(G.dag_shortest_paths_modified(u), [u, v, z])
 
     def testTotalPathNumber(self):
         r = Vertex('r')
@@ -639,16 +640,16 @@ class TestGraph(unittest.TestCase):
         d = Vertex(4)
         vertices = [a, b, c, d]
         edges = [(a, b), (b, a), (a, c), (d, d)]
-        G = Graph(vertices, edges)
-        G2 = G.single_edge()
-        edges = set([(a, b), (b, a), (a, c), (c, a)])
+        graph1 = Graph(vertices, edges)
+        graph2 = graph1.single_edge()
+        edges = {(a, b), (b, a), (a, c), (c, a)}
         vertices = set(vertices)
-        self.assertEqual(G2.vertices, vertices)
-        self.assertEqual(G2.edges, edges)
-        self.assertEqual(G2.adj[a], {b, c})
-        self.assertEqual(G2.adj[b], {a})
-        self.assertEqual(G2.adj[c], {a})
-        self.assertEqual(G2.adj[d], set())
+        self.assertEqual(graph2.vertices, vertices)
+        self.assertEqual(graph2.edges, edges)
+        self.assertEqual(graph2.adj[a], {b, c})
+        self.assertEqual(graph2.adj[b], {a})
+        self.assertEqual(graph2.adj[c], {a})
+        self.assertEqual(graph2.adj[d], set())
 
     def testUnion(self):
         a = Vertex(1)
