@@ -14,7 +14,4 @@ def kleene_star(x, L, A):
                     m[i - 1, j - 1] = 1
             if m[i - 1, j - 1] != 1:
                 m[i - 1, j - 1] = A(x[i - 1:j], L)
-    if m[0, length - 1] != 0:
-        return True
-    else:
-        return False
+    return m[0, length - 1] != 0

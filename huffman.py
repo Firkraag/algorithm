@@ -18,24 +18,19 @@ class character:
         self.sibling = sibling
 
     def __eq__(self, y):
-        if self.freq == y.freq:
-            return True
+        return self.freq == y.freq
 
     def __gt__(self, y):
-        if self.freq > y.freq:
-            return True
+        return self.freq > y.freq
 
     def __ge__(self, y):
-        if self.freq >= y.freq:
-            return True
+        return self.freq >= y.freq
 
     def __le__(self, y):
-        if self.freq <= y.freq:
-            return True
+        return self.freq <= y.freq
 
     def __lt__(self, y):
-        if self.freq < y.freq:
-            return True
+        return self.freq < y.freq
 
 
 class node:
@@ -45,24 +40,19 @@ class node:
         self.freq = freq
 
     def __eq__(self, y):
-        if self.freq == y.freq:
-            return True
+        return self.freq == y.freq
 
     def __gt__(self, y):
-        if self.freq > y.freq:
-            return True
+        return self.freq > y.freq
 
     def __ge__(self, y):
-        if self.freq >= y.freq:
-            return True
+        return self.freq >= y.freq
 
     def __le__(self, y):
-        if self.freq <= y.freq:
-            return True
+        return self.freq <= y.freq
 
     def __lt__(self, y):
-        if self.freq < y.freq:
-            return True
+        return self.freq < y.freq
 
 
 class tenary_node:
@@ -72,24 +62,19 @@ class tenary_node:
         self.sibling = sibling
 
     def __eq__(self, y):
-        if self.freq == y.freq:
-            return True
+        return self.freq == y.freq
 
     def __gt__(self, y):
-        if self.freq > y.freq:
-            return True
+        return self.freq > y.freq
 
     def __ge__(self, y):
-        if self.freq >= y.freq:
-            return True
+        return self.freq >= y.freq
 
     def __le__(self, y):
-        if self.freq <= y.freq:
-            return True
+        return self.freq <= y.freq
 
     def __lt__(self, y):
-        if self.freq < y.freq:
-            return True
+        return self.freq < y.freq
 
 
 def huffman(chars, freqs):

@@ -27,7 +27,5 @@ def direction(pi, pj, pk):
 
 
 def on_segment(pi, pj, pk):
-    if min(pi[0], pj[0]) <= pk[0] and pk[0] <= max(pi[0], pj[0]) and min(pi[1], pj[1]) <= pk[1] and pk[1] <= max(pi[1], pj[1]):
-        return True
-    else:
-        return False
+    return min(pi[0], pj[0]) <= pk[0] <= max(pi[0], pj[0]) and min(pi[1], pj[1]) <= pk[1] <= max(
+        pi[1], pj[1])

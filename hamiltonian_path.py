@@ -13,7 +13,4 @@ def hamiltonian_path(G, u, v):
         return we[(x, y)]
 
     G.dag_shortest_paths(w, u)
-    if abs(v.d) == len(G.vertices) - 1:
-        return True
-    else:
-        return False
+    return abs(v.d) == len(G.vertices) - 1

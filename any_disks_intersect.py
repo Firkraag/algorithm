@@ -10,10 +10,7 @@ def comparable(a, b):
     """Given two disks a and b that are comparable at x, determine whether a is above b or not."""
     a_y = a[0][1]
     b_y = b[0][1]
-    if a_y >= b_y:
-        return True
-    else:
-        return False
+    return a_y >= b_y
 
 
 class disk(tuple):
@@ -304,7 +301,4 @@ def disks_intersect(a, b):
     b_r = b[1]
     print((a_x - b_x) ** 2 + (a_y - b_y) ** 2)
     print((a_r + b_r) ** 2)
-    if ((a_x - b_x) ** 2 + (a_y - b_y) ** 2) <= ((a_r + b_r) ** 2):
-        return True
-    else:
-        return False
+    return ((a_x - b_x) ** 2 + (a_y - b_y) ** 2) <= ((a_r + b_r) ** 2)
