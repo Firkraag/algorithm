@@ -39,6 +39,6 @@ def k_way_merge(lists):
     elif length == 2:
         return merge(lists[0], lists[1])
     else:
-        list1 = k_way_merge(lists[0:length // 2])
-        list2 = k_way_merge(lists[length // 2: length])
+        list1 = k_way_merge(lists[:length // 2])
+        list2 = k_way_merge(lists[length // 2:])
         return merge(list1, list2)
