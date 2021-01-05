@@ -1,7 +1,10 @@
 #!/usr/bin/env python
+from typing import Sequence, Tuple, Union
+
+Number = Union[int, float]
 
 
-def polygon_area(polygon):
+def polygon_area(polygon: Sequence[Tuple[Number, Number]]) -> float:
     n = len(polygon)
     area = 0
     for i in range(n - 1):

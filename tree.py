@@ -160,9 +160,9 @@ class Tree:
 # inorder_tree_walk_stack(T.root)
 # T.root.inorder_tree_walk_stack()
 # T.root.inorder_tree_walk()
-print()
+# print()
 # T.root.preorder_tree_walk()
-print()
+# print()
 # T.root.postorder_tree_walk()
 # x = T.root.iterative_tree_search(50)
 # if x is None:
