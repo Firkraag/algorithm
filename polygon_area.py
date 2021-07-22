@@ -3,6 +3,7 @@ from typing import Sequence, Tuple, Union
 
 Number = Union[int, float]
 
+
 def polygon_area(polygon: Sequence[Tuple[Number, Number]]) -> float:
     n = len(polygon)
     area = sum((polygon[i][0] + polygon[i + 1][0]) * (polygon[i + 1][1] - polygon[i][1]) for i in range(n - 1))

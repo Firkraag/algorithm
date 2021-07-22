@@ -1,6 +1,6 @@
 class MaxHeap(list):
     def __init__(self, data):
-        super(MaxHeap, self).__init__(data)
+        super().__init__(data)
         self.length = len(self)
         self.heap_size = self.length
         self.build_max_heap()
@@ -45,7 +45,7 @@ class MaxHeap(list):
 
 class MinHeap(list):
     def __init__(self, data):
-        super(MinHeap, self).__init__(data)
+        super().__init__(data)
         self.length = len(self)
         self.heap_size = self.length
         self.build_min_heap()
