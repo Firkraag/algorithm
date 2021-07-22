@@ -6,7 +6,7 @@ class EmptyException(BaseException):
     pass
 
 
-class stack(list):
+class Stack(list):
     def __init__(self, size):
         list.__init__(self, [None] * size)
         self.top = -1
