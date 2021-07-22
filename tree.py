@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-import random
 
-
-class Node(object):
+class Node:
     def __init__(self, key, p, left, right):
         self.key = key
         self.p = p
@@ -32,8 +30,7 @@ class Node(object):
         print(self.key, )
 
     def inorder_tree_walk_stack(self):
-        s = []
-        s.append({"data": self, "status": 0})
+        s = [{"data": self, "status": 0}]
         while len(s) != 0:
             record = s.pop()
             if record["status"] == 0:
@@ -87,7 +84,7 @@ class Node(object):
             return x.p
 
 
-class Tree(object):
+class Tree:
     root = None
 
     def __init__(self, values):
