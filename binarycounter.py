@@ -1,4 +1,4 @@
-class binary_counter(list):
+class BinaryCounter(list):
     def __init__(self, size):
         self.leftmost_1 = -1
         list.__init__(self, [0] * size)
