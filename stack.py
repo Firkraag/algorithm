@@ -1,14 +1,14 @@
-class FullException(BaseException):
+class FullException(Exception):
     pass
 
 
-class EmptyException(BaseException):
+class EmptyException(Exception):
     pass
 
 
 class Stack(list):
     def __init__(self, size):
-        list.__init__(self, [None] * size)
+        super(Stack, self).__init__([None] * size)
         self.top = -1
         self.size = len(size)
 
@@ -19,7 +19,7 @@ class Stack(list):
             self.top = self.top + 1
             self[self.top] = x
 
-    def pop(self):
+    def pop(self, *args, **kwargs):
         if self.empty():
             raise EmptyException('This stack is empty')
         else:

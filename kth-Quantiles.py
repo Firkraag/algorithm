@@ -33,11 +33,11 @@ def median_of_two_arrays(X, x_start, x_end, Y, y_start, y_end, size):
 
 
 if __name__ == '__main__':
-    A = [random.randint(1, 100) for i in range(0, 15)]
+    A = [random.randint(1, 100) for i in range(15)]
     print(A)
     randomized_quicksort(A, 0, 14)
     print(A)
-    B = [random.randint(1, 100) for i in range(0, 15)]
+    B = [random.randint(1, 100) for i in range(15)]
     print(B)
     randomized_quicksort(B, 0, 14)
     print(B)

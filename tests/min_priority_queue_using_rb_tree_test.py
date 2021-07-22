@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import unittest
 from min_priority_queue_using_rb_tree import min_priority_queue
-from rb_tree import rb_node
+from rb_tree import RbNode
 
 
 class TestMinPriorityQueue(unittest.TestCase):
@@ -27,9 +27,9 @@ class TestMinPriorityQueue(unittest.TestCase):
 
     def test_heap_insert(self):
         q = min_priority_queue([41, 38, 31, 12, 19, 9])
-        q.min_heap_insert(rb_node(5, None, None, None, 0))
-        q.min_heap_insert(rb_node(38, None, None, None, 0))
-        q.min_heap_insert(rb_node(50, None, None, None, 0))
+        q.min_heap_insert(RbNode(5, None, None, None, 0))
+        q.min_heap_insert(RbNode(38, None, None, None, 0))
+        q.min_heap_insert(RbNode(50, None, None, None, 0))
         self.assertEqual(q.heap_extract_min().key, 5)
         self.assertEqual(q.heap_extract_min().key, 9)
         self.assertEqual(q.heap_extract_min().key, 12)

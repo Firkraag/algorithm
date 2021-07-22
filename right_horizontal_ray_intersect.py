@@ -4,7 +4,7 @@ from segment_intersect import segments_intersect
 
 
 def right_horizontal_ray_intersect(p0, p1, p2):
-    '''An algorithm to determine whether a given right horizontal ray from p0 intersects a line segment p1p2'''
+    """An algorithm to determine whether a given right horizontal ray from p0 intersects a line segment p1p2"""
     max_x = max(p1[0], p2[0])
     if max_x < p0[0]:
         return False

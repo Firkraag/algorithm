@@ -1,53 +1,58 @@
 from queue import Queue
 import disjoint_sets_forest as dsf
 import sys
+from typing import Iterable, Optional, Tuple, Set, Dict
+from enum import Enum
+
+Color = Enum('Color', ('WHITE', 'GREY', 'BLACK'))
 
 
-class Vertex(object):
+class Vertex:
     def __init__(self, key):
         self.key = key
 
     def __repr__(self):
-        return str(self.key)
+        return f"Vertex({self.key})"
 
     def print_path(self, v):
-        """print( out the vertices on a shortest path from s to)
-        v, assuming that BFS has already computed a breadth-first tree"""
+        """
+        print out the vertices on a shortest path from s to
+        v, assuming that BFS has already computed a breadth-first tree
+        """
         if self == v:
-            print(self, )
+            print(self)
         elif v.p is None:
             print("No path from {} to {} exists".format(self.key, v.key))
         else:
             self.print_path(v.p)
-            print(v, )
+            print(v)
 
 
-class Graph(object):
-    def __init__(self, vertices=tuple(), edges=tuple(), directed=True):
-        self.directed = directed
-        self.vertices = set(vertices)
-        self.edges = set()
-        self.adj = dict()
-        for u in vertices:
+Vertices = Optional[Iterable[Vertex]]
+Edge = Tuple[Vertex, Vertex]
+Edges = Optional[Iterable[Edge]]
+
+
+class Graph:
+    def __init__(self, vertices: Optional[Vertices] = None,
+                 edges: Optional[Edges] = None, directed: bool = True):
+        self.directed: bool = directed
+        self.vertices: Set[Vertex] = set() if vertices is None else set(vertices)
+        self.edges: Set[Edge] = set()
+        self.adj: Dict[Vertex, Set[Vertex]] = dict()
+        self._time: int = 0
+        for u in self.vertices:
             self.adj[u] = set()
-        for u, v in edges:
-            self._addEdge(u, v)
+        if edges is not None:
+            for u, v in edges:
+                self._add_edge(u, v)
 
-    def __eq__(self, G2):
-        G1 = self
-        if G1.directed != G2.directed:
-            return False
-        elif G1.vertices != G2.vertices:
-            return False
-        elif G1.edges != G2.edges:
-            return False
-        else:
-            for u in G1.vertices:
-                if G1.adj[u] != G2.adj[u]:
-                    return False
-            return True
+    def __eq__(self, graph2: 'Graph'):
+        graph1 = self
+        return (graph1.directed == graph2.directed) and (graph1.vertices == graph2.vertices) and (
+                graph1.edges == graph2.edges)
 
-    def _addEdge(self, u, v):
+    def _add_edge(self, u: Vertex, v: Vertex):
         if self.directed:
             self.adj[u].add(v)
             self.edges.add((u, v))
@@ -57,94 +62,87 @@ class Graph(object):
             self.adj[v].add(u)
             self.edges.add((v, u))
 
-    def _addVertex(self, u, edges=tuple()):
+    def _add_vertex(self, u: Vertex, edges: Optional[Edges] = None):
         self.vertices.add(u)
-        for u, v in edges:
-            self._addEdge(u, v)
+        if edges is not None:
+            for u, v in edges:
+                self._add_edge(u, v)
 
     def copy(self):
         return Graph(self.vertices, self.edges, self.directed)
 
     def transpose(self):
-        t = Graph(self.vertices)
-        for u in self.vertices:
-            for v in self.adj[u]:
-                t._addEdge(v, u)
-        return t
+        return Graph(self.vertices, [(v, u) for u, v in self.edges], self.directed)
 
-    def bfs(self, s):
+    def bfs(self, s: Vertex):
         for u in self.vertices:
-            u.d = float("Inf")
-            u.color = 0
-            u.p = None
-        s.color = 1
-        s.d = 0
-        s.p = None
-        q = Queue(2 * len(self.vertices))
-        q.put(s)
-        while not q.empty():
-            u = q.get()
+            u.distance = float("Inf")
+            u.color = Color.WHITE
+            u.parent = None
+        s.color = Color.GREY
+        s.distance = 0
+        s.parent = None
+        queue = Queue()
+        queue.put(s)
+        while not queue.empty():
+            u = queue.get()
             for v in self.adj[u]:
-                if v.color == 0:
-                    v.color = 1
-                    v.d = u.d + 1
-                    v.p = u
-                    q.put(v)
-            u.color = 2
+                if v.color == Color.WHITE:
+                    v.color = Color.GREY
+                    v.distance = u.distance + 1
+                    v.parent = u
+                    queue.put(v)
+            u.color = Color.BLACK
 
     def dfs(self):
-        global time
+        self._time = 0
         for u in self.vertices:
-            u.color = 0
+            u.color = Color.WHITE
             u.p = None
-        time = 0
         for u in self.vertices:
-            if u.color == 0:
+            if u.color == Color.WHITE:
                 self._dfs_visit(u)
 
-    def _dfs_visit(self, u):
-        global time
-        time = time + 1
-        u.d = time
-        u.color = 1
+    def _dfs_visit(self, u: Vertex):
+        self._time += 1
+        u.d = self._time
+        u.color = Color.GREY
         for v in self.adj[u]:
-            if v.color == 0:
+            if v.color == Color.WHITE:
                 v.p = u
                 self._dfs_visit(v)
-        u.color = 2
-        time = time + 1
-        u.f = time
+        u.color = Color.BLACK
+        self._time += 1
+        u.f = self._time
 
-    def isCyclic(self):
-        global time
+    def is_cyclic(self):
         for u in self.vertices:
-            u.color = 0
-            u.p = None
-        time = 0
+            u.color = Color.WHITE
         for u in self.vertices:
-            if u.color == 0:
+            if u.color == Color.WHITE:
                 if self._is_cyclic_aux(u):
                     return True
         return False
 
     def _is_cyclic_aux(self, u):
-        global time
-        time = time + 1
-        u.d = time
-        u.color = 1
+        u.color = Color.GREY
         for v in self.adj[u]:
-            if v.color == 0:
-                v.p = u
+            if v.color == Color.WHITE:
                 if self._is_cyclic_aux(v):
                     return True
-            elif v.color == 1:
+            elif v.color == Color.GREY:
                 return True
-        u.color = 2
-        time = time + 1
-        u.f = time
+        u.color = Color.BLACK
         return False
 
     def topological_sort(self):
+        """
+        Perform topological sort for dag
+
+        A topological sort of a dag(directed acyclic graph) G = (V, E) is a linear ordering of all the vertices
+        such that if G contains an edge (u, v), then u appears before v in the ordering.
+        """
+        assert (not self.is_cyclic()) and self.directed
         self.dfs()
         return sorted(self.vertices, key=lambda x: x.f, reverse=True)
 
@@ -180,11 +178,11 @@ class Graph(object):
                 print((v, u))
 
     def path_num(self, s, t):
-        '''
+        """
         A linear-time algorithm that takes as input a directed acyclic graph
         G = (V, E) and two vertices s and t, and returns the number of simple
         paths from s to t in G.
-        '''
+        """
         for u in self.vertices:
             u.color = 0
             u.num = 0
@@ -231,9 +229,11 @@ class Graph(object):
         u.f = time
 
     def simplified(self):
-        '''create a simplified graph that has the same strong
+        """
+        create a simplified graph that has the same strong
         connected components and component graph as G and that is as small 
-        as possible'''
+        as possible
+        """
         self.dfs()
         t = self.transpose()
         return t.simplified_dfs()
@@ -252,10 +252,10 @@ class Graph(object):
                 stack = []
                 cc = cc + 1
                 self.simplified_dfs_visit(u, stack, s)
-                for i in range(0, len(stack) - 1):
-                    s._addEdge(stack[i], stack[i + 1])
+                for i in range(len(stack) - 1):
+                    s._add_edge(stack[i], stack[i + 1])
                 if len(stack) > 1:
-                    s._addEdge(stack[len(stack) - 1], stack[0])
+                    s._add_edge(stack[len(stack) - 1], stack[0])
         return s
 
     def simplified_dfs_visit(self, u, stack, s):
@@ -274,7 +274,7 @@ class Graph(object):
                     st = status[(v.cc, u.cc)]
                 except KeyError:
                     status[(v.cc, u.cc)] = 1
-                    s._addEdge(v, u)
+                    s._add_edge(v, u)
         u.color = 2
         time = time + 1
         u.f = time
@@ -300,7 +300,7 @@ class Graph(object):
             if u.color == 0:
                 cc = cc + 1
                 vertices_list.append(Vertex(cc))
-                cg._addVertex(vertices_list[cc - 1])
+                cg._add_vertex(vertices_list[cc - 1])
                 t.component_graph_dfs_visit(u)
         return cg
 
@@ -319,7 +319,7 @@ class Graph(object):
                     st = status[(v.cc, u.cc)]
                 except KeyError:
                     status[(v.cc, u.cc)] = 1
-                    cg._addEdge(
+                    cg._add_edge(
                         vertices_list[v.cc - 1],
                         vertices_list[u.cc - 1])
         u.color = 2
@@ -329,16 +329,18 @@ class Graph(object):
     def semiconnected(self):
         cg = self.component_graph()
         vertices_list = sorted(cg.vertices, key=lambda u: u.key, reverse=False)
-        for i in range(0, len(vertices_list) - 1):
+        for i in range(len(vertices_list) - 1):
             if vertices_list[i + 1] not in cg.adj[vertices_list[i]]:
                 return False
         return True
 
     def cut(self, x, y, w):
-        '''For a given edge (x, y) contained in some minimum spanning tree, 
+        """
+        For a given edge (x, y) contained in some minimum spanning tree,
         form a minimum spanning tree that contains (x, y) using a method like Prim's algorithm,
         and construct a cut (S, V - S) such that (x, y) is the light edge crossing
-        the cut, S = {u: u.root = x}'''
+        the cut, S = {u: u.root = x}
+        """
         for v in self.vertices:
             v.weight = float("Inf")
             v.p = None
@@ -387,7 +389,7 @@ class Graph(object):
     def Kruskal(self, w):
         A = set()
         for v in self.vertices:
-            dsf_node(v)
+            DfsNode(v)
         #        ls = self.alledges_undirected_dfs()
         for u, v in sorted(self.edges, key=lambda x: w(x[0], x[1]), reverse=False):
             if u.index.find_set() != v.index.find_set():
@@ -396,9 +398,11 @@ class Graph(object):
         return A
 
     def Prim(self, w, r):
-        '''G.Prim(weight, root) -- Given weight function 
+        """
+        G.Prim(weight, root) -- Given weight function
         and an arbitrary vertex root of the graph G, 
-        compute minimum spanning tree using Prim's algorithm'''
+        compute minimum spanning tree using Prim's algorithm
+        """
         for v in self.vertices:
             v.weight = float("Inf")
             v.p = None
@@ -412,9 +416,9 @@ class Graph(object):
                     q.heap_decrease_key(v.index, w(u, v))
 
     #    def Prim_vEB(self, w, r, bound):
-    #        '''G.Prim(weight, root) -- Given weight function
+    #        """G.Prim(weight, root) -- Given weight function
     #        and an arbitrary vertex root of the graph G,
-    #        compute minimum spanning tree using Prim's algorithm'''
+    #        compute minimum spanning tree using Prim's algorithm"""
     #        for v in self.vertices:
     #            v.weight = bound - 1
     #            v.p = None
@@ -432,7 +436,7 @@ class Graph(object):
     #                    v.weight = w(u, v)
     #                    t.insert(v)
     def Bellman_Ford(self, w, s):
-        '''
+        """
         The Bellman-Ford algorithm solves the single-source
         shortest-paths problem in the general case in which edge
         weights may be negative.
@@ -441,7 +445,7 @@ class Graph(object):
         no solution exists.
         If there is no such cycle, this function returns True and produces
         the shortest paths and their weights.
-        '''
+        """
         self.initialize_signle_source(s)
         for i in range(1, len(self.vertices)):
             for u, v in self.edges:
@@ -463,14 +467,14 @@ class Graph(object):
             v.p = u
 
     def Bellman_Ford_modified(self, w, s):
-        '''
+        """
         Given a weighted, directed graph G = (V, E) with
         no negative-weight cycles, let m be the maximum
         over all vertices v of the minimum number of edges
         in a shortest path from the source s to v. This variant to
         the Bellman-Ford algorithm terminates in m + 1 passes, even
         if m is not known in advance.
-        '''
+        """
         modified = True
         number = 0
         self.initialize_signle_source(s)
@@ -497,10 +501,10 @@ class Graph(object):
             return 0
 
     def dag_shortest_paths(self, w, s):
-        '''
+        """
         compute shortest paths from a single source
         s for a directed acyclic graph with a weight function w
-        '''
+        """
         l = self.topological_sort()
         self.initialize_signle_source(s)
         for u in l:
@@ -508,7 +512,7 @@ class Graph(object):
                 self.relax(u, v, w)
 
     def dag_shortest_paths_modified(self, s):
-        '''
+        """
         In the PERT chart analysis, vertices repre
         sent jobs and edges represent sequencing
         contraints; that is, edge (u, v) would
@@ -522,7 +526,7 @@ class Graph(object):
         vertices in linear time.
         This function return a list of vertices in
         a longest path
-        '''
+        """
         sink = Vertex("sink")
         vertices = self.vertices.union({sink})
         edges = self.edges.union(set([(v, sink) for v in G.vertices]))
@@ -530,16 +534,16 @@ class Graph(object):
         Ga.dag_shortest_paths(lambda u, v: -u.weight, s)
         u = sink
         l = []
-        while u.p != None:
+        while u.p is not None:
             l.append(u.p)
             u = u.p
         return l[::-1]
 
     def total_path_number(self):
-        '''
+        """
         A algorithm to count the total number of paths in
         a directed acyclic graph
-        '''
+        """
         number = 0
         self._total_path_number_dfs()
         for v in self.vertices:
@@ -572,11 +576,11 @@ class Graph(object):
         u.f = time
 
     def Dijkstra(self, w, s):
-        '''
+        """
         Dijkstra's algorithm solves the single-source shortest-paths problem
         on a weighted, directed graph G = (V, E) for the case in which all edge
         weights are nonnegative.
-        '''
+        """
         self.initialize_signle_source(s)
         S = set()
         Q = min_priority_queue(self.vertices, 'd')
@@ -590,14 +594,14 @@ class Graph(object):
                     Q.heap_decrease_key(v.index, u.d + w(u, v))
 
     def Dijkstra_modified(self, w, s, W):
-        '''
+        """
         A algorithm to the the case when the values of 
         the weight function w is in the range {0, 1, ..., W}
         for some nonnegative integer W.
-        '''
+        """
         self.initialize_signle_source(s)
         A = []
-        for i in range(0, W * len(self.vertices) + 1):
+        for i in range(W * len(self.vertices) + 1):
             A.append(set())
         A[0].add(s)
         i = 0
@@ -621,14 +625,14 @@ class Graph(object):
                     v.p = u
 
     def single_edge(self):
-        '''
+        """
         An algorithm that given an adjacency-list representation
         of a multigraph G = (V, E), compute the adjacency-list 
         representation of the "equivalent" undirected graph 
         G2 = (V, E2), where E2 consists of
         the edges in E with all multiple edges between two vertices
         replaced by a single edge and with all self-loops removed
-        '''
+        """
         return Graph(self.vertices, self.edges, directed=False)
 
     def union(self, G2):
@@ -640,17 +644,17 @@ class Graph(object):
         return Graph(vertices, edges, directed=self.directed)
 
     def square(self):
-        '''
+        """
         The square of a directed graph G = (V, E) is the graph 
         G^2 = (V, E^2) such that (u, v) belongs to E^2 
         if and only if G contains a path with at most 
         two edges between u and v.
-        '''
+        """
         sqrt = self.copy()
         for u in self.vertices:
             for v in self.adj[u]:
                 for w in self.adj[v]:
-                    sqrt._addEdge(u, w)
+                    sqrt._add_edge(u, w)
         return sqrt
 
     def height(self, u):
@@ -678,7 +682,7 @@ class Graph(object):
                 self._mht_aux(v)
 
 
-class dsf_node(dsf.node):
+class DfsNode(dsf.node):
     def __init__(self, key):
         self.key = key
         key.index = self
@@ -690,7 +694,7 @@ class dsf_node(dsf.node):
 class max_heap(list):
     def __init__(self, data, attr):
         list.__init__(self, data)
-        for i in range(0, len(data)):
+        for i in range(len(data)):
             self[i].index = i
         self.length = len(data)
         self.attr = attr
@@ -767,12 +771,12 @@ class max_priority_queue(max_heap):
 
 class min_heap(list):
     def __init__(self, data, attr):
-        '''
+        """
         data: input data for heap
         attr: the attribute of input date used as compare key
-        '''
+        """
         list.__init__(self, data)
-        for i in range(0, len(data)):
+        for i in range(len(data)):
             self[i].index = i
         self.attr = attr
         self.length = len(data)

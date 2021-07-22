@@ -82,7 +82,7 @@ class FibonacciNode:
             y.remove()
 
 
-class FibonacciHeap(object):
+class FibonacciHeap:
     def __init__(self):
         self.n = 0
         self.minimum = None

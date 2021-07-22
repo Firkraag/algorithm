@@ -1,7 +1,7 @@
 class BinaryCounter(list):
     def __init__(self, size):
         self.leftmost_1 = -1
-        list.__init__(self, [0] * size)
+        super(BinaryCounter, self).__init__([0] * size)
 
     def increment(self):
         i = 0
@@ -16,7 +16,7 @@ class BinaryCounter(list):
             self.leftmost_1 = -1
 
     def reset(self):
-        for i in range(0, self.leftmost_1 + 1):
+        for i in range(self.leftmost_1 + 1):
             self[i] = 0
         self.leftmost_1 = -1
 

@@ -10,10 +10,10 @@ from square_matrix_multiply_Strassen import square_matrix_multiply
 
 
 def common_matrix_multiply(A, B):
-    if (A.shape[1] != B.shape[0]):
+    if A.shape[1] != B.shape[0]:
         print("The width of matrix A not equal the height of matrix B.\nHence no matrix multiplication allowed")
         return
-    shape = (A.shape[0], B.shape[1])
+    shape = A.shape[0], B.shape[1]
     # shape = A.shape
     length = shape[0]
     half = length / 2

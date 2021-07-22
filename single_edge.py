@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 
-class node(object):
+class node:
     def __init__(self, key, right):
         self.right = right
         self.key = key
 
 
-class graph(object):
+class graph:
     def __init__(self, data, option=0):
         if option == 0:
             self.vertices_number = len(data)
             self.vertices = [None] * self.vertices_number
             self.edges_number = 0
-            for i in range(0, self.vertices_number):
+            for i in range(self.vertices_number):
                 for j in data[i]:
                     self.insert_edge(i + 1, j)
         elif option == 1:
@@ -22,7 +22,7 @@ class graph(object):
 
     def transpose(self):
         t = graph(self.vertices_number, 1)
-        for i in range(0, self.vertices_number):
+        for i in range(self.vertices_number):
             j = self.vertices[i]
             while j is not None:
                 t.insert_edge(j.key, i + 1)
@@ -31,12 +31,12 @@ class graph(object):
 
     def union(self, g):
         u = graph(self.vertices_number, 1)
-        for i in range(0, self.vertices_number):
+        for i in range(self.vertices_number):
             j = self.vertices[i]
             while j is not None:
                 u.insert_edge(i + 1, j.key)
                 j = j.right
-        for i in range(0, g.vertices_number):
+        for i in range(g.vertices_number):
             j = g.vertices[i]
             while j is not None:
                 u.insert_edge(i + 1, j.key)
@@ -47,7 +47,7 @@ class graph(object):
         g = self.union(self.transpose())
         single = graph(g.vertices_number, 1)
         s = [0] * g.vertices_number
-        for u in range(0, g.vertices_number):
+        for u in range(g.vertices_number):
             v = g.vertices[u]
             while v:
                 if (u + 1) != v.key and s[v.key - 1] == 0:
@@ -68,7 +68,7 @@ class graph(object):
         self.edges_number = self.edges_number + 1
 
     def print_graph(self):
-        for i in range(0, self.vertices_number):
+        for i in range(self.vertices_number):
             j = self.vertices[i]
             print('{}: '.format(i + 1), )
             while j is not None:
@@ -81,7 +81,7 @@ class graph(object):
         descendent = graph(self.vertices_number, 1)
         s = [0] * self.vertices_number
         # generate grandchild graph
-        for i in range(0, self.vertices_number):
+        for i in range(self.vertices_number):
             j = self.vertices[i]
             while j is not None:
                 k = self.vertices[j.key - 1]
@@ -96,7 +96,7 @@ class graph(object):
                 s[j.key - 1] = 0
                 j = j.right
         # generate great grandchild graph
-        for i in range(0, grandchild.vertices_number):
+        for i in range(grandchild.vertices_number):
             j = grandchild.vertices[i]
             while j is not None:
                 k = self.vertices[j.key - 1]
@@ -110,7 +110,7 @@ class graph(object):
                 s[j.key - 1] = 0
                 j = j.right
         square = graph(self.vertices_number, 1)
-        for i in range(0, self.vertices_number):
+        for i in range(self.vertices_number):
             j = self.vertices[i]
             print(j)
             while j is not None:

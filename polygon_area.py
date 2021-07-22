@@ -1,11 +1,11 @@
 #!/usr/bin/env python
+from typing import Sequence, Tuple, Union
+
+Number = Union[int, float]
 
 
-
-def polygon_area(P):
-    n = len(P)
-    S = 0
-    for i in range(0, n - 1):
-        S = S + (P[i][0] + P[i + 1][0]) * (P[i + 1][1] - P[i][1])
-    S = S + (P[0][0] + P[n - 1][0]) * (P[0][1] - P[n - 1][1])
-    return 0.5 * abs(S)
+def polygon_area(polygon: Sequence[Tuple[Number, Number]]) -> float:
+    n = len(polygon)
+    area = sum((polygon[i][0] + polygon[i + 1][0]) * (polygon[i + 1][1] - polygon[i][1]) for i in range(n - 1))
+    area += (polygon[0][0] + polygon[n - 1][0]) * (polygon[0][1] - polygon[n - 1][1])
+    return 0.5 * abs(area)

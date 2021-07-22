@@ -1,12 +1,12 @@
 import unittest
+from random_array import random_arrays
 import random
 from two_sum import two_sum
 
 
 class TestInsertionSort(unittest.TestCase):
     def test_two_sum(self):
-        for _ in range(1000):
-            array = [random.randint(1, 20) for _ in range(10)]
+        for array in random_arrays(array_num=1000, array_size=10, array_lowerbound=1, array_upperbound=20):
             x = random.randint(1, 100)
             n = len(array)
             result = False

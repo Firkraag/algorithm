@@ -12,7 +12,9 @@ def vertical(a):
 
 
 def comparable(a, b, x):
-    '''Given two segments a and b that are comparable at x, determine whether a is above b or not. Assume that neither segment is vertical '''
+    """
+    Given two segments a and b that are comparable at x, determine whether a is above b or not. Assume that neither segment is vertical
+    """
     p1 = a[0]
     p2 = a[1]
     p3 = b[0]
@@ -20,41 +22,23 @@ def comparable(a, b, x):
     x4 = p4[0]
     x3 = p3[0]
     if vertical(a) and vertical(b):
-        if p1[1] >= p3[1]:
-            return True
-        else:
-            return False
+        return p1[1] >= p3[1]
     elif vertical(a) and not vertical(b):
         v1 = (p4[0] - p3[0], p4[1] - p3[1])
         v2 = (p4[0] - p1[0], p4[1] - p1[1])
         result = v1[0] * v2[1] - v2[0] * v1[1]
-        # a is below b
-        if result >= 0:
-            return False
-        # a is above b
-        else:
-            return True
+        return result < 0
     elif not vertical(a) and vertical(b):
         v1 = (p2[0] - p1[0], p2[1] - p1[1])
         v2 = (p2[0] - p3[0], p2[1] - p3[1])
         result = v1[0] * v2[1] - v2[0] * v1[1]
-        # a is above b
-        if result >= 0:
-            return True
-        # a is above b
-        else:
-            return False
+        return result >= 0
     else:
         v1 = (p2[0] - p1[0], p2[1] - p1[1])
         v2 = ((x4 - x3) * (p2[0] - p4[0]) + (x4 - x) * (p4[0] - p3[0]),
               (x4 - x3) * (p2[1] - p4[1]) + (x4 - x) * (p4[1] - p3[1]))
         result = v1[0] * v2[1] - v2[0] * v1[1]
-        # a is above b
-        if result >= 0:
-            return True
-        # a is below b
-        else:
-            return False
+        return result >= 0
 
 
 class segment(tuple):
@@ -73,7 +57,7 @@ class rb_node(Node):
     def __init__(self, key, p, left, right, color):
         Node.__init__(self, key, p, left, right)
         self.color = color
-        if key != None:
+        if key is not None:
             key.pointer = self
 
     def minimum(self, nil):
@@ -153,7 +137,9 @@ class rb_tree(Tree):
         y.p = x
 
     def insert(self, z):
-        ''' the segment z will only be inserted when the left endpoint of z is being processed'''
+        """
+        the segment z will only be inserted when the left endpoint of z is being processed
+        """
         # this is the x_coordinate of the left endpoint of z
         x_coordinate = z[0][0]
         z = rb_node(z, None, None, None, 0)
@@ -295,7 +281,9 @@ class rb_tree(Tree):
 
 
 def any_segments_intersect(S):
-    '''This algorithm takes as input a set S of n line segments, returning the boolean value TRUE if any pair of segments in S intersects, and FALSE otherwise.'''
+    """
+    This algorithm takes as input a set S of n line segments, returning the boolean value TRUE if any pair of segments in S intersects, and FALSE otherwise.
+    """
     T = rb_tree()
     segment_list = []
     point_list = []
@@ -312,17 +300,18 @@ def any_segments_intersect(S):
             T.insert(s)
             a = T.above(s)
             b = T.below(s)
-            if (a != None and segments_intersect(a[0], a[1], s[0], s[1])) or (b != None and segments_intersect(b[0], b[1], s[0], s[1])):
+            if (a is not None and segments_intersect(a[0], a[1], s[0], s[1])) or (
+                    b is not None and segments_intersect(b[0], b[1], s[0], s[1])):
                 return True
         if p[1] == 1:
             s = p.segment
             a = T.above(s)
             b = T.below(s)
-#            print( a)
-#            print( b)
-#            print( type(a))
-#            print( type(b))
-            if a != None and b != None and segments_intersect(a[0], a[1], b[0], b[1]):
+            #            print( a)
+            #            print( b)
+            #            print( type(a))
+            #            print( type(b))
+            if a is not None and b is not None and segments_intersect(a[0], a[1], b[0], b[1]):
                 return True
             T.delete(s)
     return False

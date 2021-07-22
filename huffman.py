@@ -1,8 +1,8 @@
-from priority_queue import min_priority_queue
+from priority_queue import MinPriorityQueue
 import sys
 
 
-class Min_priority_queue(min_priority_queue):
+class Min_priority_queue(MinPriorityQueue):
     def min_heap_insert(self, key):
         if self.heap_size >= self.length:
             sys.exit("heap overflow")
@@ -11,94 +11,79 @@ class Min_priority_queue(min_priority_queue):
         self.heap_decrease_key(self.heap_size - 1, key)
 
 
-class character(object):
+class character:
     def __init__(self, char, freq, sibling=None):
         self.char = char
         self.freq = freq
         self.sibling = sibling
 
     def __eq__(self, y):
-        if self.freq == y.freq:
-            return True
+        return self.freq == y.freq
 
     def __gt__(self, y):
-        if self.freq > y.freq:
-            return True
+        return self.freq > y.freq
 
     def __ge__(self, y):
-        if self.freq >= y.freq:
-            return True
+        return self.freq >= y.freq
 
     def __le__(self, y):
-        if self.freq <= y.freq:
-            return True
+        return self.freq <= y.freq
 
     def __lt__(self, y):
-        if self.freq < y.freq:
-            return True
+        return self.freq < y.freq
 
 
-class node(object):
+class node:
     def __init__(self, left, right, freq):
         self.left = left
         self.right = right
         self.freq = freq
 
     def __eq__(self, y):
-        if self.freq == y.freq:
-            return True
+        return self.freq == y.freq
 
     def __gt__(self, y):
-        if self.freq > y.freq:
-            return True
+        return self.freq > y.freq
 
     def __ge__(self, y):
-        if self.freq >= y.freq:
-            return True
+        return self.freq >= y.freq
 
     def __le__(self, y):
-        if self.freq <= y.freq:
-            return True
+        return self.freq <= y.freq
 
     def __lt__(self, y):
-        if self.freq < y.freq:
-            return True
+        return self.freq < y.freq
 
 
-class tenary_node(object):
+class tenary_node:
     def __init__(self, freq, child=None, sibling=None):
         self.freq = freq
         self.child = child
         self.sibling = sibling
 
     def __eq__(self, y):
-        if self.freq == y.freq:
-            return True
+        return self.freq == y.freq
 
     def __gt__(self, y):
-        if self.freq > y.freq:
-            return True
+        return self.freq > y.freq
 
     def __ge__(self, y):
-        if self.freq >= y.freq:
-            return True
+        return self.freq >= y.freq
 
     def __le__(self, y):
-        if self.freq <= y.freq:
-            return True
+        return self.freq <= y.freq
 
     def __lt__(self, y):
-        if self.freq < y.freq:
-            return True
+        return self.freq < y.freq
 
 
 def huffman(chars, freqs):
     n = len(chars)
     c = [0] * n
-    for i in range(0, n):
+    for i in range(n):
         c[i] = character(chars[i], freqs[i])
     q = Min_priority_queue(c)
-    for i in range(0, n - 1):
+    for i in range(n - 1):
         x = q.heap_extract_min()
         y = q.heap_extract_min()
         q.min_heap_insert(node(x, y, x.freq + y.freq))
@@ -134,7 +119,7 @@ def compact_store_prefix_code_aux(node, store, string):
 def decode_compact_prefix_code(store):
     code = ''
     pos = 0
-    for i in range(0, len(store)):
+    for i in range(len(store)):
         last_len = len(code)
         char = store[i][1][0]
         for pos in range(last_len - 1, -1, -1):
@@ -148,12 +133,14 @@ def decode_compact_prefix_code(store):
 
 
 def huffman_tenary(chars, freqs, m):
-    ''' generalize Huffman's algorithm to tenary codewords
+    """
+    generalize Huffman's algorithm to tenary codewords
     the parameter m is the number of symbols we use, eg, in
-    original huffman algorithm, we use 0 and 1, so m = 2'''
+    original huffman algorithm, we use 0 and 1, so m = 2
+    """
     n = len(chars)
     c = [0] * n
-    for i in range(0, n):
+    for i in range(n):
         c[i] = character(chars[i], freqs[i])
     q = Min_priority_queue(c)
     while q.heap_size >= m:

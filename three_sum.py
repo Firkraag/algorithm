@@ -8,10 +8,7 @@ def three_sum(array):
     in the array which gives the sum of zero.
 
     `array` must be in increasing order
-    :param array:
-    :return:
     """
-
     n = len(array)
     for i in range(n - 2):
         j = i + 1

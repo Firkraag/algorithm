@@ -10,10 +10,7 @@ def comparable(a, b):
     """Given two disks a and b that are comparable at x, determine whether a is above b or not."""
     a_y = a[0][1]
     b_y = b[0][1]
-    if a_y >= b_y:
-        return True
-    else:
-        return False
+    return a_y >= b_y
 
 
 class disk(tuple):
@@ -32,7 +29,7 @@ class rb_node(Node):
     def __init__(self, key, p, left, right, color):
         Node.__init__(self, key, p, left, right)
         self.color = color
-        if key != None:
+        if key is not None:
             key.pointer = self
 
     def minimum(self, nil):
@@ -112,7 +109,7 @@ class rb_tree(Tree):
         y.p = x
 
     def insert(self, z):
-        ''' the disk z will only be inserted when the left endpoint of z is being processed'''
+        """ the disk z will only be inserted when the left endpoint of z is being processed"""
         # this is the x_coordinate of the left endpoint of z
         x_coordinate = z[0][0]
         z = rb_node(z, None, None, None, 0)
@@ -304,7 +301,4 @@ def disks_intersect(a, b):
     b_r = b[1]
     print((a_x - b_x) ** 2 + (a_y - b_y) ** 2)
     print((a_r + b_r) ** 2)
-    if ((a_x - b_x) ** 2 + (a_y - b_y) ** 2) <= ((a_r + b_r) ** 2):
-        return True
-    else:
-        return False
+    return ((a_x - b_x) ** 2 + (a_y - b_y) ** 2) <= ((a_r + b_r) ** 2)

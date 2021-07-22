@@ -3,12 +3,12 @@ from random import sample
 
 
 def Bellman_Ford(G, w, s):
-    '''A variant to the original Bellman_Ford algorithm
+    """A variant to the original Bellman_Ford algorithm
     that we use to solve a system of difference constraints
     with m inequalities on n unknowns. The running time is
     O(nm), faster than O(n * n + nm) of the original Bellman-Ford
     algorithm.
-    '''
+    """
     edges = G.edges - set([(s, v) for v in G.adj[s]])
     G.initialize_signle_source(s)
     j = 1
@@ -34,7 +34,7 @@ def initialize_signle_source(self, s):
 
 
 def difference_constraints(A, b):
-    '''A algorithm to solve a system of difference constraints Ax <= b
+    """A algorithm to solve a system of difference constraints Ax <= b
     by solving a single-source shortest-paths problem using Bellman-Ford
     algorithm.  Each row of the linear-programming matrix A contains
     one 1 and one 1, and all other entries of A are 0.
@@ -42,7 +42,7 @@ def difference_constraints(A, b):
     Calling convention: A is a two-dimensional list, b is a list.
     Return value: This function returns a list representing x if
     there exists feasible solution; otherwise, this function returns None.
-    '''
+    """
 
     row = len(A)
     col = len(A[0])
@@ -50,12 +50,12 @@ def difference_constraints(A, b):
     vertices = []
     edges = []
     weights = dict()
-    for i in range(0, vertices_num + 1):
+    for i in range(vertices_num + 1):
         vertices.append(Vertex(i))
     for i in range(1, vertices_num + 1):
         edges.append((vertices[0], vertices[i]))
         weights[(vertices[0], vertices[i])] = 0
-    for i in range(0, row):
+    for i in range(row):
         u = A[i].index(-1) + 1
         v = A[i].index(1) + 1
         edges.append((vertices[u], vertices[v]))
@@ -68,10 +68,10 @@ def difference_constraints(A, b):
 
 
 def difference_constraints_with_arbitrary_weight(A, b):
-    ''' An variant to the above difference constraints function
+    """ An variant to the above difference constraints function
     that the weight of the edge from the auxiliary vertex to any
     other vertex can be arbitrary value.
-    '''
+    """
     row = len(A)
     col = len(A[0])
     vertices_num = col
@@ -79,12 +79,12 @@ def difference_constraints_with_arbitrary_weight(A, b):
     edges = []
     weights = dict()
     distribute = sample(range(-10, 10), vertices_num)
-    for i in range(0, vertices_num + 1):
+    for i in range(vertices_num + 1):
         vertices.append(Vertex(i))
     for i in range(1, vertices_num + 1):
         edges.append((vertices[0], vertices[i]))
         weights[(vertices[0], vertices[i])] = distribute[i - 1]
-    for i in range(0, row):
+    for i in range(row):
         u = A[i].index(-1) + 1
         v = A[i].index(1) + 1
         edges.append((vertices[u], vertices[v]))
@@ -103,12 +103,12 @@ def equality_constraints(A, b):
     vertices = []
     edges = []
     weights = dict()
-    for i in range(0, vertices_num + 1):
+    for i in range(vertices_num + 1):
         vertices.append(Vertex(i))
     for i in range(1, vertices_num + 1):
         edges.append((vertices[0], vertices[i]))
         weights[(vertices[0], vertices[i])] = 0
-    for i in range(0, row):
+    for i in range(row):
         u = A[i].index(-1) + 1
         v = A[i].index(1) + 1
         edges.append((vertices[u], vertices[v]))
@@ -131,7 +131,7 @@ def difference_constraints_without_aux_vertex(A, b):
     weights = dict()
     for i in range(vertices_num):
         vertices.append(Vertex(i + 1))
-    for i in range(0, row):
+    for i in range(row):
         u = A[i].index(-1)
         v = A[i].index(1)
         edges.append((vertices[u], vertices[v]))
@@ -167,10 +167,10 @@ def single_variable_constraints(A, b):
     vertices = []
     edges = []
     weights = dict()
-    for i in range(0, vertices_num + 1):
+    for i in range(vertices_num + 1):
         vertices.append(Vertex(i))
-    for i in range(0, row):
-        for j in range(0, len(A[i])):
+    for i in range(row):
+        for j in range(len(A[i])):
             if A[i][j] == 1:
                 edges.append((vertices[0], vertices[j + 1]))
                 weights[(vertices[0], vertices[j + 1])] = b[i]

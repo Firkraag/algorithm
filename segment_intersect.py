@@ -6,7 +6,7 @@ def segments_intersect(p1, p2, p3, p4):
     d2 = direction(p3, p4, p2)
     d3 = direction(p1, p2, p3)
     d4 = direction(p1, p2, p4)
-    if ((d1 > 0 and d2 < 0) or (d1 < 0 and d2 > 0)) and ((d3 > 0 and d4 < 0) or (d3 < 0 and d4 > 0)):
+    if ((d1 > 0 > d2) or (d1 < 0 < d2)) and ((d3 > 0 > d4) or (d3 < 0 < d4)):
         return True
     elif d1 == 0 and on_segment(p3, p4, p1):
         return True
@@ -27,7 +27,5 @@ def direction(pi, pj, pk):
 
 
 def on_segment(pi, pj, pk):
-    if min(pi[0], pj[0]) <= pk[0] and pk[0] <= max(pi[0], pj[0]) and min(pi[1], pj[1]) <= pk[1] and pk[1] <= max(pi[1], pj[1]):
-        return True
-    else:
-        return False
+    return min(pi[0], pj[0]) <= pk[0] <= max(pi[0], pj[0]) and min(pi[1], pj[1]) <= pk[1] <= max(
+        pi[1], pj[1])

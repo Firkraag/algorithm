@@ -1,16 +1,16 @@
 # A variant of red black tree that has black_height attribute
 # !/usr/bin/env python
 
-from rb_tree import rb_node, rb_tree
+from rb_tree import RbNode, RbTree
 
 
-class bh_node(rb_node):
+class bh_node(RbNode):
     def __init__(self, key, p, left, right, color, bh):
-        rb_node.__init__(self, key, p, left, right, color)
+        RbNode.__init__(self, key, p, left, right, color)
         self.bh = bh
 
 
-class bh_tree(rb_tree):
+class bh_tree(RbTree):
     nil = bh_node(None, None, None, None, 1, 0)
     root = nil
 

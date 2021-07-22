@@ -2,12 +2,12 @@
 
 # A variant of red black tree that has depth attribute
 
-from rb_tree import rb_node, rb_tree
+from rb_tree import RbNode, RbTree
 
 
-class depth_node(rb_node):
+class depth_node(RbNode):
     def __init__(self, key, p, left, right, color, depth):
-        rb_node.__init__(self, key, p, left, right, color)
+        RbNode.__init__(self, key, p, left, right, color)
         self.depth = depth
 
     def update_depth_whole_tree(self, amount):
@@ -17,7 +17,7 @@ class depth_node(rb_node):
             self.right.update_depth_whole_tree(amount)
 
 
-class depth_tree(rb_tree):
+class depth_tree(RbTree):
     nil = depth_node(None, None, None, None, 1, -1)
     root = nil
 

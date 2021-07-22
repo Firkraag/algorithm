@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-class node(object):
+class node:
     def __init__(self, key):
         self.key = key
         self.set = None
@@ -27,7 +27,7 @@ class node(object):
         return x
 
 
-class header(object):
+class header:
     def __init__(self, element):
         self.length = 1
         self.head = element
@@ -55,7 +55,7 @@ class node_notail(node):
         return y
 
 
-class header_notail(object):
+class header_notail:
     def __init__(self, element):
         self.length = 1
         self.head = element

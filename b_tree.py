@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-class b_tree_node(object):
+class b_tree_node:
     def __init__(self, t, leaf, n):
         self.leaf = leaf
         self.n = n
@@ -164,7 +164,7 @@ class b_tree_node(object):
             tree.root = y
 
 
-class b_tree(object):
+class b_tree:
     def __init__(self, t):
         self.t = t
         self.root = b_tree_node(t, True, 0)

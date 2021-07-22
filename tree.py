@@ -146,7 +146,7 @@ class Tree:
             y.left.p = y
 
 
-# A = [random.randint(1, 100) for i in range(0, 15)]
+# A = [random.randint(1, 100) for i in range(15)]
 # A = [29, 81, 53, 51, 28, 31, 57, 30, 22, 62, 6, 50, 7, 2, 24, 55, 54, 56, 98]
 # print( A)
 # T = Tree(A)
@@ -157,9 +157,9 @@ class Tree:
 # inorder_tree_walk_stack(T.root)
 # T.root.inorder_tree_walk_stack()
 # T.root.inorder_tree_walk()
-print()
+# print()
 # T.root.preorder_tree_walk()
-print()
+# print()
 # T.root.postorder_tree_walk()
 # x = T.root.iterative_tree_search(50)
 # if x is None:

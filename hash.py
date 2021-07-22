@@ -29,7 +29,7 @@ def double_hashing(k, i):
     return (k + i * (1 + k % (len(T) - 1))) % len(T)
 
 
-T = [None for i in range(0, 11)]
+T = [None] * 11
 print("length of T is ", len(T))
 for i in 10, 22, 31, 4, 15, 28, 17, 88, 59:
     hash_insert(T, i, double_hashing)

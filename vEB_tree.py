@@ -3,9 +3,9 @@
 import math
 
 
-class vEB_node(object):
+class vEB_node:
     def __init__(self, u):
-        '''u must be exact power of 2, as required by CLRS; otherwise, the behavior is undefined'''
+        """u must be exact power of 2, as required by CLRS; otherwise, the behavior is undefined"""
         self.u = u
         self.min = None
         self.max = None
@@ -39,16 +39,16 @@ class vEB_node(object):
                 return 1
             else:
                 return None
-        elif self.min != None and x < self.min:
+        elif self.min is not None and x < self.min:
             return self.min
         else:
             max_low = self.cluster[self.high(x)].max
-            if max_low != None and self.low(x) < max_low:
+            if max_low is not None and self.low(x) < max_low:
                 offset = self.cluster[self.high(x)].successor(self.low(x))
                 return self.index(self.high(x), offset)
             else:
                 succ_cluster = self.summary.successor(self.high(x))
-                if succ_cluster == None:
+                if succ_cluster is None:
                     return None
                 else:
                     offset = self.cluster[succ_cluster].min
@@ -67,7 +67,7 @@ class vEB_node(object):
             if x < self.min:
                 x, self.min = self.min, x
             if self.u > 2:
-                if self.cluster[self.high(x)].min == None:
+                if self.cluster[self.high(x)].min is None:
                     self.summary.insert(self.high(x))
                     self.cluster[self.high(x)].empty_tree_insert(self.low(x))
                 else:
@@ -95,11 +95,11 @@ class vEB_node(object):
                 x = self.index(first_cluster, self.cluster[first_cluster].min)
                 self.min = x
             self.cluster[self.high(x)].delete(self.low(x))
-            if self.cluster[self.high(x)].min == None:
+            if self.cluster[self.high(x)].min is None:
                 self.summary.delete(self.high(x))
                 if x == self.max:
                     summary_max = self.summary.max
-                    if summary_max == None:
+                    if summary_max is None:
                         self.max = self.min
                     else:
                         self.max = self.index(

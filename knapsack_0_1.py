@@ -33,8 +33,8 @@ def knapsack_0_1_memoized(W, w, v):
     n = len(w)
     value = zeros((W + 1, n + 1))
     solution = zeros((W + 1, n + 1))
-    for i in range(0, W + 1):
-        for j in range(0, n + 1):
+    for i in range(W + 1):
+        for j in range(n + 1):
             value[i, j] = float("-Inf")
     knapsack_0_1_memoized_aux(W, w, v, m, n, value, solution)
     return value, solution

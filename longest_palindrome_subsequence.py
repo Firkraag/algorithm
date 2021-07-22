@@ -17,7 +17,7 @@ def longest_palindrome_subsequence(s):
         else:
             c[i][i + 1] = 1
     for length in range(3, n + 1):
-        for i in range(0, n - length + 1):
+        for i in range(n - length + 1):
             j = i + length - 1
             if s[i] == s[j]:
                 print(i, j, c[i + 1][j - 1])

@@ -7,7 +7,7 @@ def activity_selection(s, f, n):
     s = [float("-Inf")] + s[0:n] + [float("Inf")]
     f = [float("-Inf")] + f[0:n] + [float("Inf")]
     for l in range(3, n + 3):
-        for i in range(0, n + 3 - l):
+        for i in range(n + 3 - l):
             j = i + l - 1
             print("i = {}, j = {}".format(i, j))
             for k in range(i + 1, j):
@@ -24,15 +24,17 @@ def activity_selection(s, f, n):
 
 
 def activity_selection_with_weight(s, f, v, n):
-    '''This is a modification to the activity-selection problem in which each activity has,
+    """
+    This is a modification to the activity-selection problem in which each activity has,
     in addition to a start and finish time, a value v. Now the object is to maximize 
-    the total value of the activies scheduled. It can be solved by dynamic programming method'''
+    the total value of the activies scheduled. It can be solved by dynamic programming method
+    """
     c = zeros((n + 2, n + 2))
     activities = zeros((n + 2, n + 2))
     s = [float("-Inf")] + s[0:n] + [float("Inf")]
     f = [float("-Inf")] + f[0:n] + [float("Inf")]
     for l in range(3, n + 3):
-        for i in range(0, n + 3 - l):
+        for i in range(n + 3 - l):
             j = i + l - 1
             for k in range(i + 1, j):
                 if f[i] <= s[k] and f[k] <= s[j]:
@@ -70,9 +72,10 @@ def greedy_activity_selector(s, f):
 
 
 def greedy_activity_selector_last(s, f):
-    '''Instead of always selecting the first activity to finish, 
+    """Instead of always selecting the first activity to finish,
     select the last activity to start that is compatible with all
-    previously selected activities'''
+    previously selected activities
+    """
     n = len(s)
     A = {n}
     k = n
