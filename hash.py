@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 
-
 def hash_insert(T, k, h):
     i = 0
     while i < len(T):

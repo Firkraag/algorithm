@@ -8,7 +8,7 @@ class EmptyException(Exception):
         Exception.__init__(self)
 
 
-class Queue(object):
+class Queue:
     def __init__(self, size):
         self.data = [0] * size
         self.length = size

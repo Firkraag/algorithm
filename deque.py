@@ -1,13 +1,14 @@
-from Queue import Queue, FullException, EmptyException
+from queue import Queue, FullException, EmptyException
 
 
-def deque(Queue):
+class Deque(Queue):
     """
-    whereas a Queue allows insertion at one end and deletion at the other end, a deque(double-ended Queue allows insertion and deletion at both ends
+    whereas a Queue allows insertion at one end and deletion at the other end,
+    a Deque(double-ended Queue) allows insertion and deletion at both ends
     """
 
     def __init__(self, size):
-        super(deque, self).__init__(size)
+        super().__init__(size)
 
     def enqueue_tail(self, x):
         self.enqueue(x)
