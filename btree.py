@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-class b_tree_node:
+class BTreeNode:
     def __init__(self, t, leaf, n):
         self.leaf = leaf
         self.n = n
@@ -12,7 +12,7 @@ class b_tree_node:
     def split_child(self, i):
         y = self.c[i - 1]
         t = y.t
-        z = b_tree_node(t, y.leaf, t - 1)
+        z = BTreeNode(t, y.leaf, t - 1)
         for j in range(1, t):
             z.key[j - 1] = y.key[j + t - 1]
         if not y.leaf:
@@ -164,16 +164,16 @@ class b_tree_node:
             tree.root = y
 
 
-class b_tree:
+class BTree:
     def __init__(self, t):
         self.t = t
-        self.root = b_tree_node(t, True, 0)
+        self.root = BTreeNode(t, True, 0)
 
     def insert(self, k):
         r = self.root
         t = self.t
         if r.n == 2 * t - 1:
-            s = b_tree_node(t, False, 0)
+            s = BTreeNode(t, False, 0)
             self.root = s
             s.c[0] = r
             s.split_child(1)

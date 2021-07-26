@@ -27,7 +27,7 @@ def activity_selection_with_weight(s, f, v, n):
     """
     This is a modification to the activity-selection problem in which each activity has,
     in addition to a start and finish time, a value v. Now the object is to maximize 
-    the total value of the activies scheduled. It can be solved by dynamic programming method
+    the total value of the activities scheduled. It can be solved by dynamic programming method
     """
     c = zeros((n + 2, n + 2))
     activities = zeros((n + 2, n + 2))

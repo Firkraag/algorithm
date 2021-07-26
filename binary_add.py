@@ -18,7 +18,6 @@ def binary_add(array1, array2):
     for i in range(n - 1, -1, -1):
         result = array1[i] + array2[i] + promote
         promote = result // 2
-        result = result % 2
-        array3[i + 1] = result
+        array3[i + 1] = result % 2
     array3[0] = promote
     return array3
