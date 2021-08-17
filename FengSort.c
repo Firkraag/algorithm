@@ -31,7 +31,7 @@ int main()
 	FengSort(a, 0, 8);
 	printf("%d, %d, %d, %d, %d, %d, %d, %d, %d\n", a[0], a[1], a[2], a[3],
 		   a[4], a[5], a[6], a[7], a[8]);
-     FengSort(b, 0, 1);
-     printf("%d,%d\n", b[0], b[1]);
-	 exit(0);
+    FengSort(b, 0, 1);
+    printf("%d,%d\n", b[0], b[1]);
+    exit(0);
 } 
