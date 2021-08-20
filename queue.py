@@ -11,7 +11,7 @@ class EmptyException(Exception):
 class Queue:
     def __init__(self, size):
         self.data = [0] * size
-        self.length = size
+        self.size = size
         self.head = 0
         self.tail = 0
 
@@ -19,7 +19,7 @@ class Queue:
         if self.full():
             raise FullException()
         self.data[self.tail] = x
-        if self.tail == self.length - 1:
+        if self.tail == self.size - 1:
             self.tail = 0
         else:
             self.tail = self.tail + 1
@@ -28,7 +28,7 @@ class Queue:
         if self.empty():
             raise EmptyException()
         x = self.data[self.head]
-        if self.head == self.length - 1:
+        if self.head == self.size - 1:
             self.head = 0
         else:
             self.head = self.head + 1
@@ -38,5 +38,7 @@ class Queue:
         return self.tail == self.head
 
     def full(self):
-        # print( "tail: {}, head: {}, size: {}".format(self.tail, self.head, self.length))
-        return (self.tail + 1) % self.length == self.head
+        return (self.tail + 1) % self.size == self.head
+
+    def capacity(self):
+        return self.size - 1
