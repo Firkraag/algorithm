@@ -20,9 +20,7 @@ class MaxPriorityQueue(MaxHeap):
             sys.exit("new key is smaller than current key")
         self[i] = key
         while i > 0 and self[self.parent(i)] < self[i]:
-            tmp = self[self.parent(i)]
-            self[self.parent(i)] = self[i]
-            self[i] = tmp
+            self[i], self[self.parent(i)] = self[self.parent(i)], self[i]
             i = self.parent(i)
 
     def max_heap_insert(self, key):
@@ -57,9 +55,7 @@ class MinPriorityQueue(MinHeap):
             sys.exit("new key is larger than current key")
         self[i] = key
         while i > 0 and self[self.parent(i)] > self[i]:
-            tmp = self[self.parent(i)]
-            self[self.parent(i)] = self[i]
-            self[i] = tmp
+            self[i], self[self.parent(i)] = self[self.parent(i)], self[i]
             i = self.parent(i)
 
     def min_heap_insert(self, key):

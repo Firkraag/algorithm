@@ -1,5 +1,5 @@
 from unittest import TestCase
-from queue import Queue, EmptyException, FullException
+from Queue import Queue, EmptyException, FullException
 
 
 class TestQueue(TestCase):
