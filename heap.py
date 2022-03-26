@@ -20,11 +20,11 @@ class MaxHeap(list):
     def max_heapify(self, i):
         left = self.left(i)
         right = self.right(i)
-        if (left <= (self.heap_size - 1)) and (self[left] > self[i]):
+        if left < self.heap_size and self[left] > self[i]:
             largest = left
         else:
             largest = i
-        if (right <= (self.heap_size - 1)) and (self[right] > self[largest]):
+        if right < self.heap_size and self[right] > self[largest]:
             largest = right
         if largest != i:
             self[i], self[largest] = self[largest], self[i]
